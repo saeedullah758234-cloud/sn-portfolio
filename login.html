@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - S&N Portfolio</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body class="login-page">
+
+    <!-- Back to Home -->
+    <a href="index.html" class="back-home-btn">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <!-- Login Container -->
+    <div class="login-wrapper">
+        <div class="login-left">
+            <div class="login-left-content">
+                <div class="login-brand">
+                    <span class="logo-gradient-lg">S&N</span>
+                </div>
+                <h1>Welcome Back</h1>
+                <p>Manage your portfolio, showcase your work, and connect with clients worldwide.</p>
+                <div class="login-features">
+                    <div class="login-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Edit your profile information</span>
+                    </div>
+                    <div class="login-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Add & manage projects</span>
+                    </div>
+                    <div class="login-feature">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Share with the world instantly</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-right">
+            <div class="login-card">
+                <div class="login-header">
+                    <div class="login-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h2>Admin Login</h2>
+                    <p>Only authorized admins can access this panel</p>
+                </div>
+
+                <form id="loginForm" class="login-form">
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="loginUsername" class="form-input" placeholder=" " required autocomplete="username">
+                            <label class="floating-label">Username</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="loginPassword" class="form-input" placeholder=" " required autocomplete="current-password">
+                            <label class="floating-label">Password</label>
+                            <button type="button" class="toggle-password" id="togglePassword">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-error" id="loginError">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span id="loginErrorText">Invalid username or password</span>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block btn-login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login to Dashboard</span>
+                        <div class="btn-loader" id="btnLoader"></div>
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <p><i class="fas fa-info-circle"></i> This website has only 2 admin accounts.</p>
+                    <p>No public registration available.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>
