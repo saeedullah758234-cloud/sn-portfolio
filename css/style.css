@@ -136,10 +136,6 @@ ul {
     animation: spin 0.8s linear infinite;
 }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
 /* --------------------------------------------------------------------------
    3. BULLETPROOF HEADER & NAVBAR
    -------------------------------------------------------------------------- */
@@ -343,7 +339,123 @@ ul {
 .w-100 { width: 100%; }
 
 /* --------------------------------------------------------------------------
-   5. HERO SECTION
+   5. PORTFOLIO PAGE: HERO & PROFILE HEADER (REALISTIC DESIGN)
+   -------------------------------------------------------------------------- */
+.portfolio-header-section {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 3.5rem;
+    position: relative;
+}
+
+.portfolio-cover {
+    width: 100%;
+    height: 320px;
+    background: linear-gradient(135deg, var(--primary-dark), var(--purple));
+    position: relative;
+    overflow: hidden;
+}
+
+.portfolio-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.portfolio-profile-header {
+    display: flex;
+    align-items: flex-end;
+    gap: 2rem;
+    margin-top: -80px; /* Overlaps the cover image perfectly */
+    position: relative;
+    z-index: 10;
+}
+
+.avatar-wrapper {
+    position: relative;
+    flex-shrink: 0;
+}
+
+.avatar-wrapper img {
+    width: 160px;
+    height: 160px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+    border: 6px solid var(--bg-card);
+    background: var(--bg-elevated);
+    box-shadow: var(--shadow-lg);
+    display: block;
+}
+
+.online-status-badge {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 24px;
+    height: 24px;
+    background: #10b981;
+    border: 4px solid var(--bg-card);
+    border-radius: var(--radius-full);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.profile-info-main {
+    flex: 1;
+    padding-bottom: 0.5rem;
+}
+
+.profile-title-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+}
+
+.profile-title-row h1 {
+    font-family: var(--font-heading);
+    font-size: 2.25rem;
+    font-weight: 800;
+    margin: 0;
+    color: var(--text-main);
+    line-height: 1.1;
+}
+
+.availability-tag {
+    background: rgba(16, 185, 129, 0.15);
+    color: #10b981;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-full);
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.profile-role-text {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.profile-bio-text {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 800px;
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+}
+
+.profile-actions-bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+/* --------------------------------------------------------------------------
+   6. HOME PAGE: HERO SECTION
    -------------------------------------------------------------------------- */
 .hero {
     padding: 5rem 0 3rem;
@@ -390,8 +502,8 @@ ul {
 
 .gradient-text {
     background: linear-gradient(135deg, #6366f1, #06b6d4, #ec4899);
-    background-clip: text;
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -418,7 +530,7 @@ ul {
 }
 
 /* --------------------------------------------------------------------------
-   6. DYNAMIC PROFILE CARDS
+   7. PROFILE CARDS & SECTIONS
    -------------------------------------------------------------------------- */
 .section {
     padding: 4.5rem 0;
@@ -533,11 +645,14 @@ ul {
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
 .grid-4 { grid-template-columns: repeat(4, 1fr); }
 
-.stat-card {
+.stat-card, .panel-card {
     background: var(--bg-card);
     border: 1px solid var(--border-color);
     padding: 1.5rem;
     border-radius: var(--radius-md);
+}
+
+.stat-card {
     text-align: center;
 }
 
@@ -552,8 +667,85 @@ ul {
     font-size: 0.85rem;
 }
 
+/* Project Filters */
+.project-filters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.filter-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-color);
+    background: var(--bg-card);
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background: var(--primary);
+    color: var(--text-white);
+    border-color: var(--primary);
+}
+
+/* Modal Lightbox */
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-card {
+    background: var(--bg-card);
+    width: 100%;
+    max-width: 700px;
+    border-radius: var(--radius-lg);
+    position: relative;
+    padding: 2rem;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(0,0,0,0.1);
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-main);
+}
+
 /* --------------------------------------------------------------------------
-   7. FOOTER
+   8. FOOTER
    -------------------------------------------------------------------------- */
 .footer {
     background: var(--bg-card);
@@ -600,10 +792,8 @@ ul {
     font-size: 0.85rem;
 }
 
-.text-center { text-align: center; }
-
 /* --------------------------------------------------------------------------
-   8. RESPONSIVE BREAKPOINTS (FIXED HEADER STACKING BUG)
+   9. RESPONSIVE BREAKPOINTS & MOBILE FIXES
    -------------------------------------------------------------------------- */
 @media (max-width: 992px) {
     .grid-4, .grid-3 { grid-template-columns: repeat(2, 1fr); }
@@ -612,18 +802,9 @@ ul {
 
 @media (max-width: 768px) {
     /* Header Fix for Mobile */
-    .menu-btn {
-        display: flex !important;
-    }
-
-    .desktop-only-btn {
-        display: none !important;
-    }
-
-    .mobile-only-link {
-        display: block !important;
-        margin-top: 0.5rem;
-    }
+    .menu-btn { display: flex !important; }
+    .desktop-only-btn { display: none !important; }
+    .mobile-only-link { display: block !important; margin-top: 0.5rem; }
 
     .navbar-links {
         position: fixed;
@@ -651,4 +832,51 @@ ul {
     .hero { padding: 3rem 0 2rem; }
     .hero-actions { flex-direction: column; }
     .hero-actions .btn { width: 100%; }
+
+    /* Portfolio Realistic Mobile Overrides */
+    .portfolio-cover {
+        height: 180px; /* Smaller cover for mobile */
+    }
+
+    .portfolio-profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-top: -65px;
+        gap: 1rem;
+    }
+
+    .avatar-wrapper img {
+        width: 130px;
+        height: 130px;
+        border-width: 4px;
+    }
+
+    .online-status-badge {
+        bottom: 10px;
+        right: 10px;
+        width: 20px;
+        height: 20px;
+        border-width: 3px;
+    }
+
+    .profile-title-row {
+        justify-content: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .profile-title-row h1 {
+        font-size: 1.8rem;
+    }
+
+    .profile-actions-bar {
+        justify-content: center;
+        flex-direction: column; /* Stack buttons on mobile */
+        width: 100%;
+        gap: 0.75rem;
+    }
+
+    .profile-actions-bar .btn {
+        width: 100%; /* Full width buttons on mobile */
+    }
 }
