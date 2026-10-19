@@ -1,12 +1,23 @@
 // ============================================
-// COMPLETE DATABASE SYSTEM FOR S&N PORTFOLIO
-// Supports: Full Profiles, Projects, Education, 
-// Experience, Skills, Services, Certifications
+// S&N PORTFOLIO - FIREBASE CLOUD DATABASE
+// Connected to Google Realtime Database
 // ============================================
 
+// Firebase Configuration Keys
+const firebaseConfig = {
+    apiKey: "AIzaSyD9TwGnhUGg92qWiv5zROJ50Ze0CbVgp_Q",
+    authDomain: "sn-portfolio.firebaseapp.com",
+    databaseURL: "https://sn-portfolio-default-rtdb.firebaseio.com",
+    projectId: "sn-portfolio",
+    storageBucket: "sn-portfolio.firebasestorage.app",
+    messagingSenderId: "691206200263",
+    appId: "1:691206200263:web:b70e58712d39c4787997e2",
+    measurementId: "G-RS8BCD1VG0"
+};
+
+// Default Fallback Data for Both Admins
 const defaultData = {
     saeed: {
-        // Basic Information
         name: 'Saeed ullah',
         title: 'Full Stack Web Developer',
         profileImage: '',
@@ -19,8 +30,6 @@ const defaultData = {
         website: 'https://saeed-portfolio.com',
         bank: 'Meezan Bank | Acc: 1234567890',
         whatsapp: '923000000000',
-
-        // Education Array
         education: [
             {
                 id: 1,
@@ -32,8 +41,6 @@ const defaultData = {
                 description: 'Specialized in web development and software architecture.'
             }
         ],
-
-        // Work Experience Array
         experience: [
             {
                 id: 1,
@@ -46,18 +53,13 @@ const defaultData = {
                 description: 'Developing enterprise web applications with React, Node.js, and modern frameworks.'
             }
         ],
-
-        // Skills Array
         skills: [
             { id: 1, name: 'HTML & CSS', level: 'Expert', category: 'Technical' },
             { id: 2, name: 'JavaScript', level: 'Expert', category: 'Technical' },
             { id: 3, name: 'React.js', level: 'Advanced', category: 'Technical' },
             { id: 4, name: 'Node.js', level: 'Advanced', category: 'Technical' },
-            { id: 5, name: 'VS Code', level: 'Expert', category: 'Software' },
-            { id: 6, name: 'Problem Solving', level: 'Expert', category: 'Professional' }
+            { id: 5, name: 'VS Code', level: 'Expert', category: 'Software' }
         ],
-
-        // Projects Array
         projects: [
             {
                 id: 1,
@@ -78,8 +80,6 @@ const defaultData = {
                 github: '#'
             }
         ],
-
-        // Services Array
         services: [
             {
                 id: 1,
@@ -87,28 +87,9 @@ const defaultData = {
                 description: 'Custom responsive websites built with modern technologies.',
                 icon: 'fa-code',
                 skills: 'HTML, CSS, JavaScript, React'
-            },
-            {
-                id: 2,
-                title: 'E-Commerce Solutions',
-                description: 'Complete online store development with payment integration.',
-                icon: 'fa-shopping-cart',
-                skills: 'Shopify, WooCommerce, Custom Solutions'
             }
         ],
-
-        // Certifications Array
-        certifications: [
-            {
-                id: 1,
-                name: 'Full Stack Web Development',
-                organization: 'Coursera',
-                issueDate: '2022-05',
-                url: '#'
-            }
-        ],
-
-        // Social Media Links
+        certifications: [],
         social: {
             linkedin: 'https://linkedin.com',
             github: 'https://github.com',
@@ -117,16 +98,13 @@ const defaultData = {
             youtube: '',
             twitter: ''
         },
-
-        // Additional Information
         languages: 'English, Urdu, Pashto',
-        interests: 'Coding, Learning New Tech, Reading',
-        goals: 'To build innovative web solutions that make a difference.',
+        interests: 'Coding, Tech, Reading',
+        goals: 'To build innovative web solutions.',
         resume: ''
     },
 
     naeem: {
-        // Basic Information
         name: 'Naeem ur Rahman',
         title: 'Professional Video Editor',
         profileImage: '',
@@ -139,7 +117,6 @@ const defaultData = {
         website: 'https://naeem-portfolio.com',
         bank: 'HBL Bank | Acc: 0987654321',
         whatsapp: '923000000000',
-
         education: [
             {
                 id: 1,
@@ -151,7 +128,6 @@ const defaultData = {
                 description: 'Specialized in cinematic video editing and color grading.'
             }
         ],
-
         experience: [
             {
                 id: 1,
@@ -164,16 +140,12 @@ const defaultData = {
                 description: 'Editing commercials, wedding videos, and YouTube content.'
             }
         ],
-
         skills: [
             { id: 1, name: 'Adobe Premiere Pro', level: 'Expert', category: 'Software' },
             { id: 2, name: 'After Effects', level: 'Advanced', category: 'Software' },
             { id: 3, name: 'DaVinci Resolve', level: 'Advanced', category: 'Software' },
-            { id: 4, name: 'Color Grading', level: 'Expert', category: 'Technical' },
-            { id: 5, name: 'Motion Graphics', level: 'Advanced', category: 'Technical' },
-            { id: 6, name: 'Storytelling', level: 'Expert', category: 'Professional' }
+            { id: 4, name: 'Color Grading', level: 'Expert', category: 'Technical' }
         ],
-
         projects: [
             {
                 id: 1,
@@ -183,45 +155,18 @@ const defaultData = {
                 technologies: 'Premiere Pro, After Effects',
                 link: '#',
                 github: ''
-            },
-            {
-                id: 2,
-                title: 'YouTube Commercial',
-                description: 'High-energy commercial edit for brand marketing.',
-                image: 'https://via.placeholder.com/400x250/00f3ff/0a0a1a?text=Commercial',
-                technologies: 'Premiere Pro, DaVinci Resolve',
-                link: '#',
-                github: ''
             }
         ],
-
         services: [
             {
                 id: 1,
-                title: 'Wedding Videography',
-                description: 'Cinematic wedding films that tell your love story.',
-                icon: 'fa-heart',
-                skills: 'Premiere Pro, Color Grading'
-            },
-            {
-                id: 2,
-                title: 'YouTube Content Editing',
-                description: 'Professional editing for YouTubers and content creators.',
+                title: 'Video Editing',
+                description: 'Professional video editing for YouTube and commercials.',
                 icon: 'fa-video',
-                skills: 'Motion Graphics, Sound Design'
+                skills: 'Premiere Pro, After Effects'
             }
         ],
-
-        certifications: [
-            {
-                id: 1,
-                name: 'Adobe Certified Expert',
-                organization: 'Adobe',
-                issueDate: '2021-10',
-                url: '#'
-            }
-        ],
-
+        certifications: [],
         social: {
             linkedin: 'https://linkedin.com',
             github: '',
@@ -230,50 +175,115 @@ const defaultData = {
             youtube: 'https://youtube.com',
             twitter: ''
         },
-
         languages: 'English, Urdu, Pashto',
-        interests: 'Film Making, Photography, Music',
-        goals: 'To create visual stories that inspire and entertain.',
+        interests: 'Film Making, Photography',
+        goals: 'To create inspiring visual stories.',
         resume: ''
     }
 };
 
-// Database Operations
+// --- DYNAMIC FIREBASE LOADER ---
+let isFirebaseInitialized = false;
+let firebaseDb = null;
+
+function loadFirebaseScripts() {
+    return new Promise((resolve, reject) => {
+        if (window.firebase) {
+            resolve();
+            return;
+        }
+
+        const scriptApp = document.createElement('script');
+        scriptApp.src = "https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js";
+        scriptApp.onload = () => {
+            const scriptDb = document.createElement('script');
+            scriptDb.src = "https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js";
+            scriptDb.onload = () => {
+                resolve();
+            };
+            scriptDb.onerror = reject;
+            document.head.appendChild(scriptDb);
+        };
+        scriptApp.onerror = reject;
+        document.head.appendChild(scriptApp);
+    });
+}
+
+async function initFirebase() {
+    if (isFirebaseInitialized && firebaseDb) return firebaseDb;
+
+    try {
+        await loadFirebaseScripts();
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+        firebaseDb = firebase.database();
+        isFirebaseInitialized = true;
+        return firebaseDb;
+    } catch (err) {
+        console.error("Firebase init failed, using localStorage fallback:", err);
+        return null;
+    }
+}
+
+// Database Operations Manager
 const db = {
-    // Get user data
-    getUser: function(userId) {
-        return new Promise((resolve) => {
-            try {
-                const data = localStorage.getItem(`portfolio_${userId}`);
-                if (data) {
-                    const parsed = JSON.parse(data);
-                    // Merge with defaults to ensure all keys exist
-                    const merged = { ...defaultData[userId], ...parsed };
-                    resolve(merged);
-                } else {
-                    resolve(defaultData[userId] || defaultData['saeed']);
+    // Get user data (Reads from Firebase Cloud, falls back to localStorage/default)
+    getUser: async function(userId) {
+        try {
+            const fb = await initFirebase();
+            if (fb) {
+                const snapshot = await fb.ref('users/' + userId).once('value');
+                if (snapshot.exists()) {
+                    const cloudData = snapshot.val();
+                    const merged = { ...defaultData[userId], ...cloudData };
+                    localStorage.setItem(`portfolio_${userId}`, JSON.stringify(merged));
+                    return merged;
                 }
-            } catch (error) {
-                console.error("Database read error:", error);
-                resolve(defaultData[userId] || defaultData['saeed']);
             }
-        });
+        } catch (error) {
+            console.warn("Could not fetch from Firebase, checking localStorage:", error);
+        }
+
+        // Local Storage / Default Fallback
+        try {
+            const localData = localStorage.getItem(`portfolio_${userId}`);
+            if (localData) {
+                return JSON.parse(localData);
+            }
+        } catch (e) {
+            console.error("LocalStorage error:", e);
+        }
+
+        return defaultData[userId] || defaultData['saeed'];
     },
 
-    // Save user data
-    saveUser: function(userId, data) {
-        return new Promise((resolve, reject) => {
-            try {
-                localStorage.setItem(`portfolio_${userId}`, JSON.stringify(data));
-                resolve(true);
-            } catch (error) {
-                console.error("Database save error:", error);
-                reject(error);
+    // Save user data (Writes to Firebase Cloud AND LocalStorage)
+    saveUser: async function(userId, data) {
+        let firebaseSuccess = false;
+
+        // 1. Try Firebase Cloud Save
+        try {
+            const fb = await initFirebase();
+            if (fb) {
+                await fb.ref('users/' + userId).set(data);
+                firebaseSuccess = true;
             }
-        });
+        } catch (error) {
+            console.error("Error saving to Firebase Cloud:", error);
+        }
+
+        // 2. LocalStorage Backup Save
+        try {
+            localStorage.setItem(`portfolio_${userId}`, JSON.stringify(data));
+        } catch (error) {
+            console.error("Error saving to localStorage:", error);
+        }
+
+        return true;
     },
 
-    // Authentication
+    // Auth Utilities
     checkAuth: function() {
         return localStorage.getItem('admin_token');
     },
@@ -302,7 +312,7 @@ const db = {
         window.location.href = 'login.html';
     },
 
-    // Theme Management
+    // Theme Manager
     getTheme: function() {
         return localStorage.getItem('theme') || 'dark';
     },
