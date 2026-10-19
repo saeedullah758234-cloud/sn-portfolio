@@ -3,294 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Saeed & Naeem Portfolio - Web Development × Video Editing">
-    <meta name="keywords" content="portfolio, web developer, video editor, saeed ullah, naeem ur rahman">
-    <title>Saeed & Naeem Portfolio</title>
-
+    <title>S&N Portfolio - Home</title>
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- AOS Animation -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
-
-    <!-- Preloader -->
-    <div id="preloader">
-        <div class="loader">
-            <div class="loader-circle"></div>
-            <p class="loader-text">S & N</p>
-        </div>
+    <!-- Full Centered Preloader -->
+    <div class="preloader">
+        <div class="spinner"></div>
+        <h2><span>S</span>&<span>N</span></h2>
     </div>
 
-    <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <span class="logo-gradient">S&N</span> Portfolio
-            </a>
+    <!-- Background Particles -->
+    <div id="particles-js"></div>
 
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link active">Home</a></li>
-                <li><a href="portfolio.html?user=saeedullah" class="nav-link">Saeed</a></li>
-                <li><a href="portfolio.html?user=naeemurrahman" class="nav-link">Naeem</a></li>
-                <li><a href="about.html" class="nav-link">About</a></li>
-                <li><a href="login.html" class="nav-link nav-login-btn">Admin Login</a></li>
+    <!-- Desktop Header Navigation -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><span>S&N</span> Portfolio</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="portfolio.html?user=saeed">Saeed (Web)</a></li>
+                <li><a href="portfolio.html?user=naeem">Naeem (Video)</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="login.html">Admin Login</a></li>
             </ul>
+            <button class="menu-btn" aria-label="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
 
-            <div class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero" id="hero">
-        <div class="hero-particles" id="particles"></div>
-        <div class="hero-overlay"></div>
-        <div class="hero-content" data-aos="fade-up" data-aos-duration="1200">
-            <div class="hero-badge">🚀 Creative Professionals</div>
-            <h1 class="hero-title">
-                <span class="gradient-text">Saeed</span> &
-                <span class="gradient-text-2">Naeem</span>
-            </h1>
-            <p class="hero-subtitle">Web Development <span class="hero-x">×</span> Video Editing</p>
-            <p class="hero-description">
-                Two passionate professionals. One powerful portfolio.
-                Building digital experiences and crafting visual stories.
-            </p>
-            <div class="hero-buttons">
-                <a href="portfolio.html?user=saeedullah" class="btn btn-primary btn-glow">
-                    <i class="fas fa-code"></i> Saeed's Portfolio
-                </a>
-                <a href="portfolio.html?user=naeemurrahman" class="btn btn-secondary">
-                    <i class="fas fa-film"></i> Naeem's Portfolio
-                </a>
-            </div>
-            <div class="hero-stats">
-                <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
-                    <span class="stat-number" id="statProjects">0</span>
-                    <span class="stat-label">Projects</span>
-                </div>
-                <div class="stat-item" data-aos="fade-up" data-aos-delay="400">
-                    <span class="stat-number" id="statExperience">5+</span>
-                    <span class="stat-label">Years Exp</span>
-                </div>
-                <div class="stat-item" data-aos="fade-up" data-aos-delay="600">
-                    <span class="stat-number" id="statClients">50+</span>
-                    <span class="stat-label">Happy Clients</span>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Welcome to <span class="glitch-text">S&N Portfolio</span></h1>
+                <p>We craft high-performance websites and cinematic video edits that bring your vision to life worldwide.</p>
+                <div class="hero-buttons">
+                    <a href="#profiles" class="btn primary-btn"><i class="fas fa-user-tie"></i> View Portfolios</a>
+                    <a href="about.html" class="btn secondary-btn"><i class="fas fa-info-circle"></i> Learn More</a>
                 </div>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="mouse">
-                <div class="wheel"></div>
-            </div>
-            <p>Scroll Down</p>
-        </div>
-    </section>
+        </section>
 
-    <!-- Profile Cards Section -->
-    <section class="profiles-section" id="profiles">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-tag">Our Team</span>
-                <h2 class="section-title">Meet The <span class="gradient-text">Creators</span></h2>
-                <p class="section-subtitle">Two minds, infinite possibilities</p>
-            </div>
-
+        <!-- Profiles Showcase Section -->
+        <section class="profiles-section" id="profiles">
+            <h2 class="section-title">Meet Our <span>Experts</span></h2>
             <div class="profiles-grid">
-                <!-- Saeed Card -->
-                <div class="profile-card" data-aos="fade-right" data-aos-duration="1000">
-                    <div class="card-glow"></div>
-                    <div class="card-header">
-                        <div class="profile-image-wrapper">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face"
-                                alt="Saeed Ullah" class="profile-image" id="saeedHomeImg">
-                            <div class="online-badge"></div>
-                        </div>
+                
+                <!-- Saeed's Card -->
+                <div class="profile-card">
+                    <div class="profile-img">
+                        <img src="https://via.placeholder.com/150" alt="Saeed ullah">
                     </div>
-                    <div class="card-body">
-                        <h3 class="profile-name" id="saeedHomeName">Saeed Ullah</h3>
-                        <span class="profile-role role-dev">
-                            <i class="fas fa-code"></i> Website Developer
-                        </span>
-                        <p class="profile-bio" id="saeedHomeBio">
-                            Passionate full-stack web developer creating modern, responsive, and user-friendly websites and web applications.
-                        </p>
-                        <div class="profile-skills">
-                            <span class="skill-tag">HTML</span>
-                            <span class="skill-tag">CSS</span>
-                            <span class="skill-tag">JavaScript</span>
-                            <span class="skill-tag">React</span>
-                            <span class="skill-tag">Node.js</span>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="portfolio.html?user=saeedullah" class="btn btn-primary btn-sm btn-block">
-                            <i class="fas fa-arrow-right"></i> View Portfolio
-                        </a>
-                        <a href="#" class="btn-whatsapp-sm" id="saeedWhatsappHome" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
+                    <h3>Saeed ullah</h3>
+                    <span class="role">Web Developer</span>
+                    <p>Expert in HTML, CSS, JavaScript, and modern web application development.</p>
+                    <a href="portfolio.html?user=saeed" class="btn primary-btn" style="margin-top: 15px;">View Portfolio</a>
                 </div>
 
-                <!-- Naeem Card -->
-                <div class="profile-card" data-aos="fade-left" data-aos-duration="1000">
-                    <div class="card-glow card-glow-2"></div>
-                    <div class="card-header">
-                        <div class="profile-image-wrapper">
-                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face"
-                                alt="Naeem ur Rahman" class="profile-image" id="naeemHomeImg">
-                            <div class="online-badge"></div>
-                        </div>
+                <!-- Naeem's Card -->
+                <div class="profile-card">
+                    <div class="profile-img">
+                        <img src="https://via.placeholder.com/150" alt="Naeem ur Rahman">
                     </div>
-                    <div class="card-body">
-                        <h3 class="profile-name" id="naeemHomeName">Naeem ur Rahman</h3>
-                        <span class="profile-role role-editor">
-                            <i class="fas fa-film"></i> Video Editor
-                        </span>
-                        <p class="profile-bio" id="naeemHomeBio">
-                            Creative video editor specializing in cinematic edits, color grading, and visual storytelling for all platforms.
-                        </p>
-                        <div class="profile-skills">
-                            <span class="skill-tag">Premiere Pro</span>
-                            <span class="skill-tag">After Effects</span>
-                            <span class="skill-tag">DaVinci</span>
-                            <span class="skill-tag">Photoshop</span>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="portfolio.html?user=naeemurrahman" class="btn btn-purple btn-sm btn-block">
-                            <i class="fas fa-arrow-right"></i> View Portfolio
-                        </a>
-                        <a href="#" class="btn-whatsapp-sm" id="naeemWhatsappHome" target="_blank">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
-                    </div>
+                    <h3>Naeem ur Rahman</h3>
+                    <span class="role">Video Editor</span>
+                    <p>Specialist in cinematic cuts, color grading, and dynamic video edits.</p>
+                    <a href="portfolio.html?user=naeem" class="btn primary-btn" style="margin-top: 15px;">View Portfolio</a>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Featured Projects Section -->
-    <section class="featured-section" id="featured">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-tag">Portfolio</span>
-                <h2 class="section-title">Featured <span class="gradient-text">Projects</span></h2>
-                <p class="section-subtitle">Our latest and greatest work</p>
             </div>
-
-            <div class="featured-grid" id="featuredGrid">
-                <!-- Projects loaded dynamically from JS -->
-            </div>
-
-            <div class="featured-empty" id="featuredEmpty" style="display:none;">
-                <i class="fas fa-folder-open"></i>
-                <p>Projects will appear here once added by admins.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section" data-aos="fade-up">
-        <div class="container">
-            <div class="cta-card">
-                <div class="cta-content">
-                    <h2>Ready to work with us?</h2>
-                    <p>Whether you need a stunning website or a cinematic video, we've got you covered.</p>
-                    <div class="cta-buttons">
-                        <a href="#" class="btn btn-whatsapp" id="ctaWhatsappSaeed">
-                            <i class="fab fa-whatsapp"></i> Chat with Saeed
-                        </a>
-                        <a href="#" class="btn btn-whatsapp" id="ctaWhatsappNaeem">
-                            <i class="fab fa-whatsapp"></i> Chat with Naeem
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3 class="footer-logo"><span class="logo-gradient">S&N</span> Portfolio</h3>
-                    <p class="footer-desc">Two creative professionals showcasing their best work to the world.</p>
-                    <div class="footer-socials">
-                        <a href="#" id="footerWhatsappSaeed"><i class="fab fa-whatsapp"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="footer-col">
-                    <h4>Quick Links</h4>
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="portfolio.html?user=saeedullah">Saeed's Portfolio</a></li>
-                        <li><a href="portfolio.html?user=naeemurrahman">Naeem's Portfolio</a></li>
-                        <li><a href="about.html">About Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4>Services</h4>
-                    <ul>
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Video Editing</a></li>
-                        <li><a href="#">UI/UX Design</a></li>
-                        <li><a href="#">Motion Graphics</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Saeed & Naeem Portfolio. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+        </section>
+    </main>
 
     <!-- Floating WhatsApp Button -->
-    <a href="#" class="whatsapp-float" id="whatsappFloat" target="_blank" title="Chat on WhatsApp">
+    <a href="https://wa.me/923000000000" id="whatsapp-float" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <!-- Mobile Bottom Navigation -->
-    <nav class="mobile-bottom-nav" id="mobileNav">
-        <a href="index.html" class="bottom-nav-item active">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="portfolio.html?user=saeedullah" class="bottom-nav-item">
-            <i class="fas fa-code"></i>
-            <span>Saeed</span>
-        </a>
-        <a href="portfolio.html?user=naeemurrahman" class="bottom-nav-item">
-            <i class="fas fa-film"></i>
-            <span>Naeem</span>
-        </a>
-        <a href="about.html" class="bottom-nav-item">
-            <i class="fas fa-info-circle"></i>
-            <span>About</span>
-        </a>
+    <nav class="bottom-nav">
+        <ul class="bottom-nav-links">
+            <li><a href="index.html" class="active"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a href="portfolio.html?user=saeed"><i class="fas fa-code"></i><span>Saeed</span></a></li>
+            <li><a href="portfolio.html?user=naeem"><i class="fas fa-film"></i><span>Naeem</span></a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i><span>About</span></a></li>
+        </ul>
     </nav>
 
-    <!-- AOS JS -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Desktop Footer -->
+    <footer class="desktop-footer">
+        <p>&copy; 2024 S&N Portfolio. All rights reserved.</p>
+    </footer>
 
-    <!-- Custom JS -->
+    <!-- Scripts -->
     <script src="js/database.js"></script>
     <script src="js/app.js"></script>
 </body>

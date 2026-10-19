@@ -1,81 +1,59 @@
-// Remove Preloader when everything is fully loaded (Fixes Loading Hang)
-window.addEventListener('load', () => {
+// Function to safely hide Preloader (with instant fail-safe)
+function hidePreloader() {
     const preloader = document.querySelector('.preloader');
     if (preloader) {
         preloader.style.opacity = '0';
-        preloader.style.transition = 'opacity 0.5s ease';
+        preloader.style.transition = 'opacity 0.4s ease';
         setTimeout(() => {
             preloader.style.display = 'none';
-        }, 500);
+        }, 400);
     }
-});
+}
 
-// DOM Loaded Event
+// Hide preloader when page completes loading
+window.addEventListener('load', hidePreloader);
+
+// Fail-safe: Force hide preloader after 1.2 seconds max so it NEVER freezes!
+setTimeout(hidePreloader, 1200);
+
+// DOM Content Loaded Handler
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Mobile Menu Toggle
+    // 1. Mobile Top Menu Toggle
     const menuBtn = document.querySelector('.menu-btn');
     const navLinks = document.querySelector('.nav-links');
     if (menuBtn && navLinks) {
         menuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            menuBtn.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
+            if (navLinks.style.display === 'flex') {
+                navLinks.style.display = 'none';
+            } else {
+                navLinks.style.display = 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '60px';
+                navLinks.style.left = '0';
+                navLinks.style.width = '100%';
+                navLinks.style.background = '#0a0a1a';
+                navLinks.style.padding = '20px';
+            }
         });
     }
 
-    // 2. Initialize AOS Animations safely (Desktop Only)
-    if (typeof AOS !== 'undefined' && window.innerWidth >= 768) {
-        try {
-            AOS.init({
-                duration: 800,
-                once: true,
-                offset: 100
-            });
-        } catch (e) {
-            console.log("AOS Error handled");
-        }
-    }
-
-    // 3. Initialize Particles safely (Desktop Only)
-    if (typeof particlesJS !== 'undefined' && document.getElementById('particles-js') && window.innerWidth >= 768) {
-        try {
-            particlesJS('particles-js', {
-                "particles": {
-                    "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
-                    "color": { "value": "#00f3ff" },
-                    "shape": { "type": "circle" },
-                    "opacity": { "value": 0.5, "random": false },
-                    "size": { "value": 3, "random": true },
-                    "line_linked": { "enable": true, "distance": 150, "color": "#00f3ff", "opacity": 0.4, "width": 1 },
-                    "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
-                },
-                "interactivity": {
-                    "detect_on": "canvas",
-                    "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }
-                },
-                "retina_detect": true
-            });
-        } catch (e) {
-            console.log("Particles Error handled");
-        }
-    }
-
-    // 4. Load Data if on Portfolio Page
-    const currentPage = window.location.pathname;
-    if (currentPage.includes('portfolio.html')) {
+    // 2. Load Portfolio Data if on portfolio.html page
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('portfolio.html')) {
         try {
             const urlParams = new URLSearchParams(window.location.search);
             let user = urlParams.get('user');
-            if (!user) user = 'saeed'; // Default
+            if (!user) user = 'saeed'; // Default user
             loadPortfolioData(user);
         } catch (e) {
+            console.log("Error reading URL parameter:", e);
             loadPortfolioData('saeed');
         }
     }
 });
 
-// Helper function to safely set text content
+// Helper Function: Safely Set Text
 function safeSetText(id, text) {
     const el = document.getElementById(id);
     if (el) {
@@ -83,83 +61,91 @@ function safeSetText(id, text) {
     }
 }
 
-// Function to load portfolio data dynamically
+// Function to Load User Data dynamically
 async function loadPortfolioData(user) {
     try {
+        if (typeof db === 'undefined') {
+            console.error("Database script is missing!");
+            return;
+        }
+
         const userData = await db.getUser(user);
         if (!userData) return;
 
-        // Update Text Info
-        safeSetText('profile-name', userData.name || 'Name not set');
-        safeSetText('profile-title', userData.title || 'Title not set');
-        safeSetText('profile-desc', userData.about || 'Description not set');
-        
-        // Update Email and Bank with Icons
+        // Set Basic Text Info
+        safeSetText('profile-name', userData.name || 'User Profile');
+        safeSetText('profile-title', userData.title || 'Professional');
+        safeSetText('profile-desc', userData.about || 'Welcome to my portfolio.');
+
+        // Set Email with Icon
         const emailEl = document.getElementById('profile-email');
         if (emailEl) {
-            emailEl.innerHTML = `<i class="fas fa-envelope"></i> ${userData.email || 'Email not set'}`;
+            emailEl.innerHTML = `<i class="fas fa-envelope"></i> <span>${userData.email || 'N/A'}</span>`;
         }
 
+        // Set Bank Details with Icon & Copy Function
         const bankEl = document.getElementById('profile-bank');
         if (bankEl) {
-            bankEl.innerHTML = `<i class="fas fa-university"></i> ${userData.bank || 'Bank info not set'} 
+            bankEl.innerHTML = `<i class="fas fa-university"></i> <span>${userData.bank || 'N/A'}</span> 
             <i class="fas fa-copy copy-icon" onclick="copyToClipboard('${userData.bank || ''}')"></i>`;
         }
 
-        // Update Profile Image
+        // Set Profile Image
         const profileImg = document.getElementById('profile-image');
         if (profileImg) {
-            profileImg.src = userData.profileImage ? userData.profileImage : 'https://via.placeholder.com/150';
+            profileImg.src = (userData.profileImage && userData.profileImage !== '') 
+                ? userData.profileImage 
+                : 'https://via.placeholder.com/150';
         }
 
-        // Update WhatsApp Links
+        // Set WhatsApp Links
         if (userData.whatsapp) {
             const cleanNumber = userData.whatsapp.replace(/[^0-9]/g, '');
-            const waLink = `https://wa.me/${cleanNumber}`;
-            
+            const waUrl = `https://wa.me/${cleanNumber}`;
+
             const waBtn = document.getElementById('whatsapp-btn');
-            if (waBtn) waBtn.href = waLink;
+            if (waBtn) waBtn.href = waUrl;
 
             const waFloat = document.getElementById('whatsapp-float');
-            if (waFloat) waFloat.href = waLink;
+            if (waFloat) waFloat.href = waUrl;
         }
 
-        // Load Projects
+        // Load User Projects
         const projectsGrid = document.getElementById('projects-grid');
         if (projectsGrid) {
-            projectsGrid.innerHTML = ''; // Clear default "Loading projects..." text
+            projectsGrid.innerHTML = ''; // Clear default loading text
 
             if (userData.projects && userData.projects.length > 0) {
                 userData.projects.forEach(project => {
-                    const projectCard = document.createElement('div');
-                    projectCard.className = 'project-card';
-                    projectCard.innerHTML = `
+                    const card = document.createElement('div');
+                    card.className = 'project-card';
+                    card.innerHTML = `
                         <div class="project-img">
                             <img src="${project.image || 'https://via.placeholder.com/300x200'}" alt="${project.title}">
                         </div>
                         <div class="project-info">
                             <h3>${project.title}</h3>
                             <p>${project.description}</p>
-                            <a href="${project.link}" target="_blank" class="btn primary-btn">View Project</a>
+                            <a href="${project.link || '#'}" target="_blank" class="btn primary-btn">View Project</a>
                         </div>
                     `;
-                    projectsGrid.appendChild(projectCard);
+                    projectsGrid.appendChild(card);
                 });
             } else {
                 projectsGrid.innerHTML = '<p style="text-align: center; width: 100%; color: var(--text-secondary);">No projects uploaded yet.</p>';
             }
         }
-    } catch (error) {
-        console.log("Error displaying portfolio data");
+    } catch (err) {
+        console.error("Error loading portfolio details:", err);
     }
 }
 
-// Copy to Clipboard function
+// Copy to Clipboard Utility
 window.copyToClipboard = function(text) {
     if (!text) return;
     navigator.clipboard.writeText(text).then(() => {
         alert("Copied to clipboard!");
-    }).catch(err => {
-        console.log('Copy failed');
+    }).catch(() => {
+        alert("Copy failed!");
     });
 };

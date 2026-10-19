@@ -1,11 +1,14 @@
+/* ========================================= */
+/* GLOBAL STYLES & ROOT VARIABLES            */
+/* ========================================= */
 :root {
     --bg-color: #0a0a1a;
     --primary-color: #00f3ff;
     --secondary-color: #7b2cbf;
     --text-color: #ffffff;
     --text-secondary: #a0a0b5;
-    --card-bg: rgba(25, 25, 45, 0.7);
-    --border-color: rgba(0, 243, 255, 0.2);
+    --card-bg: rgba(25, 25, 45, 0.85);
+    --border-color: rgba(0, 243, 255, 0.25);
     --whatsapp-color: #25d366;
     --transition: all 0.3s ease;
 }
@@ -17,23 +20,38 @@
     font-family: 'Poppins', sans-serif;
 }
 
+/* Fix Unstyled Bullet Points globally */
+ul, ol, li {
+    list-style: none !important;
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    text-decoration: none !important;
+    color: inherit;
+}
+
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     line-height: 1.6;
     overflow-x: hidden;
+    min-height: 100vh;
 }
 
 /* ========================================= */
-/* PRELOADER FIX (100% CENTER FOR MOBILE)    */
+/* PRELOADER FIX (100% CENTERED ON ALL DEVICES) */
 /* ========================================= */
 .preloader {
     position: fixed;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
     width: 100vw;
     height: 100vh;
-    background-color: var(--bg-color);
+    background-color: #0a0a1a;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -44,7 +62,7 @@ body {
 .spinner {
     width: 60px;
     height: 60px;
-    border: 5px solid rgba(0, 243, 255, 0.1);
+    border: 5px solid rgba(0, 243, 255, 0.15);
     border-top-color: var(--primary-color);
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -52,40 +70,29 @@ body {
 }
 
 .preloader h2 {
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
     letter-spacing: 2px;
 }
 
-.preloader h2 span:first-child {
-    color: var(--primary-color);
-}
-
-.preloader h2 span:last-child {
-    color: var(--secondary-color);
-}
+.preloader h2 span:first-child { color: var(--primary-color); }
+.preloader h2 span:last-child { color: var(--secondary-color); }
 
 @keyframes spin {
-    to { transform: rotate(360deg); }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
-/* Particles Background */
-#particles-js {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-}
-
-/* Header & Navigation */
+/* ========================================= */
+/* HEADER & NAVIGATION                       */
+/* ========================================= */
 header {
-    background: rgba(10, 10, 26, 0.9);
+    background: rgba(10, 10, 26, 0.95);
     backdrop-filter: blur(10px);
     position: fixed;
     width: 100%;
     top: 0;
+    left: 0;
     z-index: 1000;
     border-bottom: 1px solid var(--border-color);
 }
@@ -94,7 +101,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 5%;
+    padding: 18px 5%;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -102,7 +109,6 @@ nav {
 .logo {
     font-size: 24px;
     font-weight: 700;
-    text-decoration: none;
     color: var(--text-color);
 }
 
@@ -111,14 +117,14 @@ nav {
 
 .nav-links {
     display: flex;
-    list-style: none;
-    gap: 30px;
+    gap: 25px;
+    align-items: center;
 }
 
 .nav-links a {
     color: var(--text-color);
-    text-decoration: none;
     font-weight: 500;
+    font-size: 15px;
     transition: var(--transition);
 }
 
@@ -129,76 +135,77 @@ nav {
 
 .menu-btn {
     display: none;
-    font-size: 24px;
+    font-size: 22px;
     color: var(--text-color);
     cursor: pointer;
     background: none;
     border: none;
 }
 
-/* Main Content Padding */
+/* Main Container Layout */
 main {
     padding-top: 100px;
     min-height: calc(100vh - 80px);
 }
 
-/* Hero Section */
+/* ========================================= */
+/* HERO SECTION                              */
+/* ========================================= */
 .hero {
-    height: 90vh;
+    min-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 0 5%;
+    padding: 40px 5%;
 }
 
 .hero-content h1 {
-    font-size: 48px;
+    font-size: 44px;
     margin-bottom: 20px;
+    line-height: 1.2;
 }
 
 .glitch-text {
     color: var(--primary-color);
-    font-weight: bold;
-    text-shadow: 2px 2px var(--secondary-color);
+    font-weight: 700;
 }
 
 .hero-content p {
-    font-size: 18px;
+    font-size: 17px;
     color: var(--text-secondary);
-    margin-bottom: 30px;
+    margin: 0 auto 30px;
     max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .hero-buttons {
     display: flex;
-    gap: 20px;
+    gap: 15px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 /* Buttons */
 .btn {
-    padding: 12px 30px;
+    padding: 12px 28px;
     border-radius: 8px;
-    text-decoration: none;
     font-weight: 600;
+    font-size: 15px;
     transition: var(--transition);
     border: none;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .primary-btn {
     background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
-    color: #fff;
+    color: #ffffff;
 }
 
 .primary-btn:hover {
-    box-shadow: 0 0 20px rgba(0, 243, 255, 0.4);
+    box-shadow: 0 0 18px rgba(0, 243, 255, 0.4);
     transform: translateY(-2px);
 }
 
@@ -215,61 +222,59 @@ main {
 
 .whatsapp-btn {
     background: var(--whatsapp-color);
-    color: white;
+    color: #ffffff;
 }
 
 .whatsapp-btn:hover {
-    box-shadow: 0 0 20px rgba(37, 211, 102, 0.4);
+    box-shadow: 0 0 18px rgba(37, 211, 102, 0.4);
     transform: translateY(-2px);
 }
 
-/* Profiles Section */
+/* ========================================= */
+/* PROFILES SECTION                          */
+/* ========================================= */
 .profiles-section {
-    padding: 80px 5%;
+    padding: 60px 5%;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .section-title {
     text-align: center;
-    font-size: 36px;
-    margin-bottom: 50px;
+    font-size: 34px;
+    margin-bottom: 40px;
     color: var(--text-color);
 }
 
-.section-title span {
-    color: var(--primary-color);
-}
+.section-title span { color: var(--primary-color); }
 
 .profiles-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 40px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
 }
 
 .profile-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 15px;
-    padding: 30px;
+    padding: 30px 20px;
     text-align: center;
     transition: var(--transition);
-    backdrop-filter: blur(5px);
 }
 
 .profile-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 10px 30px rgba(0, 243, 255, 0.1);
+    transform: translateY(-8px);
     border-color: var(--primary-color);
 }
 
 .profile-img {
-    width: 150px;
-    height: 150px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
-    margin: 0 auto 20px;
+    margin: 0 auto 18px;
     border: 3px solid var(--primary-color);
-    padding: 5px;
+    padding: 4px;
     overflow: hidden;
     background: var(--bg-color);
 }
@@ -282,69 +287,73 @@ main {
 }
 
 .profile-card h3 {
-    font-size: 24px;
+    font-size: 22px;
     margin-bottom: 5px;
 }
 
 .role {
     color: var(--primary-color);
-    font-size: 16px;
-    margin-bottom: 20px;
+    font-size: 15px;
+    margin-bottom: 15px;
     display: block;
+    font-weight: 500;
 }
 
-/* Portfolio Specific Pages */
+/* ========================================= */
+/* PORTFOLIO DISPLAY PAGE                    */
+/* ========================================= */
 .portfolio-header {
     text-align: center;
-    padding: 40px 5% 20px;
+    padding: 30px 5% 20px;
 }
 
 .contact-info {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-    max-width: 400px;
+    gap: 12px;
+    max-width: 420px;
     margin: 20px auto;
 }
 
 .info-item {
     background: var(--card-bg);
-    padding: 15px 20px;
+    padding: 14px 18px;
     border-radius: 8px;
     border: 1px solid var(--border-color);
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+    font-size: 14px;
     word-break: break-all;
 }
 
 .info-item i {
     color: var(--primary-color);
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .copy-icon {
     cursor: pointer;
     margin-left: auto;
-    color: var(--text-secondary) !important;
+    color: var(--text-secondary);
     transition: var(--transition);
 }
 
 .copy-icon:hover {
-    color: var(--primary-color) !important;
+    color: var(--primary-color);
 }
 
 /* Projects Grid */
 .projects-section {
-    padding: 40px 5% 80px;
+    padding: 30px 5% 80px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
 }
 
 .project-card {
@@ -362,7 +371,7 @@ main {
 
 .project-img {
     width: 100%;
-    height: 200px;
+    height: 190px;
     overflow: hidden;
 }
 
@@ -370,11 +379,6 @@ main {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: var(--transition);
-}
-
-.project-card:hover .project-img img {
-    transform: scale(1.1);
 }
 
 .project-info {
@@ -382,75 +386,36 @@ main {
 }
 
 .project-info h3 {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     color: var(--primary-color);
+    font-size: 18px;
 }
 
 .project-info p {
     color: var(--text-secondary);
-    margin-bottom: 20px;
-    font-size: 14px;
+    margin-bottom: 15px;
+    font-size: 13px;
 }
 
-/* About Page */
-.about-section {
-    padding: 60px 5%;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
-.about-content {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 15px;
-    padding: 40px;
-    text-align: center;
-}
-
-.about-content p {
-    color: var(--text-secondary);
-    margin-bottom: 20px;
-    font-size: 18px;
-}
-
-.admin-login-btn {
-    margin-top: 30px;
-    padding: 10px 20px;
-    background: transparent;
-    border: 1px solid var(--text-secondary);
-    color: var(--text-secondary);
-    border-radius: 5px;
-    cursor: pointer;
-    transition: var(--transition);
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-}
-
-.admin-login-btn:hover {
-    color: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-/* Floating WhatsApp Button */
+/* ========================================= */
+/* FLOATING WHATSAPP & MOBILE NAVIGATION    */
+/* ========================================= */
 .whatsapp-float {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    width: 60px;
-    height: 60px;
+    width: 58px;
+    height: 58px;
     background-color: var(--whatsapp-color);
-    color: #fff;
+    color: #ffffff !important;
     border-radius: 50px;
     text-align: center;
-    font-size: 30px;
-    box-shadow: 0px 5px 15px rgba(37, 211, 102, 0.4);
+    font-size: 28px;
+    box-shadow: 0px 4px 15px rgba(37, 211, 102, 0.4);
     z-index: 999;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-decoration: none;
     transition: var(--transition);
 }
 
@@ -458,24 +423,23 @@ main {
     transform: scale(1.1);
 }
 
-/* Footer / Bottom Nav for Mobile */
 .bottom-nav {
     display: none;
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
-    background: rgba(10, 10, 26, 0.95);
-    backdrop-filter: blur(10px);
+    background: rgba(10, 10, 26, 0.98);
+    backdrop-filter: blur(12px);
     border-top: 1px solid var(--border-color);
     z-index: 1000;
-    padding: 10px 0;
+    padding: 8px 0;
 }
 
 .bottom-nav-links {
     display: flex;
     justify-content: space-around;
-    list-style: none;
+    align-items: center;
 }
 
 .bottom-nav-links a {
@@ -483,14 +447,13 @@ main {
     flex-direction: column;
     align-items: center;
     color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 12px;
-    gap: 5px;
+    font-size: 11px;
+    gap: 4px;
     transition: var(--transition);
 }
 
 .bottom-nav-links i {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .bottom-nav-links a.active,
@@ -498,23 +461,21 @@ main {
     color: var(--primary-color);
 }
 
-/* Footer for Desktop */
 .desktop-footer {
     text-align: center;
     padding: 20px;
     border-top: 1px solid var(--border-color);
     color: var(--text-secondary);
     background: rgba(10, 10, 26, 0.9);
+    font-size: 14px;
 }
 
-/* Responsive Design (Mobile Fixes) */
+/* ========================================= */
+/* RESPONSIVE DESIGN (MOBILE SPECIFIC FIXES) */
+/* ========================================= */
 @media (max-width: 768px) {
     body {
-        padding-bottom: 80px !important;
-    }
-    
-    .particle, #particles-js canvas {
-        display: none !important;
+        padding-bottom: 75px !important;
     }
 
     nav {
@@ -522,15 +483,15 @@ main {
     }
 
     .nav-links, .desktop-footer {
-        display: none;
+        display: none !important;
     }
 
     .menu-btn, .bottom-nav {
-        display: block;
+        display: block !important;
     }
 
     .hero-content h1 {
-        font-size: 36px;
+        font-size: 32px;
     }
 
     .hero-buttons {
@@ -538,11 +499,11 @@ main {
     }
 
     .whatsapp-float {
-        bottom: 90px !important;
+        bottom: 85px !important;
         right: 15px !important;
-        width: 50px !important;
-        height: 50px !important;
-        font-size: 25px !important;
+        width: 48px !important;
+        height: 48px !important;
+        font-size: 24px !important;
     }
 
     .profiles-grid, .projects-grid {
@@ -550,7 +511,6 @@ main {
     }
 
     .info-item {
-        font-size: 14px;
-        padding: 12px 15px;
+        font-size: 13px;
     }
 }

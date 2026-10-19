@@ -3,178 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio - S&N</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <title>S&N Portfolio - Profile</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
+    <!-- Full Centered Preloader -->
+    <div class="preloader">
+        <div class="spinner"></div>
+        <h2><span>S</span>&<span>N</span></h2>
+    </div>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-solid" id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <span class="logo-gradient">S&N</span> Portfolio
-            </a>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="portfolio.html?user=saeedullah" class="nav-link">Saeed</a></li>
-                <li><a href="portfolio.html?user=naeemurrahman" class="nav-link">Naeem</a></li>
-                <li><a href="about.html" class="nav-link">About</a></li>
-                <li><a href="login.html" class="nav-link nav-login-btn">Admin Login</a></li>
+    <!-- Background Particles -->
+    <div id="particles-js"></div>
+
+    <!-- Desktop Header Navigation -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><span>S&N</span> Portfolio</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="portfolio.html?user=saeed" id="nav-saeed">Saeed (Web)</a></li>
+                <li><a href="portfolio.html?user=naeem" id="nav-naeem">Naeem (Video)</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="login.html">Admin Login</a></li>
             </ul>
-            <div class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <button class="menu-btn" aria-label="Toggle Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Profile Header Section -->
+        <section class="portfolio-header">
+            <div class="profile-img">
+                <img id="profile-image" src="https://via.placeholder.com/150" alt="Profile">
             </div>
-        </div>
-    </nav>
-
-    <!-- Portfolio Header -->
-    <section class="portfolio-header" id="portfolioHeader">
-        <div class="portfolio-cover">
-            <div class="cover-overlay"></div>
-        </div>
-        <div class="container">
-            <div class="portfolio-profile" data-aos="fade-up">
-                <div class="portfolio-avatar-wrapper">
-                    <img src="" alt="Profile" class="portfolio-avatar" id="portfolioAvatar">
-                    <div class="avatar-ring"></div>
+            <h1 id="profile-name">Loading Profile...</h1>
+            <h3 class="role" id="profile-title">Please wait...</h3>
+            
+            <div class="contact-info">
+                <div class="info-item" id="profile-email">
+                    <i class="fas fa-envelope"></i> <span>Loading...</span>
                 </div>
-                <div class="portfolio-info">
-                    <h1 class="portfolio-name" id="portfolioName">Loading...</h1>
-                    <span class="portfolio-role" id="portfolioRole">
-                        <i class="fas fa-briefcase"></i> <span id="portfolioRoleText">Loading...</span>
-                    </span>
-                    <p class="portfolio-bio" id="portfolioBio">Loading profile information...</p>
-
-                    <div class="portfolio-contact-grid">
-                        <div class="contact-item" id="emailItem">
-                            <i class="fas fa-envelope"></i>
-                            <span id="portfolioEmail">-</span>
-                        </div>
-                        <div class="contact-item" id="bankItem">
-                            <i class="fas fa-university"></i>
-                            <span id="portfolioBank">-</span>
-                            <button class="copy-btn" id="copyBank" title="Copy">
-                                <i class="fas fa-copy"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="portfolio-actions">
-                        <a href="#" class="btn btn-whatsapp" id="portfolioWhatsapp" target="_blank">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </a>
-                        <a href="#projects" class="btn btn-primary">
-                            <i class="fas fa-folder"></i> View Projects
-                        </a>
-                    </div>
-
-                    <div class="portfolio-skills" id="portfolioSkills">
-                        <!-- skills injected by JS -->
-                    </div>
+                <div class="info-item" id="profile-bank">
+                    <i class="fas fa-university"></i> <span>Loading...</span>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Projects Section -->
-    <section class="projects-section" id="projects">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-tag">Work</span>
-                <h2 class="section-title">My <span class="gradient-text">Projects</span></h2>
-                <p class="section-subtitle" id="projectCount">Loading projects...</p>
+            <p id="profile-desc" style="max-width: 600px; margin: 20px auto; color: var(--text-secondary);">
+                Loading profile description...
+            </p>
+
+            <div style="margin-top: 25px;">
+                <a href="#" id="whatsapp-btn" class="btn whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
             </div>
+        </section>
 
-            <!-- Filter Buttons -->
-            <div class="filter-buttons" id="filterButtons" data-aos="fade-up">
-                <button class="filter-btn active" data-filter="all">All</button>
+        <!-- Projects Section -->
+        <section class="projects-section">
+            <h2 class="section-title">My <span>Projects</span></h2>
+            <div class="projects-grid" id="projects-grid">
+                <p style="text-align: center; width: 100%; color: var(--text-secondary);">Loading projects...</p>
             </div>
+        </section>
+    </main>
 
-            <!-- Projects Grid -->
-            <div class="projects-grid" id="projectsGrid">
-                <!-- Projects loaded via JS -->
-            </div>
-
-            <!-- Empty State -->
-            <div class="empty-state" id="emptyState" style="display:none;">
-                <div class="empty-icon">
-                    <i class="fas fa-folder-open"></i>
-                </div>
-                <h3>No Projects Yet</h3>
-                <p>This portfolio doesn't have any projects added yet. Check back later!</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2025 Saeed & Naeem Portfolio. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Floating WhatsApp -->
-    <a href="#" class="whatsapp-float" id="whatsappFloat" target="_blank" title="Chat on WhatsApp">
+    <!-- Floating WhatsApp Button -->
+    <a href="#" id="whatsapp-float" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
     <!-- Mobile Bottom Navigation -->
-    <nav class="mobile-bottom-nav" id="mobileNav">
-        <a href="index.html" class="bottom-nav-item">
-            <i class="fas fa-home"></i>
-            <span>Home</span>
-        </a>
-        <a href="portfolio.html?user=saeedullah" class="bottom-nav-item">
-            <i class="fas fa-code"></i>
-            <span>Saeed</span>
-        </a>
-        <a href="portfolio.html?user=naeemurrahman" class="bottom-nav-item">
-            <i class="fas fa-film"></i>
-            <span>Naeem</span>
-        </a>
-        <a href="about.html" class="bottom-nav-item">
-            <i class="fas fa-info-circle"></i>
-            <span>About</span>
-        </a>
+    <nav class="bottom-nav">
+        <ul class="bottom-nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a href="portfolio.html?user=saeed"><i class="fas fa-code"></i><span>Saeed</span></a></li>
+            <li><a href="portfolio.html?user=naeem"><i class="fas fa-film"></i><span>Naeem</span></a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i><span>About</span></a></li>
+        </ul>
     </nav>
 
-    <!-- Project Detail Modal -->
-    <div class="modal-overlay" id="projectModal">
-        <div class="modal-content">
-            <button class="modal-close" id="modalClose">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="modal-image-wrapper">
-                <img src="" alt="" class="modal-image" id="modalImage">
-            </div>
-            <div class="modal-body">
-                <span class="modal-category" id="modalCategory">Web</span>
-                <h2 class="modal-title" id="modalTitle">Project Title</h2>
-                <p class="modal-description" id="modalDescription">Description</p>
-                <div class="modal-tech" id="modalTech"></div>
-                <div class="modal-links">
-                    <a href="#" class="btn btn-primary btn-sm" id="modalGithub" target="_blank">
-                        <i class="fab fa-github"></i> GitHub
-                    </a>
-                    <a href="#" class="btn btn-secondary btn-sm" id="modalLive" target="_blank">
-                        <i class="fas fa-external-link-alt"></i> Live Demo
-                    </a>
-                </div>
-                <p class="modal-date" id="modalDate"><i class="fas fa-calendar"></i> Added: -</p>
-            </div>
-        </div>
-    </div>
+    <!-- Desktop Footer -->
+    <footer class="desktop-footer">
+        <p>&copy; 2024 S&N Portfolio. All rights reserved.</p>
+    </footer>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Scripts -->
     <script src="js/database.js"></script>
     <script src="js/app.js"></script>
 </body>
