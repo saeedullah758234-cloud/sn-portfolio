@@ -1,106 +1,264 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Saeed & Naeem | Dual Portfolio & Professional Services</title>
+    
+    <!-- Google Search Console & SEO Meta Tags -->
     <meta name="google-site-verification" content="kPEZbveAmnhBATvBuuRfe9MZf7AmZNBcPZKzjeN9xyw" />
-    <title>SN Portfolio | Saeed ullah & Naeem ur Rahman</title>
-    <meta name="description" content="Official SN Portfolio of Saeed ullah (Web Developer) and Naeem ur Rahman (Video Editor). Explore our professional projects and services.">
-    <meta name="keywords" content="SN Portfolio, Saeed ullah, Naeem ur Rahman, Web Developer, Video Editor, SNPortfolio, Portfolio Website">
-    <meta name="author" content="SN Portfolio">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="SN Portfolio | Professional Showcase">
-    <meta property="og:description" content="Meet Saeed ullah & Naeem ur Rahman - Experts in Web Development and Video Editing.">
-    <meta property="og:url" content="https://sn-portfolio-theta.vercel.app">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
-    <style>
-        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; display: flex; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease; }
-        body[data-theme="dark"] #preloader { background: #0f172a; }
-        #preloader.hidden { opacity: 0; pointer-events: none; }
-        .spinner { width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #2563eb; border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    </style>
+    <meta name="description" content="Official Portfolio of Saeed ullah (Full Stack Web Developer) and Naeem ur Rahman (Professional Video Editor & Motion Graphics Artist). Explore our projects and services.">
+    <meta name="keywords" content="Saeed ullah, Naeem ur Rahman, Web Developer, Video Editor, Portfolio, Full Stack Developer, Motion Graphics, Pakistan Freelancers">
+    <meta name="author" content="Saeed ullah & Naeem ur Rahman">
+    
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:title" content="Saeed & Naeem | Dual Portfolio">
+    <meta property="og:description" content="Web Development & Video Editing Services by Saeed ullah and Naeem ur Rahman.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://sn-portfolio-theta.vercel.app/">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- CSS Stylesheets -->
+    <link rel="stylesheet" href="css/style.css?v=3.0">
+    <link rel="stylesheet" href="css/animations.css?v=3.0">
 </head>
 <body>
-    <div id="preloader"><div class="spinner"></div></div>
 
-    <!-- Fixed Navigation -->
-    <nav>
-        <a href="index.html" class="nav-logo">SN Portfolio</a>
-        <div class="nav-right">
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="about.html">About</a>
-                <a href="login.html">Admin</a>
-            </div>
-            <button id="theme-btn" class="theme-toggle-btn" aria-label="Toggle Theme">
-                <i class="fas fa-moon"></i>
-            </button>
-        </div>
-    </nav>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-spinner"></div>
+    </div>
 
-    <header class="hero">
-        <div class="container">
-            <div class="hero-content fade-in">
-                <h1 class="glitch" data-text="SN PORTFOLIO">SN PORTFOLIO</h1>
-                <p class="subtitle">Creative Solutions & Digital Excellence</p>
-                <div class="hero-btns">
-                    <a href="about.html" class="btn btn-primary">About Us</a>
-                    <a href="login.html" class="btn btn-outline">Admin Login</a>
+    <!-- Navigation Bar -->
+    <header class="navbar-wrapper">
+        <nav class="navbar container">
+            <a href="index.html" class="navbar-brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-code-merge"></i>
                 </div>
+                <span>SN Studio</span>
+            </a>
+
+            <ul class="navbar-links" id="navLinks">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About Team</a></li>
+                <li><a href="portfolio.html?user=saeed">Saeed's Work</a></li>
+                <li><a href="portfolio.html?user=naeem">Naeem's Work</a></li>
+            </ul>
+
+            <div class="nav-right">
+                <button class="theme-toggle" id="themeToggleBtn" aria-label="Toggle Theme">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <a href="login.html" class="btn btn-outline btn-sm" id="navAdminBtn">
+                    <i class="fa-solid fa-lock"></i> Admin Login
+                </a>
+                <button class="menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
-        </div>
+        </nav>
     </header>
 
-    <section class="profiles section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Professionals</h2>
-                <div class="underline"></div>
-            </div>
-            <div class="profile-grid">
-                <div class="profile-card slide-up" onclick="location.href='portfolio.html?user=saeed'">
-                    <div id="home-saeed-banner" class="card-banner"></div>
-                    <div class="card-header">
-                        <img id="home-saeed-img" src="https://via.placeholder.com/150" alt="Saeed ullah" class="profile-img">
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container hero-content">
+                <div class="hero-badge animate-fadeInUp">
+                    <span class="status-dot"></span> Available for Worldwide Freelance Projects
+                </div>
+                
+                <h1 class="animate-fadeInUp delay-100">
+                    Crafting Modern <span class="gradient-text">Web Apps</span> & High-Impact <span class="gradient-text">Video Content</span>
+                </h1>
+                
+                <p class="hero-description animate-fadeInUp delay-200">
+                    Welcome to the joint creative digital studio of Saeed ullah (Full Stack Developer) & Naeem ur Rahman (Professional Video Editor & Motion Graphics Artist). We turn complex ideas into digital reality.
+                </p>
+
+                <div class="hero-actions animate-fadeInUp delay-300">
+                    <a href="#profilesSection" class="btn btn-primary btn-lg">
+                        <i class="fa-solid fa-users-viewfinder"></i> Explore Portfolios
+                    </a>
+                    <a href="about.html" class="btn btn-outline btn-lg">
+                        <i class="fa-solid fa-circle-info"></i> About Our Studio
+                    </a>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="hero-stats grid grid-4 animate-fadeInUp delay-400">
+                    <div class="stat-card">
+                        <h3>100%</h3>
+                        <p>Client Satisfaction</p>
                     </div>
-                    <div class="card-body">
-                        <h3 id="home-saeed-name">Saeed ullah</h3>
-                        <p id="home-saeed-title" class="role">Web Developer</p>
-                        <p id="home-saeed-intro" class="bio">Loading expert profile...</p>
-                        <a href="portfolio.html?user=saeed" class="btn btn-sm">View Portfolio</a>
+                    <div class="stat-card">
+                        <h3>50+</h3>
+                        <p>Projects Delivered</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>24/7</h3>
+                        <p>Support & Revisions</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>2 Profiles</h3>
+                        <p>Web & Video Editing</p>
                     </div>
                 </div>
-                <div class="profile-card slide-up" style="animation-delay: 0.2s" onclick="location.href='portfolio.html?user=naeem'">
-                    <div id="home-naeem-banner" class="card-banner"></div>
-                    <div class="card-header">
-                        <img id="home-naeem-img" src="https://via.placeholder.com/150" alt="Naeem ur Rahman" class="profile-img">
+            </div>
+        </section>
+
+        <!-- Dynamic Profiles Section -->
+        <section class="section" id="profilesSection">
+            <div class="container">
+                <div class="section-title text-center">
+                    <span class="eyebrow"><i class="fa-solid fa-star"></i> Our Team</span>
+                    <h2>Choose a Portfolio to Explore</h2>
+                    <p>Select either Saeed's web engineering workspace or Naeem's media & video editing portfolio.</p>
+                </div>
+
+                <div class="profile-grid">
+                    
+                    <!-- Profile Card 1: Saeed ullah -->
+                    <div class="profile-card animate-fadeInUp" id="cardSaeed">
+                        <div class="card-cover" id="home-saeed-banner"></div>
+                        <div class="card-body">
+                            <img src="https://via.placeholder.com/120" alt="Saeed ullah" class="profile-avatar" id="home-saeed-img">
+                            <h3 class="profile-name" id="home-saeed-name">Saeed ullah</h3>
+                            <span class="profile-role" id="home-saeed-title">Full Stack Web Developer</span>
+                            <p class="profile-bio" id="home-saeed-intro">
+                                Specializing in scalable Web Applications, Custom Databases, Vercel deployments, and responsive UI/UX architecture.
+                            </p>
+
+                            <div class="profile-footer-actions">
+                                <a href="portfolio.html?user=saeed" class="btn btn-primary w-100">
+                                    <i class="fa-solid fa-laptop-code"></i> View Saeed's Work
+                                </a>
+                                <a href="#" id="home-saeed-wa" target="_blank" class="btn btn-whatsapp w-100">
+                                    <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h3 id="home-naeem-name">Naeem ur Rahman</h3>
-                        <p id="home-naeem-title" class="role">Video Editor</p>
-                        <p id="home-naeem-intro" class="bio">Loading expert profile...</p>
-                        <a href="portfolio.html?user=naeem" class="btn btn-sm">View Portfolio</a>
+
+                    <!-- Profile Card 2: Naeem ur Rahman -->
+                    <div class="profile-card animate-fadeInUp delay-100" id="cardNaeem">
+                        <div class="card-cover" id="home-naeem-banner"></div>
+                        <div class="card-body">
+                            <img src="https://via.placeholder.com/120" alt="Naeem ur Rahman" class="profile-avatar" id="home-naeem-img">
+                            <h3 class="profile-name" id="home-naeem-name">Naeem ur Rahman</h3>
+                            <span class="profile-role" id="home-naeem-title">Professional Video Editor</span>
+                            <p class="profile-bio" id="home-naeem-intro">
+                                Expert in Cinematic Video Editing, Reels/Shorts, YouTube Production, Color Grading, and Motion Design.
+                            </p>
+
+                            <div class="profile-footer-actions">
+                                <a href="portfolio.html?user=naeem" class="btn btn-primary w-100">
+                                    <i class="fa-solid fa-clapperboard"></i> View Naeem's Work
+                                </a>
+                                <a href="#" id="home-naeem-wa" target="_blank" class="btn btn-whatsapp w-100">
+                                    <i class="fa-brands fa-whatsapp"></i> Chat on WhatsApp
+                                </a>
+                            </div>
+                        </div>
                     </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Shared Services Highlight Section -->
+        <section class="section bg-card">
+            <div class="container">
+                <div class="section-title text-center">
+                    <span class="eyebrow"><i class="fa-solid fa-layer-group"></i> What We Do</span>
+                    <h2>Comprehensive Digital Solutions</h2>
+                    <p>From initial design to final live code and high-resolution media creation.</p>
+                </div>
+
+                <div class="grid grid-3">
+                    <div class="panel-card hover-lift">
+                        <div class="brand-icon mb-3">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3>Web Development</h3>
+                        <p class="text-muted">Custom front-end and back-end web applications with modern Javascript, Firebase databases, and Vercel cloud hosting.</p>
+                    </div>
+
+                    <div class="panel-card hover-lift">
+                        <div class="brand-icon mb-3">
+                            <i class="fa-solid fa-film"></i>
+                        </div>
+                        <h3>Video Production</h3>
+                        <p class="text-muted">Professional Premiere Pro & After Effects editing, color grading, audio cleaning, sound effects, and smooth visual cuts.</p>
+                    </div>
+
+                    <div class="panel-card hover-lift">
+                        <div class="brand-icon mb-3">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </div>
+                        <h3>Full Brand Package</h3>
+                        <p class="text-muted">Get your business a complete landing page combined with engaging video promo commercials ready for social ad campaigns.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <div class="navbar-brand">
+                    <div class="brand-icon">
+                        <i class="fa-solid fa-code-merge"></i>
+                    </div>
+                    <span>SN Studio</span>
+                </div>
+                <p>Empowering brands and individuals with world-class code and video visual storytelling.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Team</a></li>
+                    <li><a href="portfolio.html?user=saeed">Saeed Portfolio</a></li>
+                    <li><a href="portfolio.html?user=naeem">Naeem Portfolio</a></li>
+                    <li><a href="login.html">Admin Console</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-links">
+                <h4>Connect With Us</h4>
+                <div class="social-links-grid">
+                    <a href="portfolio.html?user=saeed" title="Saeed's Profile"><i class="fa-solid fa-user-gear"></i> Saeed</a>
+                    <a href="portfolio.html?user=naeem" title="Naeem's Profile"><i class="fa-solid fa-video"></i> Naeem</a>
                 </div>
             </div>
         </div>
-    </section>
-
-    <footer>
-        <div class="container"><p>&copy; 2024 SN Portfolio. All rights reserved.</p></div>
+        <div class="footer-bottom">
+            <div class="container text-center">
+                <p>&copy; <span id="year">2025</span> Saeed ullah & Naeem ur Rahman. All Rights Reserved.</p>
+            </div>
+        </div>
     </footer>
 
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-    <script src="js/database.js"></script>
-    <script src="js/app.js"></script>
-    <script>
-        window.addEventListener('load', () => { setTimeout(() => { const pre = document.getElementById('preloader'); if(pre) pre.classList.add('hidden'); }, 500); });
-        setTimeout(() => { const pre = document.getElementById('preloader'); if(pre) pre.classList.add('hidden'); }, 2500);
-    </script>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    
+    <!-- Application Scripts -->
+    <script src="js/database.js?v=3.0"></script>
+    <script src="js/app.js?v=3.0"></script>
 </body>
 </html>
