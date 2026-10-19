@@ -17,9 +17,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- CSS Stylesheets -->
-    <link rel="stylesheet" href="css/style.css?v=3.0">
-    <link rel="stylesheet" href="css/admin.css?v=3.0">
-    <link rel="stylesheet" href="css/animations.css?v=3.0">
+    <link rel="stylesheet" href="css/style.css?v=5.0">
+    <link rel="stylesheet" href="css/admin.css?v=5.0">
+    <link rel="stylesheet" href="css/animations.css?v=5.0">
 </head>
 <body class="admin-body">
 
@@ -89,14 +89,19 @@
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <div class="topbar-title">
-                        <h1 id="panelTitle">Dashboard Overview</h1>
+                        <h1 id="panelTitle">Basic Info</h1>
                         <p>Manage portfolio content and live settings.</p>
                     </div>
                 </div>
 
-                <div class="topbar-actions">
+                <!-- Topbar Right Actions (Theme + Live Site) -->
+                <div class="topbar-actions d-flex align-items-center gap-2">
+                    <!-- New Topbar Dark Mode Toggle -->
+                    <button class="theme-toggle" id="topbarThemeToggleBtn" aria-label="Toggle Theme" style="width: 36px; height: 36px; margin-right: 5px;">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
                     <a href="portfolio.html" id="viewLiveBtn" target="_blank" class="btn btn-outline btn-sm">
-                        <i class="fa-solid fa-arrow-up-right-from-square"></i> View Live Site
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> <span class="d-none d-sm-inline">Live Site</span>
                     </a>
                 </div>
             </div>
@@ -126,7 +131,7 @@
                                 <input type="text" id="input-phone" class="form-control" placeholder="+923001234567">
                             </div>
                             <div class="form-group">
-                                <label for="input-whatsapp">WhatsApp Number <span class="label-hint">(Include country code without +)</span></label>
+                                <label for="input-whatsapp">WhatsApp Number <span class="label-hint">(No + sign)</span></label>
                                 <input type="text" id="input-whatsapp" class="form-control" placeholder="923001234567">
                             </div>
                             <div class="form-group">
@@ -198,11 +203,11 @@
                     <form id="form-bio">
                         <div class="form-grid full-width">
                             <div class="form-group">
-                                <label for="input-intro">Short Card Intro <span class="label-hint">(Appears on Home page card)</span></label>
+                                <label for="input-intro">Short Card Intro</label>
                                 <textarea id="input-intro" class="form-control" rows="3" placeholder="Brief 2-3 sentence teaser introduction..."></textarea>
                             </div>
                             <div class="form-group">
-                                <label for="input-about">Full About Biography <span class="label-hint">(Appears on About & Portfolio pages)</span></label>
+                                <label for="input-about">Full About Biography</label>
                                 <textarea id="input-about" class="form-control" rows="6" placeholder="Detailed professional bio, background, skills, and experience..."></textarea>
                             </div>
                             <div class="form-group">
@@ -220,7 +225,7 @@
                     <div class="panel-card-header">
                         <h3><i class="fa-solid fa-briefcase"></i> Project Portfolio Items</h3>
                         <button type="button" class="btn btn-primary btn-sm" id="addNewProjectBtn">
-                            <i class="fa-solid fa-plus"></i> Add New Project
+                            <i class="fa-solid fa-plus"></i> Add Project
                         </button>
                     </div>
 
@@ -328,7 +333,7 @@
                             </div>
                             <div class="form-group span-2">
                                 <label for="input-bank-account">Account / IBAN Number</label>
-                                <input type="text" id="input-bank-account" class="form-control" placeholder="03XXXXXXXXX or PK00XXXX...">
+                                <input type="text" id="input-bank-account" class="form-control" placeholder="03XXXXXXXXX">
                             </div>
                         </div>
                     </form>
@@ -372,14 +377,14 @@
         </main>
     </div>
 
-    <!-- Floating Global Save Bar -->
-    <div class="floating-save-bar" id="floatingSaveBar">
-        <div class="save-status-indicator">
+    <!-- Floating Global Save Bar (Renamed to "Save") -->
+    <div class="floating-save-bar" id="floatingSaveBar" style="padding: 0.75rem 1.25rem;">
+        <div class="save-status-indicator" style="margin-right: auto;">
             <span class="status-dot" id="saveStatusDot"></span>
-            <span id="saveStatusText">All changes synchronized</span>
+            <span id="saveStatusText" style="font-size: 0.8rem;">Synced</span>
         </div>
-        <button type="button" class="btn btn-primary" id="globalSaveBtn">
-            <i class="fa-solid fa-floppy-disk"></i> Save Dashboard Changes
+        <button type="button" class="btn btn-primary" id="globalSaveBtn" style="padding: 0.5rem 1.5rem; font-size: 1rem;">
+            <i class="fa-solid fa-floppy-disk"></i> Save
         </button>
     </div>
 
@@ -415,8 +420,8 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     
     <!-- Dashboard Scripts -->
-    <script src="js/database.js?v=3.0"></script>
-    <script src="js/auth.js?v=3.0"></script>
-    <script src="js/admin.js?v=3.0"></script>
+    <script src="js/database.js?v=5.0"></script>
+    <script src="js/auth.js?v=5.0"></script>
+    <script src="js/admin.js?v=5.0"></script>
 </body>
 </html>
