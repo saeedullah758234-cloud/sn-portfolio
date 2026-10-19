@@ -2,348 +2,337 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="mobile-web-app-capable" content="yes">
-    <title>Admin Dashboard - S&N Portfolio</title>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin Dashboard | SN Portfolio</title>
+    
+    <!-- Google Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Base & Admin CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- CSS (Version tag forces mobile to load new design) -->
+    <link rel="stylesheet" href="css/admin.css?v=2.0">
+
+    <style>
+        /* Fallback Preloader */
+        #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f5f8fa; display: flex; justify-content: center; align-items: center; z-index: 9999; transition: 0.5s; }
+        #preloader.hidden { opacity: 0; pointer-events: none; }
+        .spinner { width: 50px; height: 50px; border: 5px solid #e2e8f0; border-top-color: #4f46e5; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
 </head>
-<body class="admin-body-bg">
+<body>
+
     <!-- Preloader -->
     <div id="preloader">
         <div class="spinner"></div>
     </div>
 
-    <div class="admin-wrapper">
-        <!-- Sidebar Navigation -->
-        <aside class="admin-sidebar" id="admin-sidebar">
+    <div class="admin-layout">
+        <!-- Sidebar Overlay for Mobile -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+        <!-- Left Sidebar -->
+        <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
-                <div class="brand">
-                    <i class="fas fa-user-shield"></i>
-                    <span>S&N Admin</span>
-                </div>
-                <button class="sidebar-close-btn" id="sidebar-close" type="button"><i class="fas fa-times"></i></button>
+                <h2><i class="fas fa-user-shield"></i> S&N Admin</h2>
+                <button class="close-sidebar" id="close-sidebar"><i class="fas fa-times"></i></button>
             </div>
             
-            <nav class="sidebar-nav">
-                <a href="#sec-basic" class="nav-item active" data-sec="sec-basic">
-                    <i class="fas fa-user-edit"></i> <span>Basic Info</span>
-                </a>
-                <a href="#sec-photos" class="nav-item" data-sec="sec-photos">
-                    <i class="fas fa-images"></i> <span>Profile Photos</span>
-                </a>
-                <a href="#sec-bio" class="nav-item" data-sec="sec-bio">
-                    <i class="fas fa-address-card"></i> <span>Bio & Resume</span>
-                </a>
-                <a href="#sec-education" class="nav-item" data-sec="sec-education">
-                    <i class="fas fa-graduation-cap"></i> <span>Education</span>
-                </a>
-                <a href="#sec-experience" class="nav-item" data-sec="sec-experience">
-                    <i class="fas fa-briefcase"></i> <span>Experience</span>
-                </a>
-                <a href="#sec-skills" class="nav-item" data-sec="sec-skills">
-                    <i class="fas fa-code"></i> <span>Skills</span>
-                </a>
-                <a href="#sec-projects" class="nav-item" data-sec="sec-projects">
-                    <i class="fas fa-folder-open"></i> <span>Projects</span>
-                </a>
-                <a href="#sec-services" class="nav-item" data-sec="sec-services">
-                    <i class="fas fa-concierge-bell"></i> <span>Services</span>
-                </a>
-                <a href="#sec-certifications" class="nav-item" data-sec="sec-certifications">
-                    <i class="fas fa-certificate"></i> <span>Certifications</span>
-                </a>
-                <a href="#sec-socials" class="nav-item" data-sec="sec-socials">
-                    <i class="fas fa-university"></i> <span>Bank & Socials</span>
-                </a>
-            </nav>
+            <ul class="sidebar-menu">
+                <li class="active"><a href="#" data-target="basic-info"><i class="fas fa-user"></i> Basic Info</a></li>
+                <li><a href="#" data-target="profile-photos"><i class="fas fa-image"></i> Profile Photos</a></li>
+                <li><a href="#" data-target="bio-resume"><i class="fas fa-id-card"></i> Bio & Resume</a></li>
+                <li><a href="#" data-target="education"><i class="fas fa-graduation-cap"></i> Education</a></li>
+                <li><a href="#" data-target="experience"><i class="fas fa-briefcase"></i> Experience</a></li>
+                <li><a href="#" data-target="skills"><i class="fas fa-code"></i> Skills</a></li>
+                <li><a href="#" data-target="projects"><i class="fas fa-folder-open"></i> Projects</a></li>
+                <li><a href="#" data-target="services"><i class="fas fa-concierge-bell"></i> Services</a></li>
+                <li><a href="#" data-target="certifications"><i class="fas fa-certificate"></i> Certifications</a></li>
+                <li><a href="#" data-target="bank-socials"><i class="fas fa-university"></i> Bank & Socials</a></li>
+            </ul>
         </aside>
 
-        <!-- Sidebar Backdrop for Mobile -->
-        <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
-
-        <!-- Main Content Area -->
-        <div class="admin-main">
-            <!-- Header Bar -->
-            <header class="admin-header">
-                <div class="header-left">
-                    <button class="menu-toggle-btn" id="sidebar-toggle" type="button">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h2 class="welcome-txt" id="welcome-message">Welcome, Admin</h2>
+        <!-- Main Content -->
+        <main class="main-content">
+            
+            <!-- Topbar -->
+            <div class="topbar">
+                <div class="topbar-left">
+                    <button class="menu-toggle" id="menu-toggle"><i class="fas fa-bars"></i></button>
+                    <h1>Welcome, <span id="welcome-name">Admin</span></h1>
                 </div>
-                <div class="header-actions">
-                    <button id="theme-toggle" class="btn-icon" type="button" title="Toggle Theme">
-                        <i class="fas fa-moon"></i>
-                    </button>
-                    <a href="index.html" target="_blank" class="btn btn-outline">
-                        <i class="fas fa-external-link-alt"></i> <span>View Site</span>
-                    </a>
-                    <button id="logout-btn" class="btn btn-danger" type="button">
-                        <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
-                    </button>
+                
+                <div class="topbar-actions">
+                    <button id="theme-btn" class="btn" title="Toggle Theme"><i class="fas fa-moon"></i></button>
+                    <a href="index.html" class="btn" target="_blank"><i class="fas fa-external-link-alt"></i> <span>View Site</span></a>
+                    <button id="logout-btn" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></button>
                 </div>
-            </header>
+            </div>
 
-            <!-- Dashboard Content Sections -->
-            <main class="admin-content">
-                <form id="admin-form" onsubmit="return false;">
+            <!-- Form Area -->
+            <form id="admin-form">
+                
+                <!-- Basic Info Section -->
+                <section id="basic-info" class="admin-section active">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-user-edit"></i> Personal Information</h3>
+                        <div class="form-grid full">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" id="admin-name" placeholder="e.g. Saeed Ullah">
+                            </div>
+                            <div class="form-group">
+                                <label>Professional Title</label>
+                                <input type="text" id="admin-title" placeholder="e.g. Web Developer & Video Editor">
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" id="admin-email" placeholder="contact@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>WhatsApp Number (with country code)</label>
+                                <input type="text" id="admin-whatsapp" placeholder="923001234567">
+                            </div>
+                            <div class="form-group">
+                                <label>Short Intro (Home Page)</label>
+                                <textarea id="admin-intro" placeholder="Short introduction for the home page..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Profile & Cover Photos -->
+                <section id="profile-photos" class="admin-section">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-camera"></i> Display Pictures</h3>
+                        
+                        <div class="form-group">
+                            <label>Profile Picture (Circular)</label>
+                            <div class="image-upload-box" id="profile-upload-btn">
+                                <img id="profile-preview" src="https://via.placeholder.com/150" class="image-preview" alt="Profile Preview">
+                                <p><i class="fas fa-upload"></i> Click to change Profile Photo</p>
+                            </div>
+                            <input type="file" id="profile-input" accept="image/*" style="display:none;">
+                        </div>
+
+                        <div class="form-group" style="margin-top: 2rem;">
+                            <label>Cover Banner (Top Background)</label>
+                            <div class="image-upload-box" id="cover-upload-btn">
+                                <img id="cover-preview" src="https://via.placeholder.com/600x200" class="cover-preview" alt="Cover Preview">
+                                <p><i class="fas fa-upload"></i> Click to change Cover Photo</p>
+                            </div>
+                            <input type="file" id="cover-input" accept="image/*" style="display:none;">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bio & Resume -->
+                <section id="bio-resume" class="admin-section">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-address-card"></i> Detailed Biography</h3>
+                        <div class="form-group">
+                            <label>Full About Me (Portfolio Page)</label>
+                            <textarea id="admin-about" style="min-height: 200px;" placeholder="Write a detailed biography about your journey, skills, and passion..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Resume Link (Google Drive / PDF Link)</label>
+                            <input type="url" id="admin-resume" placeholder="https://drive.google.com/...">
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Education -->
+                <section id="education" class="admin-section">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-graduation-cap"></i> Education History</h3>
+                        <div id="admin-education-list"></div>
+                        <button type="button" class="add-btn" onclick="addDynamicItem('admin-education-list', 'education')">
+                            <i class="fas fa-plus"></i> Add Education
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Experience -->
+                <section id="experience" class="admin-section">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-briefcase"></i> Work Experience</h3>
+                        <div id="admin-experience-list"></div>
+                        <button type="button" class="add-btn" onclick="addDynamicItem('admin-experience-list', 'experience')">
+                            <i class="fas fa-plus"></i> Add Experience
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Skills -->
+                <section id="skills" class="admin-section">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-code"></i> Professional Skills</h3>
+                        <div id="admin-skills-list"></div>
+                        <button type="button" class="add-btn" onclick="addDynamicItem('admin-skills-list', 'skills')">
+                            <i class="fas fa-plus"></i> Add Skill
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Projects -->
+                <section id="projects" class="admin-section">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-folder-open"></i> Portfolio Projects</h3>
+                        <div id="admin-projects-list"></div>
+                        <button type="button" class="add-btn" onclick="addDynamicItem('admin-projects-list', 'projects')">
+                            <i class="fas fa-plus"></i> Add Project
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Services -->
+                <section id="services" class="admin-section">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-concierge-bell"></i> Offered Services</h3>
+                        <div id="admin-services-list"></div>
+                        <button type="button" class="add-btn" onclick="addDynamicItem('admin-services-list', 'services')">
+                            <i class="fas fa-plus"></i> Add Service
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Certifications -->
+                <section id="certifications" class="admin-section">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-certificate"></i> Certifications & Awards</h3>
+                        <div id="admin-certs-list"></div>
+                        <button type="button" class="add-btn" onclick="addDynamicItem('admin-certs-list', 'certifications')">
+                            <i class="fas fa-plus"></i> Add Certification
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Bank & Socials -->
+                <section id="bank-socials" class="admin-section">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-university"></i> Bank Details</h3>
+                        <div class="form-group">
+                            <label>Bank Info (For Clients)</label>
+                            <textarea id="admin-bank" placeholder="Bank Name: XYZ&#10;Account No: 123456789&#10;Title: Saeed Ullah"></textarea>
+                        </div>
+                    </div>
                     
-                    <!-- Section: Basic Info -->
-                    <section class="admin-card active-section" id="sec-basic">
-                        <div class="card-header">
-                            <h3><i class="fas fa-user-edit"></i> Personal Information</h3>
-                        </div>
-                        <div class="card-body grid-2">
+                    <div class="admin-card">
+                        <h3><i class="fas fa-hashtag"></i> Social Media & Freelance Links</h3>
+                        <div class="form-grid full">
                             <div class="form-group">
-                                <label class="form-label">Full Name</label>
-                                <input type="text" id="name" class="form-control" placeholder="Enter Full Name" autocomplete="name">
+                                <label>Freelance Profile (Fiverr/Upwork)</label>
+                                <input type="url" id="admin-freelance" placeholder="https://fiverr.com/...">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Professional Title</label>
-                                <input type="text" id="title" class="form-control" placeholder="e.g. Web Developer & Designer">
+                                <label>GitHub Profile</label>
+                                <input type="url" id="admin-github" placeholder="https://github.com/...">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Role Badge</label>
-                                <input type="text" id="role" class="form-control" placeholder="e.g. Full-Stack Developer">
+                                <label>LinkedIn Profile</label>
+                                <input type="url" id="admin-linkedin" placeholder="https://linkedin.com/in/...">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Email Address</label>
-                                <input type="email" id="email" class="form-control" placeholder="admin@example.com" autocomplete="email">
+                                <label>Facebook Profile</label>
+                                <input type="url" id="admin-facebook" placeholder="https://facebook.com/...">
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Phone Number</label>
-                                <input type="text" id="phone" class="form-control" placeholder="+92 300 0000000" inputmode="tel">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">WhatsApp Number (Direct Link)</label>
-                                <input type="text" id="whatsapp" class="form-control" placeholder="+923000000000" inputmode="tel">
-                            </div>
-                            <div class="form-group full-width">
-                                <label class="form-label">Location / Address</label>
-                                <input type="text" id="location" class="form-control" placeholder="City, Country">
+                                <label>Instagram Profile</label>
+                                <input type="url" id="admin-instagram" placeholder="https://instagram.com/...">
                             </div>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <!-- Section: Profile & Cover Photos -->
-                    <section class="admin-card" id="sec-photos">
-                        <div class="card-header">
-                            <h3><i class="fas fa-images"></i> Profile & Cover Photos</h3>
-                        </div>
-                        <div class="card-body grid-2">
-                            <!-- Profile Photo Card -->
-                            <div class="photo-upload-box">
-                                <h4>Profile Picture</h4>
-                                <div class="profile-preview-wrapper">
-                                    <img id="profile-img-preview" src="https://via.placeholder.com/150" alt="Profile Preview">
-                                </div>
-                                <div class="file-upload-actions">
-                                    <label for="profile-photo-input" class="btn btn-secondary">
-                                        <i class="fas fa-crop-alt"></i> Choose & Crop Photo
-                                    </label>
-                                    <input type="file" id="profile-photo-input" accept="image/*" style="display:none;">
-                                </div>
-                                <small class="help-text">Crop tool opens after you choose a photo.</small>
-                            </div>
+            </form>
+        </main>
+        
+        <!-- Floating Save Bar -->
+        <div class="floating-save-bar">
+            <div class="status-indicator">
+                <i class="fas fa-cloud-check"></i> 
+                <span>Firebase Connected Worldwide</span>
+            </div>
+            <button type="button" id="save-btn" class="save-btn">
+                <i class="fas fa-save"></i> Save All Changes To Cloud
+            </button>
+        </div>
+    </div>
 
-                            <!-- Cover Image Card -->
-                            <div class="photo-upload-box">
-                                <h4>Cover / Banner Image</h4>
-                                <div class="cover-preview-wrapper">
-                                    <img id="cover-img-preview" src="https://via.placeholder.com/600x200" alt="Cover Preview">
-                                </div>
-                                <div class="file-upload-actions">
-                                    <label for="cover-photo-input" class="btn btn-secondary">
-                                        <i class="fas fa-upload"></i> Upload Cover Banner
-                                    </label>
-                                    <input type="file" id="cover-photo-input" accept="image/*" style="display:none;">
-                                </div>
-                                <small class="help-text">This banner shows on your public portfolio page. Auto-compressed for speed.</small>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Section: Bio & Resume -->
-                    <section class="admin-card" id="sec-bio">
-                        <div class="card-header">
-                            <h3><i class="fas fa-address-card"></i> Bio & Resume Link</h3>
-                        </div>
-                        <div class="card-body grid-1">
-                            <div class="form-group">
-                                <label class="form-label">Short Bio / Tagline</label>
-                                <textarea id="about" class="form-control" rows="3" placeholder="Short intro about yourself..."></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Detailed Bio</label>
-                                <textarea id="bio" class="form-control" rows="5" placeholder="Detailed professional bio..."></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Resume / CV Link (Google Drive / Direct URL)</label>
-                                <input type="url" id="resumeUrl" class="form-control" placeholder="https://drive.google.com/...">
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Section: Education -->
-                    <section class="admin-card" id="sec-education">
-                        <div class="card-header flex-between">
-                            <h3><i class="fas fa-graduation-cap"></i> Education History</h3>
-                            <button type="button" class="btn btn-sm btn-primary" id="add-edu-btn">
-                                <i class="fas fa-plus"></i> Add Education
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <div id="education-list" class="dynamic-items-list"></div>
-                        </div>
-                    </section>
-
-                    <!-- Section: Experience -->
-                    <section class="admin-card" id="sec-experience">
-                        <div class="card-header flex-between">
-                            <h3><i class="fas fa-briefcase"></i> Work Experience</h3>
-                            <button type="button" class="btn btn-sm btn-primary" id="add-exp-btn">
-                                <i class="fas fa-plus"></i> Add Experience
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <div id="experience-list" class="dynamic-items-list"></div>
-                        </div>
-                    </section>
-
-                    <!-- Section: Skills -->
-                    <section class="admin-card" id="sec-skills">
-                        <div class="card-header flex-between">
-                            <h3><i class="fas fa-code"></i> Skills & Expertise</h3>
-                            <button type="button" class="btn btn-sm btn-primary" id="add-skill-btn">
-                                <i class="fas fa-plus"></i> Add Skill
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <div id="skills-list" class="dynamic-items-list grid-2"></div>
-                        </div>
-                    </section>
-
-                    <!-- Section: Projects -->
-                    <section class="admin-card" id="sec-projects">
-                        <div class="card-header flex-between">
-                            <h3><i class="fas fa-folder-open"></i> Portfolio Projects</h3>
-                            <button type="button" class="btn btn-sm btn-primary" id="add-project-btn">
-                                <i class="fas fa-plus"></i> Add Project
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <div id="projects-list" class="dynamic-items-list"></div>
-                        </div>
-                    </section>
-
-                    <!-- Section: Services -->
-                    <section class="admin-card" id="sec-services">
-                        <div class="card-header flex-between">
-                            <h3><i class="fas fa-concierge-bell"></i> Services Offered</h3>
-                            <button type="button" class="btn btn-sm btn-primary" id="add-service-btn">
-                                <i class="fas fa-plus"></i> Add Service
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <div id="services-list" class="dynamic-items-list"></div>
-                        </div>
-                    </section>
-
-                    <!-- Section: Certifications -->
-                    <section class="admin-card" id="sec-certifications">
-                        <div class="card-header flex-between">
-                            <h3><i class="fas fa-certificate"></i> Certifications</h3>
-                            <button type="button" class="btn btn-sm btn-primary" id="add-cert-btn">
-                                <i class="fas fa-plus"></i> Add Certification
-                            </button>
-                        </div>
-                        <div class="card-body">
-                            <div id="certifications-list" class="dynamic-items-list"></div>
-                        </div>
-                    </section>
-
-                    <!-- Section: Bank & Socials -->
-                    <section class="admin-card" id="sec-socials">
-                        <div class="card-header">
-                            <h3><i class="fas fa-university"></i> Bank Account & Social Links</h3>
-                        </div>
-                        <div class="card-body grid-2">
-                            <div class="form-group full-width">
-                                <label class="form-label">Bank Details / Account Info</label>
-                                <textarea id="bankAccount" class="form-control" rows="3" placeholder="Bank Name, Account Title, Account Number/IBAN..."></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label"><i class="fab fa-github"></i> GitHub Profile</label>
-                                <input type="url" id="github" class="form-control" placeholder="https://github.com/username">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label"><i class="fab fa-linkedin"></i> LinkedIn Profile</label>
-                                <input type="url" id="linkedin" class="form-control" placeholder="https://linkedin.com/in/username">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label"><i class="fab fa-facebook"></i> Facebook Profile</label>
-                                <input type="url" id="facebook" class="form-control" placeholder="https://facebook.com/username">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label"><i class="fab fa-instagram"></i> Instagram Profile</label>
-                                <input type="url" id="instagram" class="form-control" placeholder="https://instagram.com/username">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label"><i class="fab fa-twitter"></i> Twitter Profile</label>
-                                <input type="url" id="twitter" class="form-control" placeholder="https://twitter.com/username">
-                            </div>
-                        </div>
-                    </section>
-
-                </form>
-            </main>
-
-            <!-- Bottom Floating Action Bar -->
-            <div class="floating-save-bar">
-                <span class="save-status-txt"><i class="fas fa-cloud"></i> Firebase Connected Worldwide</span>
-                <button type="button" id="save-all-btn" class="btn btn-save-main">
-                    <i class="fas fa-save"></i> Save All Changes To Cloud
-                </button>
+    <!-- Image Cropping Modal -->
+    <div id="crop-modal" class="modal">
+        <div class="modal-content">
+            <h3>Crop Profile Image</h3>
+            <p style="font-size: 0.8rem; color: #64748b; margin-bottom: 10px;">Drag image to adjust position</p>
+            <div id="crop-container">
+                <img id="crop-image" src="" alt="Crop">
+            </div>
+            <div class="modal-actions">
+                <button type="button" id="crop-zoom-in" class="btn" style="background:#4b5563; color:white;"><i class="fas fa-search-plus"></i></button>
+                <button type="button" id="crop-zoom-out" class="btn" style="background:#4b5563; color:white;"><i class="fas fa-search-minus"></i></button>
+                <button type="button" id="crop-cancel" class="btn" style="background:#ef4444; color:white;">Cancel</button>
+                <button type="button" id="crop-save" class="btn" style="background:#10b981; color:white;">Apply Crop</button>
             </div>
         </div>
     </div>
 
-    <!-- CROP MODAL -->
-    <div id="crop-modal" class="modal-overlay" style="display:none;">
-        <div class="modal-card">
-            <div class="modal-header">
-                <h3><i class="fas fa-crop-alt"></i> Crop Profile Photo</h3>
-                <button type="button" class="modal-close" id="crop-cancel-x">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p class="crop-instructions"><i class="fas fa-info-circle"></i> Drag image to adjust position & use slider to zoom.</p>
-                <div class="crop-stage">
-                    <canvas id="crop-canvas" width="300" height="300"></canvas>
-                </div>
-                <div class="crop-controls">
-                    <label><i class="fas fa-search-minus"></i></label>
-                    <input type="range" id="crop-zoom" min="0.4" max="3" step="0.05" value="1">
-                    <label><i class="fas fa-search-plus"></i></label>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="crop-cancel-btn">Cancel</button>
-                <button type="button" class="btn btn-primary" id="crop-confirm-btn"><i class="fas fa-check"></i> Apply & Save Crop</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Firebase SDK Scripts -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script src="js/database.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/admin.js"></script>
+    
+    <script>
+        // Kill preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => { document.getElementById('preloader').classList.add('hidden'); }, 500);
+        });
+        
+        // Mobile Sidebar Controls
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeSidebar = document.getElementById('close-sidebar');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const sidebarLinks = document.querySelectorAll('.sidebar-menu a');
+
+        function openMenu() {
+            sidebar.classList.add('active');
+            overlay.classList.add('active');
+        }
+
+        function closeMenu() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        menuToggle.addEventListener('click', openMenu);
+        closeSidebar.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+
+        // Auto close sidebar on mobile when a link is clicked
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if(window.innerWidth <= 768) {
+                    closeMenu();
+                }
+            });
+        });
+
+        // Theme Toggle (Admin)
+        const themeBtn = document.getElementById('theme-btn');
+        if(localStorage.getItem('theme') === 'dark') document.body.setAttribute('data-theme', 'dark');
+        
+        themeBtn.addEventListener('click', () => {
+            const current = document.body.getAttribute('data-theme');
+            if(current === 'dark') {
+                document.body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+    </script>
 </body>
 </html>
