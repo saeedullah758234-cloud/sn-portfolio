@@ -1,106 +1,322 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Login - S&N Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Base CSS -->
     <link rel="stylesheet" href="css/style.css">
     <style>
-        .login-container {
+        body.login-body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            background: var(--bg-primary);
+            margin: 0;
+            padding: 1.5rem;
+            font-family: 'Poppins', sans-serif;
+            color: #f8fafc;
         }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #0f172a;
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255,255,255,0.1);
+            border-top-color: #6366f1;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         .login-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-lg);
-            padding: 35px 25px;
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
             width: 100%;
             max-width: 420px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-sizing: border-box;
+        }
+
+        .login-header {
             text-align: center;
-            box-shadow: 0 10px 30px var(--shadow-color);
+            margin-bottom: 2rem;
         }
-        .login-logo {
-            font-size: 26px;
+
+        .login-header .icon-box {
+            width: 65px;
+            height: 65px;
+            background: rgba(99, 102, 241, 0.15);
+            border: 2px solid #6366f1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            color: #6366f1;
+            font-size: 1.8rem;
+        }
+
+        .login-header h2 {
+            margin: 0 0 0.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
-            margin-bottom: 8px;
         }
-        .login-logo span:first-child { color: var(--accent-primary); }
-        .login-logo span:last-child { color: var(--accent-secondary); }
-        
-        .login-desc {
-            color: var(--text-secondary);
-            margin-bottom: 25px;
-            font-size: 14px;
+
+        .login-header p {
+            margin: 0;
+            color: #94a3b8;
+            font-size: 0.9rem;
         }
+
+        .user-selector {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            background: rgba(15, 23, 42, 0.6);
+            padding: 5px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .user-tab {
+            flex: 1;
+            padding: 0.65rem 0.5rem;
+            border: none;
+            background: transparent;
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .user-tab.active {
+            background: #6366f1;
+            color: #ffffff;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
         .form-group {
-            margin-bottom: 18px;
-            text-align: left;
+            margin-bottom: 1.25rem;
         }
+
         .form-group label {
             display: block;
-            margin-bottom: 6px;
-            color: var(--text-primary);
-            font-weight: 500;
-            font-size: 13px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #cbd5e1;
+            margin-bottom: 0.5rem;
         }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+        }
+
         .form-control {
             width: 100%;
-            padding: 12px 15px;
-            background: var(--bg-input);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-sm);
-            color: var(--text-primary);
-            font-size: 14px;
+            padding: 0.85rem 1rem 0.85rem 2.75rem;
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
         }
+
+        .form-control:focus {
+            border-color: #6366f1;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 0.85rem;
+            background: #6366f1;
+            color: #ffffff;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: background 0.2s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-login:hover {
+            background: #4f46e5;
+        }
+
         .error-msg {
-            color: var(--error);
-            font-size: 13px;
-            margin-top: 10px;
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid #ef4444;
+            color: #f87171;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
             display: none;
+            align-items: center;
+            gap: 0.5rem;
         }
+
         .back-link {
-            display: inline-block;
-            margin-top: 20px;
-            color: var(--text-secondary);
-            font-size: 13px;
+            display: block;
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #ffffff;
         }
     </style>
 </head>
-<body>
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-logo"><span>S&N</span> Admin Login</div>
-            <p class="login-desc">Sign in to manage your portfolio</p>
-            
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" class="form-control" placeholder="saeedullah OR naeemurrahman" required autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Enter password" required>
-                </div>
-                
-                <div id="login-error" class="error-msg">Invalid credentials!</div>
-                
-                <button type="submit" class="btn primary-btn" style="width: 100%; justify-content: center; margin-top: 10px;">
-                    <i class="fas fa-sign-in-alt"></i> Login
-                </button>
-            </form>
-
-            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Return to Main Website</a>
-        </div>
+<body class="login-body">
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
     </div>
 
-    <script src="js/database.js"></script>
+    <div class="login-card">
+        <div class="login-header">
+            <div class="icon-box">
+                <i class="fas fa-user-lock"></i>
+            </div>
+            <h2>Admin Portal</h2>
+            <p>Login to manage portfolio & cloud data</p>
+        </div>
+
+        <!-- User Role Switcher -->
+        <div class="user-selector">
+            <button type="button" class="user-tab active" id="tab-saeed" onclick="selectUser('saeed')">
+                <i class="fas fa-code"></i> Saeed ullah
+            </button>
+            <button type="button" class="user-tab" id="tab-naeem" onclick="selectUser('naeem')">
+                <i class="fas fa-video"></i> Naeem ur Rahman
+            </button>
+        </div>
+
+        <div id="error-box" class="error-msg">
+            <i class="fas fa-exclamation-circle"></i> <span id="error-text">Invalid credentials!</span>
+        </div>
+
+        <form id="login-form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" class="form-control" placeholder="Enter username" required value="saeedullah">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" class="form-control" placeholder="Enter password" required>
+                </div>
+            </div>
+
+            <button type="submit" id="login-btn" class="btn-login">
+                <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+            </button>
+        </form>
+
+        <a href="index.html" class="back-link">
+            <i class="fas fa-arrow-left"></i> Back to Public Website
+        </a>
+    </div>
+
+    <!-- Auth Script -->
     <script src="js/auth.js"></script>
+    <script>
+        // Guaranteed Instant Preloader Hide
+        function forceHideLoader() {
+            const loader = document.getElementById('preloader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 300);
+            }
+        }
+        window.addEventListener('load', forceHideLoader);
+        setTimeout(forceHideLoader, 150);
+
+        let selectedUser = 'saeed';
+
+        function selectUser(user) {
+            selectedUser = user;
+            const tabSaeed = document.getElementById('tab-saeed');
+            const tabNaeem = document.getElementById('tab-naeem');
+            const usernameInput = document.getElementById('username');
+
+            if (user === 'saeed') {
+                tabSaeed.classList.add('active');
+                tabNaeem.classList.remove('active');
+                if (usernameInput) usernameInput.value = 'saeedullah';
+            } else {
+                tabNaeem.classList.add('active');
+                tabSaeed.classList.remove('active');
+                if (usernameInput) usernameInput.value = 'naeemurrahman';
+            }
+        }
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const errorBox = document.getElementById('error-box');
+            const errorText = document.getElementById('error-text');
+
+            if (typeof login === 'function') {
+                const success = login(username, password);
+                if (success) {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    errorText.innerText = "Invalid username or password!";
+                    errorBox.style.display = 'flex';
+                }
+            }
+        });
+    </script>
 </body>
 </html>
