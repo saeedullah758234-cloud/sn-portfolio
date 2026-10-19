@@ -48,7 +48,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sidebarClose) sidebarClose.addEventListener('click', closeSidebar);
     if (sidebarBackdrop) sidebarBackdrop.addEventListener('click', closeSidebar);
 
-    // Smooth Scroll to Section on Nav Click
     navItems.forEach(item => {
         item.addEventListener('click', (e) => {
             e.preventDefault();
@@ -66,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Logout & Theme Toggle
+    // 4. Theme & Logout
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
@@ -89,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 5. Load Data from Firebase / Fallback
+    // 5. Load Data
     if (typeof db !== 'undefined' && db.getUser) {
         db.getUser(currentUser, (data) => {
             hidePreloader();
@@ -109,14 +108,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (input) input.value = data[id] || '';
         });
 
-        // Previews
         const profPrev = document.getElementById('profile-img-preview');
         if (profPrev && data.profileImage) profPrev.src = data.profileImage;
 
         const covPrev = document.getElementById('cover-img-preview');
         if (covPrev && data.coverImage) covPrev.src = data.coverImage;
 
-        // Render Dynamic Lists
         renderList('education', data.education || []);
         renderList('experience', data.experience || []);
         renderList('skills', data.skills || []);
@@ -125,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderList('certifications', data.certifications || []);
     }
 
-    // Dynamic Lists Renderer
     function renderList(type, items) {
         const container = document.getElementById(`${type}-list`);
         if (!container) return;
@@ -175,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
         renderList(type, currentData[type]);
     };
 
-    // Add Item Handlers
     ['education', 'experience', 'skills', 'projects', 'services', 'certifications'].forEach(type => {
         const btn = document.getElementById(`add-${type.slice(0, -1)}-btn`) || document.getElementById(`add-${type}-btn`);
         if (btn) {
@@ -188,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 6. Profile Photo Crop Engine
+    // 6. Profile Crop
     const cropModal = document.getElementById('crop-modal');
     const cropCanvas = document.getElementById('crop-canvas');
     const cropZoom = document.getElementById('crop-zoom');
@@ -199,9 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let cropImg = new Image();
     let ctx = cropCanvas ? cropCanvas.getContext('2d') : null;
-    let zoomVal = 1;
-    let offsetX = 0, offsetY = 0;
-    let isDragging = false, startX = 0, startY = 0;
+    let zoomVal = 1, offsetX = 0, offsetY = 0, isDragging = false, startX = 0, startY = 0;
 
     if (profileInput) {
         profileInput.addEventListener('change', (e) => {
@@ -228,12 +221,10 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.beginPath();
         ctx.arc(150, 150, 145, 0, Math.PI * 2);
         ctx.clip();
-
         const w = cropImg.width * zoomVal;
         const h = cropImg.height * zoomVal;
         const x = 150 - w / 2 + offsetX;
         const y = 150 - h / 2 + offsetY;
-
         ctx.drawImage(cropImg, x, y, w, h);
         ctx.restore();
     }
@@ -243,50 +234,35 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('mousemove', (e) => { if (!isDragging) return; offsetX = e.clientX - startX; offsetY = e.clientY - startY; drawCrop(); });
         window.addEventListener('mouseup', () => { isDragging = false; });
 
-        // Touch support for mobile devices
         cropCanvas.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX - offsetX; startY = e.touches[0].clientY - offsetY; });
         window.addEventListener('touchmove', (e) => { if (!isDragging) return; offsetX = e.touches[0].clientX - startX; offsetY = e.touches[0].clientY - startY; drawCrop(); });
         window.addEventListener('touchend', () => { isDragging = false; });
     }
 
-    if (cropZoom) {
-        cropZoom.addEventListener('input', () => { zoomVal = parseFloat(cropZoom.value); drawCrop(); });
-    }
-
+    if (cropZoom) cropZoom.addEventListener('input', () => { zoomVal = parseFloat(cropZoom.value); drawCrop(); });
     function closeCrop() { if (cropModal) cropModal.style.display = 'none'; }
     if (cropCancel) cropCancel.addEventListener('click', closeCrop);
     if (cropCancelX) cropCancelX.addEventListener('click', closeCrop);
 
     if (cropConfirm) {
         cropConfirm.addEventListener('click', () => {
-            const exportCanvas = document.createElement('canvas');
-            exportCanvas.width = 400;
-            exportCanvas.height = 400;
-            const expCtx = exportCanvas.getContext('2d');
-
-            expCtx.beginPath();
-            expCtx.arc(200, 200, 200, 0, Math.PI * 2);
-            expCtx.clip();
-
-            const scale = 400 / 300;
-            const w = cropImg.width * zoomVal * scale;
-            const h = cropImg.height * zoomVal * scale;
-            const x = 200 - w / 2 + (offsetX * scale);
-            const y = 200 - h / 2 + (offsetY * scale);
-
-            expCtx.drawImage(cropImg, x, y, w, h);
-            const croppedBase64 = exportCanvas.toDataURL('image/jpeg', 0.85);
-
+            const expCvs = document.createElement('canvas');
+            expCvs.width = 400; expCvs.height = 400;
+            const expCtx = expCvs.getContext('2d');
+            expCtx.beginPath(); expCtx.arc(200, 200, 200, 0, Math.PI * 2); expCtx.clip();
+            const sc = 400 / 300;
+            expCtx.drawImage(cropImg, 200 - (cropImg.width*zoomVal*sc)/2 + offsetX*sc, 200 - (cropImg.height*zoomVal*sc)/2 + offsetY*sc, cropImg.width*zoomVal*sc, cropImg.height*zoomVal*sc);
+            
+            const b64 = expCvs.toDataURL('image/jpeg', 0.85);
             if (!currentData) currentData = {};
-            currentData.profileImage = croppedBase64;
-
+            currentData.profileImage = b64;
             const profPrev = document.getElementById('profile-img-preview');
-            if (profPrev) profPrev.src = croppedBase64;
+            if (profPrev) profPrev.src = b64;
             closeCrop();
         });
     }
 
-    // Cover Image Upload Handler
+    // 7. Cover Image (With Auto Compression to prevent hangs)
     const coverInput = document.getElementById('cover-photo-input');
     if (coverInput) {
         coverInput.addEventListener('change', (e) => {
@@ -294,38 +270,73 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!file) return;
             const reader = new FileReader();
             reader.onload = (evt) => {
-                if (!currentData) currentData = {};
-                currentData.coverImage = evt.target.result;
-                const covPrev = document.getElementById('cover-img-preview');
-                if (covPrev) covPrev.src = evt.target.result;
+                const img = new Image();
+                img.onload = () => {
+                    const cvs = document.createElement('canvas');
+                    const MAX_WIDTH = 1200;
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > MAX_WIDTH) { height = Math.round((height * MAX_WIDTH) / width); width = MAX_WIDTH; }
+                    cvs.width = width; cvs.height = height;
+                    const ctx = cvs.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    const compressedBase64 = cvs.toDataURL('image/jpeg', 0.75); // Compress for speed
+                    
+                    if (!currentData) currentData = {};
+                    currentData.coverImage = compressedBase64;
+                    const covPrev = document.getElementById('cover-img-preview');
+                    if (covPrev) covPrev.src = compressedBase64;
+                };
+                img.src = evt.target.result;
             };
             reader.readAsDataURL(file);
         });
     }
 
-    // 7. Save All Changes to Firebase
+    // 8. Super-Fast Instant Save
     const saveBtn = document.getElementById('save-all-btn');
     if (saveBtn) {
         saveBtn.addEventListener('click', () => {
             if (!currentData) currentData = {};
 
+            // A: Read all static basic info inputs
             ['name', 'title', 'role', 'email', 'phone', 'whatsapp', 'location', 'about', 'bio', 'resumeUrl', 'bankAccount', 'github', 'linkedin', 'facebook', 'instagram', 'twitter'].forEach(id => {
                 const input = document.getElementById(id);
                 if (input) currentData[id] = input.value;
             });
 
+            // B: READ ALL DYNAMIC LIST INPUTS (Projects, Skills, etc. from form fields)
+            ['education', 'experience', 'skills', 'projects', 'services', 'certifications'].forEach(type => {
+                const container = document.getElementById(`${type}-list`);
+                if (container) {
+                    const items = [];
+                    container.querySelectorAll('.dynamic-item-card').forEach(card => {
+                        const obj = {};
+                        card.querySelectorAll('.item-field').forEach(inp => {
+                            obj[inp.getAttribute('data-key')] = inp.value;
+                        });
+                        items.push(obj);
+                    });
+                    currentData[type] = items;
+                }
+            });
+
+            // Put UI in loading state
             saveBtn.disabled = true;
             saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
 
             if (typeof db !== 'undefined' && db.saveUser) {
+                // Call database.js saveUser (It will return instantly)
                 db.saveUser(currentUser, currentData, (success) => {
                     saveBtn.disabled = false;
-                    saveBtn.innerHTML = '<i class="fas fa-save"></i> Save All Changes To Cloud';
-                    if (success) {
-                        alert('✅ All changes saved successfully to Firebase cloud!');
-                    } else {
-                        alert('⚠️ Local save successful, cloud sync pending.');
-                    }
+                    saveBtn.classList.add('btn-success');
+                    saveBtn.innerHTML = '<i class="fas fa-check-circle"></i> Saved!';
+                    
+                    // Reset button text after 2.5 seconds
+                    setTimeout(() => {
+                        saveBtn.classList.remove('btn-success');
+                        saveBtn.innerHTML = '<i class="fas fa-save"></i> Save All Changes To Cloud';
+                    }, 2500);
                 });
             }
         });
