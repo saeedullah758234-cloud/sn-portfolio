@@ -1,5 +1,6 @@
 /* ==========================================
    S&N PORTFOLIO - MODERN ADMIN DASHBOARD STYLES
+   Mobile zoom fixed | No PDF-like scale
    ========================================== */
 
 :root {
@@ -65,6 +66,14 @@
     to { transform: rotate(360deg); }
 }
 
+/* STOP mobile PDF-like zoom / overflow */
+html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    width: 100%;
+    overflow-x: hidden;
+}
+
 body.admin-body-bg {
     background-color: var(--bg-color);
     color: var(--text-primary);
@@ -72,6 +81,12 @@ body.admin-body-bg {
     margin: 0;
     padding: 0;
     min-height: 100vh;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    font-size: 16px; /* iOS won't auto-zoom inputs if >= 16px */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 /* Base Wrapper Grid */
@@ -79,7 +94,9 @@ body.admin-body-bg {
     display: flex;
     min-height: 100vh;
     width: 100%;
+    max-width: 100vw;
     position: relative;
+    overflow-x: hidden;
 }
 
 /* Sidebar Styles */
@@ -98,7 +115,7 @@ body.admin-body-bg {
 }
 
 .sidebar-header {
-    padding: 1.5rem;
+    padding: 1.25rem 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -106,7 +123,7 @@ body.admin-body-bg {
 }
 
 .sidebar-header .brand {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: #ffffff;
     display: flex;
@@ -125,22 +142,25 @@ body.admin-body-bg {
     color: #fff;
     font-size: 1.2rem;
     cursor: pointer;
+    padding: 0.35rem;
 }
 
 .sidebar-nav {
-    padding: 1rem 0;
+    padding: 0.75rem 0;
     overflow-y: auto;
     flex: 1;
+    -webkit-overflow-scrolling: touch;
 }
 
 .sidebar-nav .nav-item {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
-    padding: 0.85rem 1.5rem;
+    gap: 0.75rem;
+    padding: 0.8rem 1.25rem;
     color: var(--sidebar-text);
     text-decoration: none;
     font-weight: 500;
+    font-size: 0.92rem;
     transition: all 0.2s ease;
     border-left: 4px solid transparent;
 }
@@ -155,7 +175,7 @@ body.admin-body-bg {
 .sidebar-nav .nav-item i {
     width: 20px;
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 /* Main Layout Area */
@@ -166,94 +186,137 @@ body.admin-body-bg {
     flex-direction: column;
     min-height: 100vh;
     padding-bottom: 90px;
+    width: auto;
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 /* Top Header Bar */
 .admin-header {
     background-color: var(--card-bg);
     border-bottom: 1px solid var(--border-color);
-    padding: 1rem 2rem;
+    padding: 0.85rem 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: sticky;
     top: 0;
     z-index: 900;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
 .header-left {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.65rem;
+    min-width: 0;
+    flex: 1;
 }
 
 .menu-toggle-btn {
     display: none;
     background: transparent;
     border: none;
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     color: var(--text-primary);
     cursor: pointer;
+    padding: 0.35rem;
+    flex-shrink: 0;
 }
 
 .welcome-txt {
     margin: 0;
-    font-size: 1.3rem;
+    font-size: 1.05rem;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    flex-wrap: wrap;
 }
 
 .btn-icon {
     background: var(--bg-color);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
-    width: 40px;
-    height: 40px;
+    width: 38px;
+    height: 38px;
     border-radius: 8px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.header-actions .btn {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.82rem;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid var(--border-color);
+    background: var(--bg-color);
+    color: var(--text-primary);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.header-actions .btn-outline {
+    background: transparent;
+}
+
+.header-actions .btn-danger {
+    background: var(--danger-color);
+    border-color: var(--danger-color);
+    color: #fff;
 }
 
 /* Main Section Layout */
 .admin-content {
-    padding: 2rem;
-    max-width: 1200px;
+    padding: 1.25rem;
+    max-width: 1000px;
     width: 100%;
     margin: 0 auto;
     box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .admin-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 1.75rem;
-    margin-bottom: 2rem;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
     box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    max-width: 100%;
 }
 
 .card-header {
     border-bottom: 1px solid var(--border-color);
-    padding-bottom: 1rem;
-    margin-bottom: 1.5rem;
+    padding-bottom: 0.85rem;
+    margin-bottom: 1.15rem;
 }
 
 .card-header h3 {
     margin: 0;
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: var(--text-primary);
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.45rem;
 }
 
 .card-header h3 i {
@@ -264,16 +327,19 @@ body.admin-body-bg {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
-/* Form Controls */
-.grid-1 { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
-.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+/* Form Controls — 16px prevents iOS input zoom */
+.grid-1 { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
+    min-width: 0;
 }
 
 .form-group.full-width {
@@ -281,22 +347,26 @@ body.admin-body-bg {
 }
 
 .form-label {
-    font-size: 0.875rem;
+    font-size: 0.82rem;
     font-weight: 600;
     color: var(--text-secondary);
 }
 
 .form-control {
     width: 100%;
-    padding: 0.75rem 1rem;
+    max-width: 100%;
+    padding: 0.7rem 0.85rem;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     background-color: var(--bg-color);
     color: var(--text-primary);
     font-family: inherit;
-    font-size: 0.95rem;
+    font-size: 16px; /* CRITICAL: stops mobile zoom on focus */
+    line-height: 1.4;
     box-sizing: border-box;
     transition: border-color 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
 }
 
 .form-control:focus {
@@ -304,23 +374,30 @@ body.admin-body-bg {
     border-color: var(--primary-color);
 }
 
+textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+}
+
 /* Photo Upload Box Styles */
 .photo-upload-box {
     background: var(--bg-color);
     border: 1px dashed var(--border-color);
-    padding: 1.5rem;
+    padding: 1.15rem;
     border-radius: 10px;
     text-align: center;
+    min-width: 0;
 }
 
 .photo-upload-box h4 {
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
+    font-size: 0.95rem;
 }
 
 .profile-preview-wrapper {
-    width: 140px;
-    height: 140px;
+    width: 120px;
+    height: 120px;
     margin: 0 auto 1rem;
     border-radius: 50%;
     overflow: hidden;
@@ -332,28 +409,62 @@ body.admin-body-bg {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .cover-preview-wrapper {
     width: 100%;
-    height: 140px;
+    height: 120px;
     margin-bottom: 1rem;
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid var(--border-color);
+    background: var(--border-color);
 }
 
 .cover-preview-wrapper img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .help-text {
     display: block;
     margin-top: 0.5rem;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: var(--text-secondary);
+}
+
+.file-upload-actions .btn,
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.55rem 0.9rem;
+    background: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-sm {
+    padding: 0.4rem 0.75rem;
+    font-size: 0.8rem;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: #fff;
 }
 
 /* Dynamic Item Cards */
@@ -361,20 +472,28 @@ body.admin-body-bg {
     background: var(--bg-color);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 1rem 1.25rem;
-    margin-bottom: 1rem;
+    padding: 1rem;
+    margin-bottom: 0.85rem;
     position: relative;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .dynamic-item-card .remove-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
+    top: 8px;
+    right: 8px;
     background: transparent;
     border: none;
     color: var(--danger-color);
     cursor: pointer;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    line-height: 1;
+    z-index: 2;
+}
+
+.dynamic-items-list {
+    max-width: 100%;
 }
 
 /* Floating Save Action Bar */
@@ -385,17 +504,19 @@ body.admin-body-bg {
     left: 260px;
     background: var(--card-bg);
     border-top: 1px solid var(--border-color);
-    padding: 1rem 2rem;
+    padding: 0.85rem 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 0.75rem;
     box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
     z-index: 850;
     transition: left 0.3s ease;
+    flex-wrap: wrap;
 }
 
 .save-status-txt {
-    font-size: 0.9rem;
+    font-size: 0.82rem;
     color: var(--success-color);
     font-weight: 500;
 }
@@ -403,16 +524,23 @@ body.admin-body-bg {
 .btn-save-main {
     background-color: var(--primary-color);
     color: white;
-    padding: 0.75rem 2rem;
+    padding: 0.7rem 1.35rem;
     font-weight: 600;
+    font-size: 0.9rem;
     border-radius: 8px;
     border: none;
     cursor: pointer;
     transition: background 0.2s;
+    white-space: nowrap;
 }
 
 .btn-save-main:hover {
     background-color: var(--primary-hover);
+}
+
+.btn-save-main.btn-success,
+.btn-success {
+    background-color: var(--success-color) !important;
 }
 
 /* Crop Modal */
@@ -426,43 +554,46 @@ body.admin-body-bg {
     align-items: center;
     justify-content: center;
     padding: 1rem;
+    box-sizing: border-box;
 }
 
 .modal-card {
     background: var(--card-bg);
     border-radius: 12px;
     width: 100%;
-    max-width: 440px;
-    overflow: hidden;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
 }
 
 .modal-header {
-    padding: 1rem 1.25rem;
+    padding: 0.9rem 1.1rem;
     border-bottom: 1px solid var(--border-color);
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.modal-header h3 { margin: 0; font-size: 1.1rem; }
+.modal-header h3 { margin: 0; font-size: 1rem; }
 .modal-close { background: transparent; border: none; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; }
 
 .modal-body {
-    padding: 1.25rem;
+    padding: 1.1rem;
     text-align: center;
 }
 
 .crop-instructions {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     color: var(--text-secondary);
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
 }
 
 .crop-stage {
-    width: 300px;
-    height: 300px;
+    width: 260px;
+    height: 260px;
+    max-width: 100%;
     margin: 0 auto;
     border-radius: 50%;
     overflow: hidden;
@@ -471,33 +602,66 @@ body.admin-body-bg {
     cursor: move;
 }
 
+.crop-stage canvas {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
 .crop-controls {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.75rem;
-    margin-top: 1.25rem;
+    gap: 0.65rem;
+    margin-top: 1rem;
 }
 
 .crop-controls input[type="range"] {
-    width: 200px;
+    width: 160px;
+    max-width: 50vw;
 }
 
 .modal-footer {
-    padding: 1rem 1.25rem;
+    padding: 0.9rem 1.1rem;
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: flex-end;
-    gap: 0.75rem;
+    gap: 0.65rem;
+    flex-wrap: wrap;
 }
 
-/* Mobile & Tablet Responsive Fixes */
+.modal-footer .btn {
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+
+.modal-footer .btn-secondary {
+    background: var(--bg-color);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.modal-footer .btn-primary {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.sidebar-backdrop {
+    display: none;
+}
+
+/* ========== MOBILE: no zoom, clean layout ========== */
 @media (max-width: 991px) {
     .admin-sidebar {
         transform: translateX(-100%);
-        visibility: hidden; /* Complete hide when closed to prevent text overlay on form */
+        visibility: hidden;
         z-index: 1200;
         box-shadow: 5px 0 25px rgba(0,0,0,0.3);
+        width: min(280px, 85vw);
     }
 
     .admin-sidebar.open {
@@ -523,6 +687,8 @@ body.admin-body-bg {
 
     .admin-main {
         margin-left: 0;
+        width: 100%;
+        max-width: 100vw;
     }
 
     .menu-toggle-btn {
@@ -531,6 +697,8 @@ body.admin-body-bg {
 
     .floating-save-bar {
         left: 0;
+        padding: 0.75rem 1rem;
+        padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
     }
 
     .grid-2 {
@@ -538,6 +706,67 @@ body.admin-body-bg {
     }
 
     .admin-content {
+        padding: 0.85rem;
+    }
+
+    .admin-card {
         padding: 1rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+    }
+
+    .welcome-txt {
+        font-size: 0.95rem;
+    }
+
+    .header-actions .btn span {
+        display: none; /* icons only on very tight space if needed */
+    }
+
+    .header-actions .btn {
+        padding: 0.45rem 0.65rem;
+    }
+
+    /* Keep button text visible on most phones */
+    @media (min-width: 380px) {
+        .header-actions .btn span {
+            display: inline;
+        }
+    }
+
+    .crop-stage {
+        width: 240px;
+        height: 240px;
+    }
+
+    .btn-save-main {
+        flex: 1;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .save-status-txt {
+        width: 100%;
+        text-align: center;
+        font-size: 0.78rem;
+    }
+
+    .floating-save-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+@media (max-width: 400px) {
+    .admin-header {
+        padding: 0.65rem 0.75rem;
+    }
+
+    .admin-content {
+        padding: 0.65rem;
+    }
+
+    .welcome-txt {
+        font-size: 0.88rem;
     }
 }

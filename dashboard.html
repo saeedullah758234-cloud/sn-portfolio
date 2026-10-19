@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="mobile-web-app-capable" content="yes">
     <title>Admin Dashboard - S&N Portfolio</title>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -26,7 +27,7 @@
                     <i class="fas fa-user-shield"></i>
                     <span>S&N Admin</span>
                 </div>
-                <button class="sidebar-close-btn" id="sidebar-close"><i class="fas fa-times"></i></button>
+                <button class="sidebar-close-btn" id="sidebar-close" type="button"><i class="fas fa-times"></i></button>
             </div>
             
             <nav class="sidebar-nav">
@@ -71,19 +72,19 @@
             <!-- Header Bar -->
             <header class="admin-header">
                 <div class="header-left">
-                    <button class="menu-toggle-btn" id="sidebar-toggle">
+                    <button class="menu-toggle-btn" id="sidebar-toggle" type="button">
                         <i class="fas fa-bars"></i>
                     </button>
                     <h2 class="welcome-txt" id="welcome-message">Welcome, Admin</h2>
                 </div>
                 <div class="header-actions">
-                    <button id="theme-toggle" class="btn-icon" title="Toggle Theme">
+                    <button id="theme-toggle" class="btn-icon" type="button" title="Toggle Theme">
                         <i class="fas fa-moon"></i>
                     </button>
                     <a href="index.html" target="_blank" class="btn btn-outline">
                         <i class="fas fa-external-link-alt"></i> <span>View Site</span>
                     </a>
-                    <button id="logout-btn" class="btn btn-danger">
+                    <button id="logout-btn" class="btn btn-danger" type="button">
                         <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
                     </button>
                 </div>
@@ -101,7 +102,7 @@
                         <div class="card-body grid-2">
                             <div class="form-group">
                                 <label class="form-label">Full Name</label>
-                                <input type="text" id="name" class="form-control" placeholder="Enter Full Name">
+                                <input type="text" id="name" class="form-control" placeholder="Enter Full Name" autocomplete="name">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Professional Title</label>
@@ -113,15 +114,15 @@
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Email Address</label>
-                                <input type="email" id="email" class="form-control" placeholder="admin@example.com">
+                                <input type="email" id="email" class="form-control" placeholder="admin@example.com" autocomplete="email">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">Phone Number</label>
-                                <input type="text" id="phone" class="form-control" placeholder="+92 300 0000000">
+                                <input type="text" id="phone" class="form-control" placeholder="+92 300 0000000" inputmode="tel">
                             </div>
                             <div class="form-group">
                                 <label class="form-label">WhatsApp Number (Direct Link)</label>
-                                <input type="text" id="whatsapp" class="form-control" placeholder="+923000000000">
+                                <input type="text" id="whatsapp" class="form-control" placeholder="+923000000000" inputmode="tel">
                             </div>
                             <div class="form-group full-width">
                                 <label class="form-label">Location / Address</label>
@@ -148,12 +149,12 @@
                                     </label>
                                     <input type="file" id="profile-photo-input" accept="image/*" style="display:none;">
                                 </div>
-                                <small class="help-text">Clicking choose will open the Crop tool so your photo looks perfect.</small>
+                                <small class="help-text">Crop tool opens after you choose a photo.</small>
                             </div>
 
                             <!-- Cover Image Card -->
                             <div class="photo-upload-box">
-                                <h4>Cover Image</h4>
+                                <h4>Cover / Banner Image</h4>
                                 <div class="cover-preview-wrapper">
                                     <img id="cover-img-preview" src="https://via.placeholder.com/600x200" alt="Cover Preview">
                                 </div>
@@ -163,7 +164,7 @@
                                     </label>
                                     <input type="file" id="cover-photo-input" accept="image/*" style="display:none;">
                                 </div>
-                                <small class="help-text">Recommended resolution: 1200x400 for background banner.</small>
+                                <small class="help-text">This banner shows on your public portfolio page. Auto-compressed for speed.</small>
                             </div>
                         </div>
                     </section>
@@ -198,9 +199,7 @@
                             </button>
                         </div>
                         <div class="card-body">
-                            <div id="education-list" class="dynamic-items-list">
-                                <!-- Dynamic items injected via JS -->
-                            </div>
+                            <div id="education-list" class="dynamic-items-list"></div>
                         </div>
                     </section>
 
@@ -213,9 +212,7 @@
                             </button>
                         </div>
                         <div class="card-body">
-                            <div id="experience-list" class="dynamic-items-list">
-                                <!-- Dynamic items injected via JS -->
-                            </div>
+                            <div id="experience-list" class="dynamic-items-list"></div>
                         </div>
                     </section>
 
@@ -228,9 +225,7 @@
                             </button>
                         </div>
                         <div class="card-body">
-                            <div id="skills-list" class="dynamic-items-list grid-2">
-                                <!-- Dynamic items injected via JS -->
-                            </div>
+                            <div id="skills-list" class="dynamic-items-list grid-2"></div>
                         </div>
                     </section>
 
@@ -243,9 +238,7 @@
                             </button>
                         </div>
                         <div class="card-body">
-                            <div id="projects-list" class="dynamic-items-list">
-                                <!-- Dynamic items injected via JS -->
-                            </div>
+                            <div id="projects-list" class="dynamic-items-list"></div>
                         </div>
                     </section>
 
@@ -258,9 +251,7 @@
                             </button>
                         </div>
                         <div class="card-body">
-                            <div id="services-list" class="dynamic-items-list">
-                                <!-- Dynamic items injected via JS -->
-                            </div>
+                            <div id="services-list" class="dynamic-items-list"></div>
                         </div>
                     </section>
 
@@ -273,9 +264,7 @@
                             </button>
                         </div>
                         <div class="card-body">
-                            <div id="certifications-list" class="dynamic-items-list">
-                                <!-- Dynamic items injected via JS -->
-                            </div>
+                            <div id="certifications-list" class="dynamic-items-list"></div>
                         </div>
                     </section>
 
@@ -315,7 +304,7 @@
                 </form>
             </main>
 
-            <!-- Bottom Floating Action Bar for Easy Saving -->
+            <!-- Bottom Floating Action Bar -->
             <div class="floating-save-bar">
                 <span class="save-status-txt"><i class="fas fa-cloud"></i> Firebase Connected Worldwide</span>
                 <button type="button" id="save-all-btn" class="btn btn-save-main">

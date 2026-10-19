@@ -72,7 +72,18 @@ function loadPortfolioPage() {
     const urlParams = new URLSearchParams(window.location.search);
     const user = urlParams.get('user') || 'saeed';
 
-    if (typeof db === 'undefined' || !db.getUser) return;
+    // Kill preloader early
+    const pre = document.getElementById('preloader');
+    if (pre) {
+        pre.style.display = 'none';
+        pre.classList.add('hide');
+    }
+
+    if (typeof db === 'undefined' || !db.getUser) {
+        const nameEl = document.getElementById('profile-name');
+        if (nameEl) nameEl.innerText = 'Profile unavailable';
+        return;
+    }
 
     db.getUser(user, (data) => {
         if (!data) return;
@@ -88,11 +99,28 @@ function loadPortfolioPage() {
         const resumeBtn = document.getElementById('resume-btn');
         const whatsappBtn = document.getElementById('whatsapp-btn');
 
-        if (nameEl) nameEl.innerText = data.name || '';
+        if (nameEl) nameEl.innerText = data.name || 'User';
         if (titleEl) titleEl.innerText = data.title || '';
-        if (roleEl) roleEl.innerText = data.role || '';
-        if (imgEl && data.profileImage) imgEl.src = data.profileImage;
-        if (coverEl && data.coverImage) coverEl.src = data.coverImage;
+        if (roleEl) roleEl.innerText = data.role || 'Creator';
+
+        // Profile photo
+        if (imgEl && data.profileImage) {
+            imgEl.src = data.profileImage;
+            imgEl.style.display = 'block';
+        }
+
+        // COVER / BANNER — IMPORTANT: show it when image exists
+        if (coverEl && data.coverImage) {
+            coverEl.onload = function () {
+                coverEl.style.display = 'block';
+            };
+            coverEl.onerror = function () {
+                coverEl.style.display = 'none';
+            };
+            coverEl.src = data.coverImage;
+            coverEl.style.display = 'block';
+        }
+
         if (aboutEl) aboutEl.innerText = data.about || '';
         if (bioEl) bioEl.innerText = data.bio || '';
 
@@ -102,9 +130,37 @@ function loadPortfolioPage() {
         }
 
         if (whatsappBtn && data.whatsapp) {
-            const cleanNum = data.whatsapp.replace(/[^0-9]/g, '');
-            whatsappBtn.href = `https://wa.me/${cleanNum}`;
-            whatsappBtn.style.display = 'inline-flex';
+            const cleanNum = String(data.whatsapp).replace(/[^0-9]/g, '');
+            if (cleanNum) {
+                whatsappBtn.href = 'https://wa.me/' + cleanNum;
+                whatsappBtn.style.display = 'inline-flex';
+            }
+        }
+
+        // Contact block (optional)
+        const contactBlock = document.getElementById('contact-block');
+        const contactInfo = document.getElementById('contact-info');
+        if (contactBlock && contactInfo) {
+            const parts = [];
+            if (data.email) parts.push('Email: ' + data.email);
+            if (data.phone) parts.push('Phone: ' + data.phone);
+            if (data.location) parts.push('Location: ' + data.location);
+            if (parts.length) {
+                contactInfo.innerText = parts.join('\n');
+                contactBlock.style.display = 'block';
+            }
+        }
+
+        // Skills (optional)
+        const skillsBlock = document.getElementById('skills-block');
+        const skillsDisplay = document.getElementById('skills-display');
+        if (skillsBlock && skillsDisplay && data.skills && data.skills.length) {
+            skillsDisplay.innerHTML = data.skills.map(function (s) {
+                const n = s.name || s.title || '';
+                const lvl = s.level ? ' — ' + s.level + '%' : '';
+                return n ? '<div style="padding:0.35rem 0;border-bottom:1px solid #e2e8f0;">' + n + lvl + '</div>' : '';
+            }).join('');
+            skillsBlock.style.display = 'block';
         }
 
         // Render Projects
@@ -118,22 +174,25 @@ function renderProjects(projects) {
     if (!grid) return;
 
     grid.innerHTML = '';
-    if (projects.length === 0) {
+    if (!projects || projects.length === 0) {
         grid.innerHTML = '<p class="no-data">No projects uploaded yet.</p>';
         return;
     }
 
-    projects.forEach(p => {
+    projects.forEach(function (p) {
         const card = document.createElement('div');
         card.className = 'project-card';
-        card.innerHTML = `
-            <div class="project-info">
-                <span class="project-cat">${p.category || 'Portfolio'}</span>
-                <h4>${p.title || 'Project Title'}</h4>
-                <p class="project-tech">${p.tech || ''}</p>
-                ${p.link ? `<a href="${p.link}" target="_blank" class="btn btn-sm btn-primary">View Project <i class="fas fa-external-link-alt"></i></a>` : ''}
-            </div>
-        `;
+        const title = p.title || 'Project Title';
+        const cat = p.category || 'Portfolio';
+        const tech = p.tech || '';
+        const link = p.link || '';
+        card.innerHTML =
+            '<div class="project-info">' +
+            '<span class="project-cat">' + cat + '</span>' +
+            '<h4>' + title + '</h4>' +
+            (tech ? '<p class="project-tech">' + tech + '</p>' : '') +
+            (link ? '<a href="' + link + '" target="_blank" rel="noopener" class="btn btn-sm btn-primary">View Project <i class="fas fa-external-link-alt"></i></a>' : '') +
+            '</div>';
         grid.appendChild(card);
     });
 }
