@@ -2,170 +2,151 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&N Portfolio - Saeed ullah & Naeem ur Rahman</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- SEO Meta Tags -->
+    <title>SN Portfolio | Saeed ullah & Naeem ur Rahman</title>
+    <meta name="description" content="Official SN Portfolio of Saeed ullah (Web Developer) and Naeem ur Rahman (Video Editor). Explore our professional projects and services.">
+    <meta name="keywords" content="SN Portfolio, Saeed ullah, Naeem ur Rahman, Web Developer, Video Editor, SNPortfolio, Portfolio Website">
+    <meta name="author" content="SN Portfolio">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph for Social Media (WhatsApp/Facebook preview) -->
+    <meta property="og:title" content="SN Portfolio | Professional Showcase">
+    <meta property="og:description" content="Meet Saeed ullah & Naeem ur Rahman - Experts in Web Development and Video Editing.">
+    <meta property="og:image" content="https://sn-portfolio-theta.vercel.app/favicon.ico">
+    <meta property="og:url" content="https://sn-portfolio-theta.vercel.app">
+
+    <!-- Google Fonts & CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
+
     <style>
-        /* Home card banner can show real cover photo */
-        .card-banner {
-            height: 130px;
-            width: 100%;
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            background-size: cover;
-            background-position: center;
-            position: relative;
+        /* Preloader Fix for PC/Mobile */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
         }
-        .card-banner.purple-banner {
-            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
-            background-size: cover;
-            background-position: center;
-        }
-        .card-banner.has-cover {
-            background-color: #1e293b;
-        }
-        /* Soft dark overlay so avatar stays readable on busy covers */
-        .card-banner.has-cover::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.35));
-            pointer-events: none;
-        }
-        .card-avatar {
-            width: 130px;
-            height: 130px;
+        body[data-theme="dark"] #preloader { background: #0f172a; }
+        #preloader.hidden { opacity: 0; pointer-events: none; }
+        .spinner {
+            width: 50px; height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #2563eb;
             border-radius: 50%;
-            margin: -65px auto 1rem;
-            border: 5px solid var(--card-bg, #fff);
-            overflow: hidden;
-            background: #e2e8f0;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-            position: relative;
-            z-index: 2;
+            animation: spin 1s linear infinite;
         }
-        .card-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .card-banner {
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: #e2e8f0;
+            border-radius: 15px 15px 0 0;
         }
+        [data-theme="dark"] .card-banner { background-color: #1e293b; }
     </style>
 </head>
 <body>
     <!-- Preloader -->
     <div id="preloader">
         <div class="spinner"></div>
-        <div class="preloader-logo" style="margin-top:15px; font-weight:800; font-size:1.5rem;">
-            <span style="color:#2563eb;">S</span>&amp;<span style="color:#7c3aed;">N</span>
-        </div>
     </div>
-    <script>
-        setTimeout(function () {
-            var p = document.getElementById('preloader');
-            if (p) {
-                p.style.opacity = '0';
-                p.style.pointerEvents = 'none';
-                setTimeout(function () { p.style.display = 'none'; }, 200);
-            }
-        }, 300);
-    </script>
 
-    <!-- Navigation -->
-    <header class="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="logo">
-                <span class="logo-s">S</span><span class="logo-amp">&amp;</span><span class="logo-n">N</span>
-            </a>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle">
+        <button id="theme-btn" aria-label="Toggle Theme">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
 
-            <nav class="nav-menu">
-                <a href="index.html" class="nav-link active">Home</a>
-                <a href="about.html" class="nav-link">About Us</a>
-                <a href="portfolio.html?user=saeed" class="nav-link">Saeed's Portfolio</a>
-                <a href="portfolio.html?user=naeem" class="nav-link">Naeem's Portfolio</a>
-            </nav>
-
-            <div class="nav-actions">
-                <button id="theme-toggle" class="theme-btn" type="button" aria-label="Toggle Theme">
-                    <i class="fas fa-moon"></i>
-                </button>
-                <a href="login.html" class="btn btn-sm btn-primary">
-                    <i class="fas fa-lock"></i> Admin Login
-                </a>
+    <!-- Main Hero -->
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1 class="glitch" data-text="SN PORTFOLIO">SN PORTFOLIO</h1>
+                <p class="subtitle">Creative Solutions & Digital Excellence</p>
+                <div class="hero-btns">
+                    <a href="about.html" class="btn btn-primary">About Us</a>
+                    <a href="login.html" class="btn btn-outline">Admin Login</a>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero -->
-    <section class="hero-section">
-        <div class="hero-container">
-            <div class="hero-content">
-                <span class="badge">Welcome to S&amp;N Multi-Portfolio</span>
-                <h1>Crafting Digital <span class="text-gradient">Experiences</span> &amp; Visual <span class="text-gradient-purple">Magic</span></h1>
-                <p class="hero-subtitle">We are a dual-creator powerhouse offering top-tier Web Development and Professional Video Editing services.</p>
+    <!-- Profiles Section -->
+    <section class="profiles section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Professionals</h2>
+                <div class="underline"></div>
             </div>
 
-            <div class="profiles-dual-grid">
-
-                <!-- ========== SAEED CARD ========== -->
-                <div class="profile-card saeed-card">
-                    <!-- id used by JS to inject cover/banner image -->
-                    <div class="card-banner" id="home-saeed-banner"></div>
-                    <div class="card-avatar">
-                        <img id="home-saeed-img"
-                             src="https://ui-avatars.com/api/?name=Saeed+Ullah&size=150&background=2563eb&color=fff"
-                             alt="Saeed ullah">
+            <div class="profile-grid">
+                <!-- Saeed's Card -->
+                <div class="profile-card slide-up" onclick="location.href='portfolio.html?user=saeed'">
+                    <div id="home-saeed-banner" class="card-banner"></div>
+                    <div class="card-header">
+                        <img id="home-saeed-img" src="https://via.placeholder.com/150" alt="Saeed ullah" class="profile-img">
                     </div>
                     <div class="card-body">
-                        <span class="role-badge">Web Developer</span>
                         <h3 id="home-saeed-name">Saeed ullah</h3>
-                        <p class="card-title" id="home-saeed-title">Full-Stack Web Developer &amp; UI Designer</p>
-                        <p class="card-intro" id="home-saeed-intro">Building scalable web applications, responsive websites, and custom admin portals with modern technologies.</p>
-                        <div class="card-actions">
-                            <a href="portfolio.html?user=saeed" class="btn btn-primary btn-full">
-                                View Full Portfolio <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
+                        <p id="home-saeed-title" class="role">Web Developer</p>
+                        <p id="home-saeed-intro" class="bio">Loading expert profile...</p>
+                        <a href="portfolio.html?user=saeed" class="btn btn-sm">View Portfolio</a>
                     </div>
                 </div>
 
-                <!-- ========== NAEEM CARD ========== -->
-                <div class="profile-card naeem-card">
-                    <!-- id used by JS to inject cover/banner image -->
-                    <div class="card-banner purple-banner" id="home-naeem-banner"></div>
-                    <div class="card-avatar">
-                        <img id="home-naeem-img"
-                             src="https://ui-avatars.com/api/?name=Naeem+ur+Rahman&size=150&background=7c3aed&color=fff"
-                             alt="Naeem ur Rahman">
+                <!-- Naeem's Card -->
+                <div class="profile-card slide-up" style="animation-delay: 0.2s" onclick="location.href='portfolio.html?user=naeem'">
+                    <div id="home-naeem-banner" class="card-banner"></div>
+                    <div class="card-header">
+                        <img id="home-naeem-img" src="https://via.placeholder.com/150" alt="Naeem ur Rahman" class="profile-img">
                     </div>
                     <div class="card-body">
-                        <span class="role-badge purple">Video Editor</span>
                         <h3 id="home-naeem-name">Naeem ur Rahman</h3>
-                        <p class="card-title" id="home-naeem-title">Professional Video Editor &amp; Content Creator</p>
-                        <p class="card-intro" id="home-naeem-intro">Transforming raw footage into compelling stories with cinematic color grading, motion graphics, and audio editing.</p>
-                        <div class="card-actions">
-                            <a href="portfolio.html?user=naeem" class="btn btn-purple btn-full">
-                                View Full Portfolio <i class="fas fa-arrow-right"></i>
-                            </a>
-                        </div>
+                        <p id="home-naeem-title" class="role">Video Editor</p>
+                        <p id="home-naeem-intro" class="bio">Loading expert profile...</p>
+                        <a href="portfolio.html?user=naeem" class="btn btn-sm">View Portfolio</a>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <footer class="footer">
-        <div class="footer-container">
-            <p>&copy; 2025 S&amp;N Portfolio. All Rights Reserved. Saeed ullah &amp; Naeem ur Rahman.</p>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 SN Portfolio. All rights reserved.</p>
         </div>
     </footer>
 
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script src="js/database.js"></script>
     <script src="js/app.js"></script>
+    <script>
+        // Inline Fail-safe for preloader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const pre = document.getElementById('preloader');
+                if(pre) pre.classList.add('hidden');
+            }, 500);
+        });
+        setTimeout(() => {
+            const pre = document.getElementById('preloader');
+            if(pre) pre.classList.add('hidden');
+        }, 2500);
+    </script>
 </body>
 </html>
