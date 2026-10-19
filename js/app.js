@@ -3,11 +3,12 @@
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Hide Preloader Failsafe
+    // 1. Instant Preloader Removal Failsafe
     const preloader = document.getElementById('preloader');
     if (preloader) {
         preloader.style.opacity = '0';
-        setTimeout(() => { preloader.style.display = 'none'; }, 300);
+        preloader.style.pointerEvents = 'none';
+        setTimeout(() => { preloader.style.display = 'none'; }, 200);
     }
 
     // 2. Theme Switcher Logic

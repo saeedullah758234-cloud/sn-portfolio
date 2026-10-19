@@ -1,110 +1,128 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&N Portfolio - Welcome</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <title>S&N Portfolio - Saeed ullah & Naeem ur Rahman</title>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Base Styles -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
-    <!-- Preloader -->
-    <div class="preloader">
+    <!-- Preloader with Instant Auto-Kill -->
+    <div id="preloader">
         <div class="spinner"></div>
-        <h2><span>S</span>&<span>N</span></h2>
+        <div class="preloader-logo" style="margin-top:15px; font-weight:800; font-size:1.5rem;">
+            <span style="color:#2563eb;">S</span>&<span style="color:#7c3aed;">N</span>
+        </div>
     </div>
+    <script>
+        // Emergency Auto-Kill Preloader in 400ms max
+        setTimeout(function() {
+            var p = document.getElementById('preloader');
+            if (p) {
+                p.style.opacity = '0';
+                p.style.pointerEvents = 'none';
+                setTimeout(function() { p.style.display = 'none'; }, 200);
+            }
+        }, 400);
+    </script>
 
-    <!-- Desktop Header & Navigation -->
-    <header>
-        <nav>
-            <a href="index.html" class="logo"><span>S&N</span> Portfolio</a>
-            <ul class="nav-links">
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="portfolio.html?user=saeed">Saeed (Web)</a></li>
-                <li><a href="portfolio.html?user=naeem">Naeem (Video)</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">
+    <!-- Header / Navbar -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <span class="logo-s">S</span><span class="logo-amp">&</span><span class="logo-n">N</span>
+            </a>
+            
+            <nav class="nav-menu" id="nav-menu">
+                <a href="index.html" class="nav-link active">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="portfolio.html?user=saeed" class="nav-link">Saeed's Portfolio</a>
+                <a href="portfolio.html?user=naeem" class="nav-link">Naeem's Portfolio</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
                     <i class="fas fa-moon"></i>
                 </button>
-                <button class="menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
-                    <i class="fas fa-bars"></i>
-                </button>
+                <a href="login.html" class="btn btn-sm btn-primary admin-btn">
+                    <i class="fas fa-lock"></i> Admin Login
+                </a>
             </div>
-        </nav>
+        </div>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-container">
             <div class="hero-content">
-                <h1>Welcome to <span class="gradient-text">S&N Portfolio</span></h1>
-                <p>We craft high-performance websites and cinematic video edits that bring your vision to life worldwide. Experience digital excellence.</p>
-                <div class="hero-buttons">
-                    <a href="#profiles" class="btn primary-btn"><i class="fas fa-user-tie"></i> View Portfolios</a>
-                    <a href="about.html" class="btn secondary-btn"><i class="fas fa-info-circle"></i> Learn More</a>
-                </div>
+                <span class="badge">Welcome to S&N Multi-Portfolio</span>
+                <h1>Crafting Digital <span class="text-gradient">Experiences</span> & Visual <span class="text-gradient-purple">Magic</span></h1>
+                <p class="hero-subtitle">We are a dual-creator powerhouse offering top-tier Web Development and Professional Video Editing services.</p>
             </div>
-        </section>
 
-        <!-- Profiles Showcase Section -->
-        <section class="section" id="profiles">
-            <h2 class="section-title fade-in">Meet Our <span>Experts</span></h2>
-            <p class="section-subtitle fade-in">Choose a professional to view their detailed portfolio</p>
-            
-            <div class="profiles-grid">
+            <!-- Profiles Grid Cards -->
+            <div class="profiles-dual-grid">
+                
                 <!-- Saeed's Card -->
-                <div class="profile-card fade-in">
-                    <div class="profile-img">
-                        <img src="https://via.placeholder.com/150/00f3ff/0a0a1a?text=S" alt="Saeed ullah">
+                <div class="profile-card saeed-card">
+                    <div class="card-banner"></div>
+                    <div class="card-avatar">
+                        <img id="home-saeed-img" src="https://via.placeholder.com/150" alt="Saeed ullah">
                     </div>
-                    <h3>Saeed ullah</h3>
-                    <span class="role">Web Developer</span>
-                    <p>Expert in HTML, CSS, JavaScript, and modern web application development.</p>
-                    <a href="portfolio.html?user=saeed" class="btn primary-btn" style="margin-top: 15px; width: 100%; justify-content: center;">View Portfolio</a>
+                    <div class="card-body">
+                        <span class="role-badge">Web Developer</span>
+                        <h3 id="home-saeed-name">Saeed ullah</h3>
+                        <p class="card-title" id="home-saeed-title">Full-Stack Web Developer & UI Designer</p>
+                        <p class="card-intro" id="home-saeed-intro">Building scalable web applications, responsive websites, and custom admin portals with modern technologies.</p>
+                        <div class="card-actions">
+                            <a href="portfolio.html?user=saeed" class="btn btn-primary btn-full">
+                                View Full Portfolio <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Naeem's Card -->
-                <div class="profile-card fade-in" style="transition-delay: 0.2s;">
-                    <div class="profile-img">
-                        <img src="https://via.placeholder.com/150/7b2cbf/ffffff?text=N" alt="Naeem ur Rahman">
+                <div class="profile-card naeem-card">
+                    <div class="card-banner purple-banner"></div>
+                    <div class="card-avatar">
+                        <img id="home-naeem-img" src="https://via.placeholder.com/150" alt="Naeem ur Rahman">
                     </div>
-                    <h3>Naeem ur Rahman</h3>
-                    <span class="role">Video Editor</span>
-                    <p>Specialist in cinematic cuts, color grading, and dynamic video edits.</p>
-                    <a href="portfolio.html?user=naeem" class="btn primary-btn" style="margin-top: 15px; width: 100%; justify-content: center;">View Portfolio</a>
+                    <div class="card-body">
+                        <span class="role-badge purple">Video Editor</span>
+                        <h3 id="home-naeem-name">Naeem ur Rahman</h3>
+                        <p class="card-title" id="home-naeem-title">Professional Video Editor & Content Creator</p>
+                        <p class="card-intro" id="home-naeem-intro">Transforming raw footage into compelling stories with cinematic color grading, motion graphics, and audio editing.</p>
+                        <div class="card-actions">
+                            <a href="portfolio.html?user=naeem" class="btn btn-purple btn-full">
+                                View Full Portfolio <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/923000000000" id="whatsapp-float" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <!-- Mobile Bottom Navigation -->
-    <nav class="bottom-nav">
-        <ul class="bottom-nav-links">
-            <li><a href="index.html" class="active"><i class="fas fa-home"></i><span>Home</span></a></li>
-            <li><a href="portfolio.html?user=saeed"><i class="fas fa-code"></i><span>Saeed</span></a></li>
-            <li><a href="portfolio.html?user=naeem"><i class="fas fa-film"></i><span>Naeem</span></a></li>
-            <li><a href="about.html"><i class="fas fa-info-circle"></i><span>About</span></a></li>
-        </ul>
-    </nav>
-
-    <!-- Desktop Footer -->
-    <footer class="desktop-footer">
-        <p>&copy; 2024 S&N Portfolio. All rights reserved.</p>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2025 S&N Portfolio. All Rights Reserved. Saeed ullah & Naeem ur Rahman.</p>
+        </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Firebase & Core Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <script src="js/database.js"></script>
     <script src="js/app.js"></script>
 </body>
-</html><!-- Test Update -->
+</html>
