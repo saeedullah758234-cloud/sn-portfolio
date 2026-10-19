@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <!-- CSS (Version tag forces mobile to load new design) -->
-    <link rel="stylesheet" href="css/admin.css?v=2.0">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/admin.css?v=3.0">
 
     <style>
         /* Fallback Preloader */
@@ -281,7 +281,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script src="js/database.js"></script>
     <script src="js/auth.js"></script>
-    <script src="js/admin.js"></script>
+    <script src="js/admin.js?v=3.0"></script>
     
     <script>
         // Kill preloader
@@ -289,50 +289,49 @@
             setTimeout(() => { document.getElementById('preloader').classList.add('hidden'); }, 500);
         });
         
-        // Mobile Sidebar Controls
+        // Mobile Sidebar Toggle Controls
         const menuToggle = document.getElementById('menu-toggle');
         const closeSidebar = document.getElementById('close-sidebar');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebar-overlay');
-        const sidebarLinks = document.querySelectorAll('.sidebar-menu a');
 
-        function openMenu() {
-            sidebar.classList.add('active');
-            overlay.classList.add('active');
-        }
-
-        function closeMenu() {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        }
-
-        menuToggle.addEventListener('click', openMenu);
-        closeSidebar.addEventListener('click', closeMenu);
-        overlay.addEventListener('click', closeMenu);
-
-        // Auto close sidebar on mobile when a link is clicked
-        sidebarLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                if(window.innerWidth <= 768) {
-                    closeMenu();
-                }
+        if(menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
             });
-        });
+        }
+
+        if(closeSidebar) {
+            closeSidebar.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
+
+        if(overlay) {
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+        }
 
         // Theme Toggle (Admin)
         const themeBtn = document.getElementById('theme-btn');
         if(localStorage.getItem('theme') === 'dark') document.body.setAttribute('data-theme', 'dark');
         
-        themeBtn.addEventListener('click', () => {
-            const current = document.body.getAttribute('data-theme');
-            if(current === 'dark') {
-                document.body.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-            } else {
-                document.body.setAttribute('data-theme', 'dark');
-                localStorage.setItem('theme', 'dark');
-            }
-        });
+        if(themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                const current = document.body.getAttribute('data-theme');
+                if(current === 'dark') {
+                    document.body.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.body.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
     </script>
 </body>
 </html>
