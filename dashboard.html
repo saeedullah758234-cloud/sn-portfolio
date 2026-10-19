@@ -1,262 +1,360 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - S&N Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Base & Admin CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/admin.css">
 </head>
-<body>
+<body class="admin-body-bg">
     <!-- Preloader -->
-    <div class="preloader">
+    <div id="preloader">
         <div class="spinner"></div>
-        <h2>Loading <span>Dashboard</span></h2>
     </div>
 
-    <div class="admin-layout">
+    <div class="admin-wrapper">
         <!-- Sidebar Navigation -->
         <aside class="admin-sidebar" id="admin-sidebar">
-            <div class="admin-logo"><span>S&N</span> Admin</div>
-            <div class="admin-nav">
-                <div class="admin-nav-item active" data-target="basic-info">
-                    <i class="fas fa-user"></i> Basic Info
+            <div class="sidebar-header">
+                <div class="brand">
+                    <i class="fas fa-user-shield"></i>
+                    <span>S&N Admin</span>
                 </div>
-                <div class="admin-nav-item" data-target="education">
-                    <i class="fas fa-graduation-cap"></i> Education
-                </div>
-                <div class="admin-nav-item" data-target="experience">
-                    <i class="fas fa-briefcase"></i> Experience
-                </div>
-                <div class="admin-nav-item" data-target="skills">
-                    <i class="fas fa-tools"></i> Skills
-                </div>
-                <div class="admin-nav-item" data-target="projects">
-                    <i class="fas fa-project-diagram"></i> Projects
-                </div>
-                <div class="admin-nav-item" data-target="services">
-                    <i class="fas fa-hand-holding-heart"></i> Services
-                </div>
-                <div class="admin-nav-item" data-target="social-extra">
-                    <i class="fas fa-share-alt"></i> Social & Extras
-                </div>
+                <button class="sidebar-close-btn" id="sidebar-close"><i class="fas fa-times"></i></button>
             </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#sec-basic" class="nav-item active" data-sec="sec-basic">
+                    <i class="fas fa-user-edit"></i> <span>Basic Info</span>
+                </a>
+                <a href="#sec-photos" class="nav-item" data-sec="sec-photos">
+                    <i class="fas fa-images"></i> <span>Profile Photos</span>
+                </a>
+                <a href="#sec-bio" class="nav-item" data-sec="sec-bio">
+                    <i class="fas fa-address-card"></i> <span>Bio & Resume</span>
+                </a>
+                <a href="#sec-education" class="nav-item" data-sec="sec-education">
+                    <i class="fas fa-graduation-cap"></i> <span>Education</span>
+                </a>
+                <a href="#sec-experience" class="nav-item" data-sec="sec-experience">
+                    <i class="fas fa-briefcase"></i> <span>Experience</span>
+                </a>
+                <a href="#sec-skills" class="nav-item" data-sec="sec-skills">
+                    <i class="fas fa-code"></i> <span>Skills</span>
+                </a>
+                <a href="#sec-projects" class="nav-item" data-sec="sec-projects">
+                    <i class="fas fa-folder-open"></i> <span>Projects</span>
+                </a>
+                <a href="#sec-services" class="nav-item" data-sec="sec-services">
+                    <i class="fas fa-concierge-bell"></i> <span>Services</span>
+                </a>
+                <a href="#sec-certifications" class="nav-item" data-sec="sec-certifications">
+                    <i class="fas fa-certificate"></i> <span>Certifications</span>
+                </a>
+                <a href="#sec-socials" class="nav-item" data-sec="sec-socials">
+                    <i class="fas fa-university"></i> <span>Bank & Socials</span>
+                </a>
+            </nav>
         </aside>
 
-        <!-- Main Dashboard View -->
-        <main class="admin-main">
+        <!-- Sidebar Backdrop for Mobile -->
+        <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
+
+        <!-- Main Content Area -->
+        <div class="admin-main">
             <!-- Header Bar -->
             <header class="admin-header">
-                <button class="mobile-sidebar-toggle" id="sidebar-toggle" aria-label="Toggle Sidebar">
-                    <i class="fas fa-bars"></i>
-                </button>
-                <h2 style="font-size: 16px;">Welcome, <span id="admin-display-name" style="color: var(--accent-primary);">Admin</span></h2>
-                
+                <div class="header-left">
+                    <button class="menu-toggle-btn" id="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2 class="welcome-txt" id="welcome-message">Welcome, Admin</h2>
+                </div>
                 <div class="header-actions">
-                    <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">
+                    <button id="theme-toggle" class="btn-icon" title="Toggle Theme">
                         <i class="fas fa-moon"></i>
                     </button>
-                    <a href="index.html" class="btn secondary-btn small-btn" target="_blank">
+                    <a href="index.html" target="_blank" class="btn btn-outline">
                         <i class="fas fa-external-link-alt"></i> <span>View Site</span>
                     </a>
-                    <button id="logout-btn" class="btn danger-btn small-btn">
+                    <button id="logout-btn" class="btn btn-danger">
                         <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
                     </button>
                 </div>
             </header>
 
-            <div class="admin-content" id="dashboard-form">
-                
-                <!-- 1. BASIC INFO -->
-                <section class="dashboard-section active" id="basic-info">
-                    <div class="card">
-                        <h3 class="card-title">Profile Photos</h3>
-                        <div class="form-grid">
+            <!-- Dashboard Content Sections -->
+            <main class="admin-content">
+                <form id="admin-form" onsubmit="return false;">
+                    
+                    <!-- Section: Basic Info -->
+                    <section class="admin-card active-section" id="sec-basic">
+                        <div class="card-header">
+                            <h3><i class="fas fa-user-edit"></i> Personal Information</h3>
+                        </div>
+                        <div class="card-body grid-2">
                             <div class="form-group">
-                                <label>Profile Photo</label>
-                                <div class="image-upload-wrapper">
-                                    <div class="image-preview">
-                                        <img id="preview-profile" src="https://via.placeholder.com/150" alt="Profile">
-                                    </div>
-                                    <input type="file" id="input-profile-img" class="form-control" accept="image/*">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" id="name" class="form-control" placeholder="Enter Full Name">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Professional Title</label>
+                                <input type="text" id="title" class="form-control" placeholder="e.g. Web Developer & Designer">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Role Badge</label>
+                                <input type="text" id="role" class="form-control" placeholder="e.g. Full-Stack Developer">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address</label>
+                                <input type="email" id="email" class="form-control" placeholder="admin@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Phone Number</label>
+                                <input type="text" id="phone" class="form-control" placeholder="+92 300 0000000">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">WhatsApp Number (Direct Link)</label>
+                                <input type="text" id="whatsapp" class="form-control" placeholder="+923000000000">
+                            </div>
+                            <div class="form-group full-width">
+                                <label class="form-label">Location / Address</label>
+                                <input type="text" id="location" class="form-control" placeholder="City, Country">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section: Profile & Cover Photos -->
+                    <section class="admin-card" id="sec-photos">
+                        <div class="card-header">
+                            <h3><i class="fas fa-images"></i> Profile & Cover Photos</h3>
+                        </div>
+                        <div class="card-body grid-2">
+                            <!-- Profile Photo Card -->
+                            <div class="photo-upload-box">
+                                <h4>Profile Picture</h4>
+                                <div class="profile-preview-wrapper">
+                                    <img id="profile-img-preview" src="https://via.placeholder.com/150" alt="Profile Preview">
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Cover Banner</label>
-                                <div class="image-upload-wrapper">
-                                    <div class="image-preview" style="width: 180px;">
-                                        <img id="preview-cover" src="https://via.placeholder.com/400x150" alt="Cover">
-                                    </div>
-                                    <input type="file" id="input-cover-img" class="form-control" accept="image/*">
+                                <div class="file-upload-actions">
+                                    <label for="profile-photo-input" class="btn btn-secondary">
+                                        <i class="fas fa-upload"></i> Choose & Crop Photo
+                                    </label>
+                                    <input type="file" id="profile-photo-input" accept="image/*" style="display:none;">
                                 </div>
+                                <small class="help-text">Clicking choose will open the Crop tool so your photo looks perfect.</small>
+                            </div>
+
+                            <!-- Cover Image Card -->
+                            <div class="photo-upload-box">
+                                <h4>Cover Image</h4>
+                                <div class="cover-preview-wrapper">
+                                    <img id="cover-img-preview" src="https://via.placeholder.com/600x200" alt="Cover Preview">
+                                </div>
+                                <div class="file-upload-actions">
+                                    <label for="cover-photo-input" class="btn btn-secondary">
+                                        <i class="fas fa-upload"></i> Upload Cover Banner
+                                    </label>
+                                    <input type="file" id="cover-photo-input" accept="image/*" style="display:none;">
+                                </div>
+                                <small class="help-text">Recommended resolution: 1200x400 for background banner.</small>
                             </div>
                         </div>
-                    </div>
+                    </section>
 
-                    <div class="card">
-                        <h3 class="card-title">Personal Details</h3>
-                        <div class="form-grid">
+                    <!-- Section: Bio & Resume -->
+                    <section class="admin-card" id="sec-bio">
+                        <div class="card-header">
+                            <h3><i class="fas fa-address-card"></i> Bio & Resume Link</h3>
+                        </div>
+                        <div class="card-body grid-1">
                             <div class="form-group">
-                                <label>Full Name</label>
-                                <input type="text" id="input-name" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Professional Title</label>
-                                <input type="text" id="input-title" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Email Address</label>
-                                <input type="email" id="input-email" class="form-control">
+                                <label class="form-label">Short Bio / Tagline</label>
+                                <textarea id="about" class="form-control" rows="3" placeholder="Short intro about yourself..."></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Phone Number</label>
-                                <input type="text" id="input-phone" class="form-control">
+                                <label class="form-label">Detailed Bio</label>
+                                <textarea id="bio" class="form-control" rows="5" placeholder="Detailed professional bio..."></textarea>
                             </div>
                             <div class="form-group">
-                                <label>Location</label>
-                                <input type="text" id="input-location" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>WhatsApp Number (e.g. 923000000000)</label>
-                                <input type="text" id="input-whatsapp" class="form-control">
-                            </div>
-                            <div class="form-group" style="grid-column: 1 / -1;">
-                                <label>Bank Account Details</label>
-                                <input type="text" id="input-bank" class="form-control" placeholder="Bank Name | Account Number">
-                            </div>
-                            <div class="form-group" style="grid-column: 1 / -1;">
-                                <label>Short Introduction</label>
-                                <input type="text" id="input-intro" class="form-control" placeholder="One-line pitch">
-                            </div>
-                            <div class="form-group" style="grid-column: 1 / -1;">
-                                <label>About Me (Detailed)</label>
-                                <textarea id="input-about" class="form-control" rows="4"></textarea>
+                                <label class="form-label">Resume / CV Link (Google Drive / Direct URL)</label>
+                                <input type="url" id="resumeUrl" class="form-control" placeholder="https://drive.google.com/...">
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
 
-                <!-- 2. EDUCATION -->
-                <section class="dashboard-section" id="education">
-                    <div class="card">
-                        <h3 class="card-title">Education History</h3>
-                        <div id="education-list" class="dynamic-list"></div>
-                        <button type="button" id="add-education-btn" class="add-new-btn"><i class="fas fa-plus"></i> Add Education Entry</button>
-                    </div>
-                </section>
-
-                <!-- 3. EXPERIENCE -->
-                <section class="dashboard-section" id="experience">
-                    <div class="card">
-                        <h3 class="card-title">Work Experience</h3>
-                        <div id="experience-list" class="dynamic-list"></div>
-                        <button type="button" id="add-experience-btn" class="add-new-btn"><i class="fas fa-plus"></i> Add Experience Entry</button>
-                    </div>
-                </section>
-
-                <!-- 4. SKILLS -->
-                <section class="dashboard-section" id="skills">
-                    <div class="card">
-                        <h3 class="card-title">Professional Skills</h3>
-                        <div id="skills-list" class="dynamic-list"></div>
-                        <button type="button" id="add-skill-btn" class="add-new-btn"><i class="fas fa-plus"></i> Add Skill</button>
-                    </div>
-                </section>
-
-                <!-- 5. PROJECTS -->
-                <section class="dashboard-section" id="projects">
-                    <div class="card">
-                        <h3 class="card-title">Portfolio Projects & Videos</h3>
-                        <div id="projects-list" class="dynamic-list"></div>
-                        <button type="button" id="add-project-btn" class="add-new-btn"><i class="fas fa-plus"></i> Add New Project</button>
-                    </div>
-                </section>
-
-                <!-- 6. SERVICES -->
-                <section class="dashboard-section" id="services">
-                    <div class="card">
-                        <h3 class="card-title">Services Offered</h3>
-                        <div id="services-list" class="dynamic-list"></div>
-                        <button type="button" id="add-service-btn" class="add-new-btn"><i class="fas fa-plus"></i> Add Service</button>
-                    </div>
-                </section>
-
-                <!-- 7. SOCIAL & EXTRAS -->
-                <section class="dashboard-section" id="social-extra">
-                    <div class="card">
-                        <h3 class="card-title">Social Media</h3>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label><i class="fab fa-linkedin"></i> LinkedIn</label>
-                                <input type="url" id="input-linkedin" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label><i class="fab fa-github"></i> GitHub</label>
-                                <input type="url" id="input-github" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label><i class="fab fa-youtube"></i> YouTube</label>
-                                <input type="url" id="input-youtube" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label><i class="fab fa-facebook"></i> Facebook</label>
-                                <input type="url" id="input-facebook" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label><i class="fab fa-instagram"></i> Instagram</label>
-                                <input type="url" id="input-instagram" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label><i class="fas fa-link"></i> Website URL</label>
-                                <input type="url" id="input-website" class="form-control">
+                    <!-- Section: Education -->
+                    <section class="admin-card" id="sec-education">
+                        <div class="card-header flex-between">
+                            <h3><i class="fas fa-graduation-cap"></i> Education History</h3>
+                            <button type="button" class="btn btn-sm btn-primary" id="add-edu-btn">
+                                <i class="fas fa-plus"></i> Add Education
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="education-list" class="dynamic-items-list">
+                                <!-- Dynamic items injected via JS -->
                             </div>
                         </div>
-                    </div>
+                    </section>
 
-                    <div class="card">
-                        <h3 class="card-title">CV & Additional Info</h3>
-                        <div class="form-grid">
-                            <div class="form-group">
-                                <label>Languages</label>
-                                <input type="text" id="input-languages" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Interests</label>
-                                <input type="text" id="input-interests" class="form-control">
-                            </div>
-                            <div class="form-group" style="grid-column: 1 / -1;">
-                                <label>Professional Goals</label>
-                                <input type="text" id="input-goals" class="form-control">
-                            </div>
-                            <div class="form-group" style="grid-column: 1 / -1;">
-                                <label>Resume / CV Google Drive PDF Link</label>
-                                <input type="url" id="input-resume" class="form-control">
+                    <!-- Section: Experience -->
+                    <section class="admin-card" id="sec-experience">
+                        <div class="card-header flex-between">
+                            <h3><i class="fas fa-briefcase"></i> Work Experience</h3>
+                            <button type="button" class="btn btn-sm btn-primary" id="add-exp-btn">
+                                <i class="fas fa-plus"></i> Add Experience
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="experience-list" class="dynamic-items-list">
+                                <!-- Dynamic items injected via JS -->
                             </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
 
-            </div>
+                    <!-- Section: Skills -->
+                    <section class="admin-card" id="sec-skills">
+                        <div class="card-header flex-between">
+                            <h3><i class="fas fa-code"></i> Skills & Expertise</h3>
+                            <button type="button" class="btn btn-sm btn-primary" id="add-skill-btn">
+                                <i class="fas fa-plus"></i> Add Skill
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="skills-list" class="dynamic-items-list grid-2">
+                                <!-- Dynamic items injected via JS -->
+                            </div>
+                        </div>
+                    </section>
 
-            <!-- Sticky Save Button -->
-            <div class="save-bar">
-                <button type="button" id="save-all-btn" class="btn primary-btn">
-                    <i class="fas fa-save"></i> Save All Changes
+                    <!-- Section: Projects -->
+                    <section class="admin-card" id="sec-projects">
+                        <div class="card-header flex-between">
+                            <h3><i class="fas fa-folder-open"></i> Portfolio Projects</h3>
+                            <button type="button" class="btn btn-sm btn-primary" id="add-project-btn">
+                                <i class="fas fa-plus"></i> Add Project
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="projects-list" class="dynamic-items-list">
+                                <!-- Dynamic items injected via JS -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section: Services -->
+                    <section class="admin-card" id="sec-services">
+                        <div class="card-header flex-between">
+                            <h3><i class="fas fa-concierge-bell"></i> Services Offered</h3>
+                            <button type="button" class="btn btn-sm btn-primary" id="add-service-btn">
+                                <i class="fas fa-plus"></i> Add Service
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="services-list" class="dynamic-items-list">
+                                <!-- Dynamic items injected via JS -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section: Certifications -->
+                    <section class="admin-card" id="sec-certifications">
+                        <div class="card-header flex-between">
+                            <h3><i class="fas fa-certificate"></i> Certifications</h3>
+                            <button type="button" class="btn btn-sm btn-primary" id="add-cert-btn">
+                                <i class="fas fa-plus"></i> Add Certification
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div id="certifications-list" class="dynamic-items-list">
+                                <!-- Dynamic items injected via JS -->
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Section: Bank & Socials -->
+                    <section class="admin-card" id="sec-socials">
+                        <div class="card-header">
+                            <h3><i class="fas fa-university"></i> Bank Account & Social Links</h3>
+                        </div>
+                        <div class="card-body grid-2">
+                            <div class="form-group full-width">
+                                <label class="form-label">Bank Details / Account Info</label>
+                                <textarea id="bankAccount" class="form-control" rows="3" placeholder="Bank Name, Account Title, Account Number/IBAN..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label"><i class="fab fa-github"></i> GitHub Profile</label>
+                                <input type="url" id="github" class="form-control" placeholder="https://github.com/username">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label"><i class="fab fa-linkedin"></i> LinkedIn Profile</label>
+                                <input type="url" id="linkedin" class="form-control" placeholder="https://linkedin.com/in/username">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label"><i class="fab fa-facebook"></i> Facebook Profile</label>
+                                <input type="url" id="facebook" class="form-control" placeholder="https://facebook.com/username">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label"><i class="fab fa-instagram"></i> Instagram Profile</label>
+                                <input type="url" id="instagram" class="form-control" placeholder="https://instagram.com/username">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label"><i class="fab fa-twitter"></i> Twitter Profile</label>
+                                <input type="url" id="twitter" class="form-control" placeholder="https://twitter.com/username">
+                            </div>
+                        </div>
+                    </section>
+
+                </form>
+            </main>
+
+            <!-- Bottom Floating Action Bar for Easy Saving -->
+            <div class="floating-save-bar">
+                <span class="save-status-txt"><i class="fas fa-cloud"></i> Firebase Connected Worldwide</span>
+                <button type="button" id="save-all-btn" class="btn btn-save-main">
+                    <i class="fas fa-save"></i> Save All Changes To Cloud
                 </button>
             </div>
-        </main>
+        </div>
     </div>
 
-    <!-- Toast Banner -->
-    <div id="toast" class="toast">
-        <i class="fas fa-check-circle"></i>
-        <span id="toast-msg">Notification</span>
+    <!-- CROP MODAL -->
+    <div id="crop-modal" class="modal-overlay" style="display:none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3><i class="fas fa-crop-alt"></i> Crop Profile Photo</h3>
+                <button type="button" class="modal-close" id="crop-cancel-x">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="crop-instructions"><i class="fas fa-info-circle"></i> Drag image to adjust position & use slider to zoom.</p>
+                <div class="crop-stage">
+                    <canvas id="crop-canvas" width="300" height="300"></canvas>
+                </div>
+                <div class="crop-controls">
+                    <label><i class="fas fa-search-minus"></i></label>
+                    <input type="range" id="crop-zoom" min="0.4" max="3" step="0.05" value="1">
+                    <label><i class="fas fa-search-plus"></i></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="crop-cancel-btn">Cancel</button>
+                <button type="button" class="btn btn-primary" id="crop-confirm-btn"><i class="fas fa-check"></i> Apply & Save Crop</button>
+            </div>
+        </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Firebase SDK Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <script src="js/database.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/admin.js"></script>
 </body>
 </html>
