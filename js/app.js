@@ -5,6 +5,11 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Ensure Database is initialized first
+    if (typeof Database !== 'undefined') {
+        Database.init();
+    }
+
     // ---- PRELOADER ----
     const preloader = document.getElementById('preloader');
     window.addEventListener('load', () => {
@@ -16,14 +21,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 800);
     });
 
-    // ---- AOS INIT ----
+    // ---- AOS INIT (Disable on mobile for better performance) ----
     if (typeof AOS !== 'undefined') {
         AOS.init({
             duration: 800,
             easing: 'ease-out-cubic',
             once: true,
-            offset: 80,
-            disable: 'mobile'
+            offset: 50,
+            disable: window.innerWidth < 768 // Disable on mobile to fix hang issue
         });
     }
 
@@ -49,52 +54,91 @@ document.addEventListener('DOMContentLoaded', () => {
             navMenu.classList.toggle('active');
         });
 
-        // Close menu on link click
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
                 navMenu.classList.remove('active');
             });
         });
-
-        // Close menu on outside click
-        document.addEventListener('click', (e) => {
-            if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
-            }
-        });
     }
 
     // ---- MOBILE BOTTOM NAV ACTIVE STATE ----
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    
+    // Helper function to extract user from URL safely
+    function getUserFromUrl() {
+        try {
+            const params = new URLSearchParams(window.location.search);
+            return params.get('user');
+        } catch (e) {
+            return null;
+        }
+    }
+
+    const currentUser = getUserFromUrl();
+
     document.querySelectorAll('.bottom-nav-item').forEach(item => {
         const href = item.getAttribute('href');
-        if (href && href.includes(currentPage)) {
-            document.querySelectorAll('.bottom-nav-item').forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
+        if (href) {
+            if (currentPage === 'index.html' && href === 'index.html') {
+                item.classList.add('active');
+            } else if (currentPage === 'about.html' && href === 'about.html') {
+                item.classList.add('active');
+            } else if (currentPage === 'portfolio.html' && currentUser && href.includes(currentUser)) {
+                document.querySelectorAll('.bottom-nav-item').forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            }
         }
     });
 
-    // ---- HELPER: Generate WhatsApp Link ----
+    // ---- HELPER FUNCTIONS ----
     function getWhatsAppLink(phone, name) {
+        if (!phone) return '#';
         const cleanPhone = phone.replace(/[^0-9]/g, '');
-        const message = encodeURIComponent(`Hi ${name}, I found your portfolio! I'd like to connect with you.`);
+        const message = encodeURIComponent(`Hi ${name || ''}, I found your portfolio! I'd like to connect with you.`);
         return `https://wa.me/${cleanPhone}?text=${message}`;
     }
 
-    // ---- HELPER: Sanitize HTML ----
     function sanitize(str) {
+        if (!str) return '';
         const div = document.createElement('div');
         div.textContent = str;
         return div.innerHTML;
     }
 
-    // ---- HELPER: Format Date ----
     function formatDate(dateStr) {
         if (!dateStr) return 'N/A';
-        const options = { year: 'numeric', month: 'short', day: 'numeric' };
-        return new Date(dateStr).toLocaleDateString('en-US', options);
+        try {
+            const options = { year: 'numeric', month: 'short', day: 'numeric' };
+            return new Date(dateStr).toLocaleDateString('en-US', options);
+        } catch (e) {
+            return dateStr;
+        }
+    }
+
+    function setText(id, text) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text || '';
+    }
+
+    function setImg(id, src, alt) {
+        const el = document.getElementById(id);
+        if (el && src) {
+            el.src = src;
+            el.alt = alt || '';
+        }
+    }
+
+    function setLink(id, href) {
+        const el = document.getElementById(id);
+        if (el && href) el.href = href;
+    }
+
+    function setWhatsApp(id, phone, name) {
+        const el = document.getElementById(id);
+        if (el && phone) {
+            el.href = getWhatsAppLink(phone, name);
+        }
     }
 
     // =============================================
@@ -105,37 +149,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadHomePage() {
+        if (typeof Database === 'undefined') return;
         const admins = Database.getBothAdmins();
         if (!admins) return;
 
         const saeed = admins.saeedullah;
         const naeem = admins.naeemurrahman;
 
-        // Update Saeed card
-        setText('saeedHomeName', saeed.fullName);
-        setText('saeedHomeBio', saeed.bio);
-        setImg('saeedHomeImg', saeed.profileImage, saeed.fullName);
-        setWhatsApp('saeedWhatsappHome', saeed.whatsapp, saeed.fullName);
-        setWhatsApp('ctaWhatsappSaeed', saeed.whatsapp, saeed.fullName);
-        setWhatsApp('footerWhatsappSaeed', saeed.whatsapp, saeed.fullName);
-        setWhatsApp('whatsappFloat', saeed.whatsapp, saeed.fullName);
+        if (saeed) {
+            setText('saeedHomeName', saeed.fullName);
+            setText('saeedHomeBio', saeed.bio);
+            setImg('saeedHomeImg', saeed.profileImage, saeed.fullName);
+            setWhatsApp('saeedWhatsappHome', saeed.whatsapp, saeed.fullName);
+            setWhatsApp('ctaWhatsappSaeed', saeed.whatsapp, saeed.fullName);
+            setWhatsApp('footerWhatsappSaeed', saeed.whatsapp, saeed.fullName);
+            
+            // Default float whatsapp to Saeed on home
+            setWhatsApp('whatsappFloat', saeed.whatsapp, saeed.fullName);
+        }
 
-        // Update Naeem card
-        setText('naeemHomeName', naeem.fullName);
-        setText('naeemHomeBio', naeem.bio);
-        setImg('naeemHomeImg', naeem.profileImage, naeem.fullName);
-        setWhatsApp('naeemWhatsappHome', naeem.whatsapp, naeem.fullName);
-        setWhatsApp('ctaWhatsappNaeem', naeem.whatsapp, naeem.fullName);
+        if (naeem) {
+            setText('naeemHomeName', naeem.fullName);
+            setText('naeemHomeBio', naeem.bio);
+            setImg('naeemHomeImg', naeem.profileImage, naeem.fullName);
+            setWhatsApp('naeemWhatsappHome', naeem.whatsapp, naeem.fullName);
+            setWhatsApp('ctaWhatsappNaeem', naeem.whatsapp, naeem.fullName);
+        }
 
-        // Update stats
         const totalProjects = Database.getTotalProjectCount();
         animateCounter('statProjects', totalProjects);
 
-        // Load featured projects
         loadFeaturedProjects();
 
-        // Create particles
-        createParticles();
+        // Only create particles on Desktop to prevent Mobile Hang
+        if (window.innerWidth > 768) {
+            createParticles();
+        }
     }
 
     function loadFeaturedProjects() {
@@ -145,32 +194,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const allProjects = Database.getAllProjects();
 
-        if (allProjects.length === 0) {
+        if (!allProjects || allProjects.length === 0) {
             grid.style.display = 'none';
             if (empty) empty.style.display = 'block';
             return;
         }
 
-        // Show max 6 featured
         const featured = allProjects.slice(0, 6);
         grid.innerHTML = '';
 
         featured.forEach((project, index) => {
             const card = document.createElement('div');
             card.className = 'project-card';
-            card.setAttribute('data-aos', 'fade-up');
-            card.setAttribute('data-aos-delay', (index * 100).toString());
+            if (window.innerWidth > 768) {
+                card.setAttribute('data-aos', 'fade-up');
+                card.setAttribute('data-aos-delay', (index * 50).toString());
+            }
 
-            const techTags = project.techStack
+            const techTags = project.techStack && Array.isArray(project.techStack)
                 ? project.techStack.slice(0, 3).map(t => `<span class="tech-tag">${sanitize(t)}</span>`).join('')
                 : '';
 
             card.innerHTML = `
                 <div class="project-card-image-wrapper">
                     <img src="${sanitize(project.image)}" alt="${sanitize(project.title)}" class="project-card-image" loading="lazy">
-                    <div class="project-card-overlay">
-                        <i class="fas fa-expand"></i>
-                    </div>
                 </div>
                 <div class="project-card-body">
                     <span class="project-card-category">${sanitize(project.category)}</span>
@@ -183,46 +230,42 @@ document.addEventListener('DOMContentLoaded', () => {
                             <span>${sanitize(project.adminName)}</span>
                         </div>
                         <div class="project-card-links">
-                            ${project.githubLink ? `<a href="${sanitize(project.githubLink)}" class="project-link" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>` : ''}
-                            ${project.liveLink ? `<a href="${sanitize(project.liveLink)}" class="project-link" target="_blank" title="Live"><i class="fas fa-external-link-alt"></i></a>` : ''}
+                            ${project.githubLink ? `<a href="${sanitize(project.githubLink)}" class="project-link" target="_blank"><i class="fab fa-github"></i></a>` : ''}
+                            ${project.liveLink ? `<a href="${sanitize(project.liveLink)}" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>` : ''}
                         </div>
                     </div>
                 </div>
             `;
-
             grid.appendChild(card);
         });
 
-        // Refresh AOS
-        if (typeof AOS !== 'undefined') AOS.refresh();
+        if (typeof AOS !== 'undefined' && window.innerWidth > 768) AOS.refresh();
     }
 
-    // ---- PARTICLES ----
     function createParticles() {
         const container = document.getElementById('particles');
         if (!container) return;
 
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 20; i++) {
             const particle = document.createElement('div');
             particle.className = 'particle';
             particle.style.left = Math.random() * 100 + '%';
             particle.style.top = Math.random() * 100 + '%';
             particle.style.width = (Math.random() * 4 + 2) + 'px';
             particle.style.height = particle.style.width;
-            particle.style.animationDelay = Math.random() * 10 + 's';
-            particle.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
             particle.style.opacity = Math.random() * 0.5 + 0.1;
             container.appendChild(particle);
         }
     }
 
-    // ---- COUNTER ANIMATION ----
     function animateCounter(elementId, target) {
         const el = document.getElementById(elementId);
-        if (!el) return;
+        if (!el || target <= 0) return;
 
         let current = 0;
-        const increment = Math.ceil(target / 40);
+        const increment = Math.ceil(target / 20);
         const timer = setInterval(() => {
             current += increment;
             if (current >= target) {
@@ -241,10 +284,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadPortfolioPage() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const userId = urlParams.get('user');
-
-        if (!userId || !['saeedullah', 'naeemurrahman'].includes(userId)) {
+        if (typeof Database === 'undefined') return;
+        
+        const userId = getUserFromUrl();
+        if (!userId) {
             window.location.href = 'index.html';
             return;
         }
@@ -255,10 +298,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Set page title
         document.title = `${admin.fullName} - S&N Portfolio`;
 
-        // Populate profile
         setText('portfolioName', admin.fullName);
         setText('portfolioRoleText', admin.role);
         setText('portfolioBio', admin.bio);
@@ -266,20 +307,17 @@ document.addEventListener('DOMContentLoaded', () => {
         setText('portfolioBank', admin.bankAccount || 'Not provided');
         setImg('portfolioAvatar', admin.profileImage, admin.fullName);
 
-        // WhatsApp links
         const waLink = getWhatsAppLink(admin.whatsapp, admin.fullName);
         setLink('portfolioWhatsapp', waLink);
         setLink('whatsappFloat', waLink);
 
-        // Skills
         const skillsContainer = document.getElementById('portfolioSkills');
-        if (skillsContainer && admin.skills) {
+        if (skillsContainer && admin.skills && Array.isArray(admin.skills)) {
             skillsContainer.innerHTML = admin.skills
                 .map(s => `<span class="skill-tag">${sanitize(s)}</span>`)
                 .join('');
         }
 
-        // Copy bank account
         const copyBtn = document.getElementById('copyBank');
         if (copyBtn) {
             copyBtn.addEventListener('click', () => {
@@ -294,20 +332,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // Load projects
         loadPortfolioProjects(userId, admin);
     }
 
     function loadPortfolioProjects(userId, admin) {
-        const projects = Database.getProjects(userId);
+        const projects = Database.getProjects(userId) || [];
         const grid = document.getElementById('projectsGrid');
         const empty = document.getElementById('emptyState');
         const countEl = document.getElementById('projectCount');
         const filterContainer = document.getElementById('filterButtons');
 
-        if (countEl) {
-            countEl.textContent = `${projects.length} project${projects.length !== 1 ? 's' : ''} in portfolio`;
-        }
+        if (countEl) countEl.textContent = `${projects.length} project(s) in portfolio`;
 
         if (projects.length === 0) {
             if (grid) grid.style.display = 'none';
@@ -316,25 +351,21 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Build filter buttons
-        const categories = ['all', ...new Set(projects.map(p => p.category))];
         if (filterContainer) {
+            const categories = ['all', ...new Set(projects.map(p => p.category))];
             filterContainer.innerHTML = categories
                 .map(c => `<button class="filter-btn ${c === 'all' ? 'active' : ''}" data-filter="${c}">${c === 'all' ? 'All' : c}</button>`)
                 .join('');
 
-            // Filter click handlers
             filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     filterContainer.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
-                    const filter = btn.dataset.filter;
-                    renderProjectCards(projects, grid, filter);
+                    renderProjectCards(projects, grid, btn.dataset.filter);
                 });
             });
         }
 
-        // Render all projects initially
         renderProjectCards(projects, grid, 'all');
     }
 
@@ -342,31 +373,24 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!grid) return;
         grid.innerHTML = '';
 
-        const filtered = filter === 'all'
-            ? projects
-            : projects.filter(p => p.category === filter);
+        const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
 
         if (filtered.length === 0) {
-            grid.innerHTML = '<p style="text-align:center;color:var(--text-muted);grid-column:1/-1;padding:40px;">No projects in this category.</p>';
+            grid.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:40px;">No projects in this category.</p>';
             return;
         }
 
         filtered.forEach((project, index) => {
             const card = document.createElement('div');
             card.className = 'project-card';
-            card.setAttribute('data-aos', 'fade-up');
-            card.setAttribute('data-aos-delay', (index * 100).toString());
-
-            const techTags = project.techStack
+            
+            const techTags = project.techStack && Array.isArray(project.techStack)
                 ? project.techStack.slice(0, 3).map(t => `<span class="tech-tag">${sanitize(t)}</span>`).join('')
                 : '';
 
             card.innerHTML = `
                 <div class="project-card-image-wrapper">
                     <img src="${sanitize(project.image)}" alt="${sanitize(project.title)}" class="project-card-image" loading="lazy">
-                    <div class="project-card-overlay">
-                        <i class="fas fa-expand"></i>
-                    </div>
                 </div>
                 <div class="project-card-body">
                     <span class="project-card-category">${sanitize(project.category)}</span>
@@ -378,14 +402,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             <i class="fas fa-calendar"></i> ${formatDate(project.dateAdded)}
                         </span>
                         <div class="project-card-links">
-                            ${project.githubLink ? `<a href="${sanitize(project.githubLink)}" class="project-link" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>` : ''}
-                            ${project.liveLink ? `<a href="${sanitize(project.liveLink)}" class="project-link" target="_blank" title="Live"><i class="fas fa-external-link-alt"></i></a>` : ''}
+                            ${project.githubLink ? `<a href="${sanitize(project.githubLink)}" class="project-link" target="_blank"><i class="fab fa-github"></i></a>` : ''}
+                            ${project.liveLink ? `<a href="${sanitize(project.liveLink)}" class="project-link" target="_blank"><i class="fas fa-external-link-alt"></i></a>` : ''}
                         </div>
                     </div>
                 </div>
             `;
 
-            // Click to open modal
             card.addEventListener('click', (e) => {
                 if (e.target.closest('.project-link')) return;
                 openProjectModal(project);
@@ -393,8 +416,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
             grid.appendChild(card);
         });
-
-        if (typeof AOS !== 'undefined') AOS.refresh();
     }
 
     // ---- PROJECT MODAL ----
@@ -408,15 +429,13 @@ document.addEventListener('DOMContentLoaded', () => {
         setText('modalDescription', project.description);
         setText('modalDate', formatDate(project.dateAdded));
 
-        // Tech tags
         const techContainer = document.getElementById('modalTech');
         if (techContainer) {
-            techContainer.innerHTML = project.techStack
+            techContainer.innerHTML = project.techStack && Array.isArray(project.techStack)
                 ? project.techStack.map(t => `<span class="tech-tag">${sanitize(t)}</span>`).join('')
                 : '';
         }
 
-        // Links
         const githubBtn = document.getElementById('modalGithub');
         const liveBtn = document.getElementById('modalLive');
 
@@ -442,23 +461,15 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = 'hidden';
     }
 
-    // Close modal
     const modalClose = document.getElementById('modalClose');
     const projectModal = document.getElementById('projectModal');
 
-    if (modalClose) {
-        modalClose.addEventListener('click', closeModal);
-    }
-
+    if (modalClose) modalClose.addEventListener('click', closeModal);
     if (projectModal) {
         projectModal.addEventListener('click', (e) => {
             if (e.target === projectModal) closeModal();
         });
     }
-
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape') closeModal();
-    });
 
     function closeModal() {
         if (projectModal) {
@@ -475,24 +486,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function loadAboutPage() {
+        if (typeof Database === 'undefined') return;
         const admins = Database.getBothAdmins();
         if (!admins) return;
 
         const saeed = admins.saeedullah;
         const naeem = admins.naeemurrahman;
 
-        setText('aboutSaeedName', saeed.fullName);
-        setText('aboutSaeedBio', saeed.bio);
-        setImg('aboutSaeedImg', saeed.profileImage, saeed.fullName);
-        setWhatsApp('aboutWhatsappSaeed', saeed.whatsapp, saeed.fullName);
-        setWhatsApp('whatsappFloat', saeed.whatsapp, saeed.fullName);
+        if (saeed) {
+            setText('aboutSaeedName', saeed.fullName);
+            setText('aboutSaeedBio', saeed.bio);
+            setImg('aboutSaeedImg', saeed.profileImage, saeed.fullName);
+            setWhatsApp('aboutWhatsappSaeed', saeed.whatsapp, saeed.fullName);
+            setWhatsApp('whatsappFloat', saeed.whatsapp, saeed.fullName);
+        }
 
-        setText('aboutNaeemName', naeem.fullName);
-        setText('aboutNaeemBio', naeem.bio);
-        setImg('aboutNaeemImg', naeem.profileImage, naeem.fullName);
-        setWhatsApp('aboutWhatsappNaeem', naeem.whatsapp, naeem.fullName);
+        if (naeem) {
+            setText('aboutNaeemName', naeem.fullName);
+            setText('aboutNaeemBio', naeem.bio);
+            setImg('aboutNaeemImg', naeem.profileImage, naeem.fullName);
+            setWhatsApp('aboutWhatsappNaeem', naeem.whatsapp, naeem.fullName);
+        }
 
-        // Animate skill bars on scroll
         animateSkillBars();
     }
 
@@ -516,33 +531,4 @@ document.addEventListener('DOMContentLoaded', () => {
             observer.observe(bar);
         });
     }
-
-    // =============================================
-    //  UTILITY FUNCTIONS
-    // =============================================
-    function setText(id, text) {
-        const el = document.getElementById(id);
-        if (el && text) el.textContent = text;
-    }
-
-    function setImg(id, src, alt) {
-        const el = document.getElementById(id);
-        if (el && src) {
-            el.src = src;
-            el.alt = alt || '';
-        }
-    }
-
-    function setLink(id, href) {
-        const el = document.getElementById(id);
-        if (el && href) el.href = href;
-    }
-
-    function setWhatsApp(id, phone, name) {
-        const el = document.getElementById(id);
-        if (el && phone) {
-            el.href = getWhatsAppLink(phone, name);
-        }
-    }
-
 });
