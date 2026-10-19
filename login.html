@@ -20,36 +20,35 @@
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: var(--radius-lg);
-            padding: 40px;
+            padding: 35px 25px;
             width: 100%;
-            max-width: 450px;
-            box-shadow: 0 10px 30px var(--shadow-color);
+            max-width: 420px;
             text-align: center;
+            box-shadow: 0 10px 30px var(--shadow-color);
         }
         .login-logo {
-            font-size: 28px;
+            font-size: 26px;
             font-weight: 700;
-            margin-bottom: 10px;
-            color: var(--text-primary);
+            margin-bottom: 8px;
         }
         .login-logo span:first-child { color: var(--accent-primary); }
         .login-logo span:last-child { color: var(--accent-secondary); }
         
         .login-desc {
             color: var(--text-secondary);
-            margin-bottom: 30px;
-            font-size: 15px;
+            margin-bottom: 25px;
+            font-size: 14px;
         }
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             text-align: left;
         }
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: var(--text-primary);
             font-weight: 500;
-            font-size: 14px;
+            font-size: 13px;
         }
         .form-control {
             width: 100%;
@@ -58,13 +57,7 @@
             border: 1px solid var(--border-color);
             border-radius: var(--radius-sm);
             color: var(--text-primary);
-            font-size: 15px;
-            transition: var(--transition);
-        }
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent-primary);
-            box-shadow: 0 0 10px rgba(0, 243, 255, 0.1);
+            font-size: 14px;
         }
         .error-msg {
             color: var(--error);
@@ -76,38 +69,34 @@
             display: inline-block;
             margin-top: 20px;
             color: var(--text-secondary);
-            font-size: 14px;
-            transition: var(--transition);
-        }
-        .back-link:hover {
-            color: var(--accent-primary);
+            font-size: 13px;
         }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <div class="login-card fade-in">
-            <div class="login-logo"><span>S&N</span> Admin</div>
-            <p class="login-desc">Enter your credentials to access the dashboard</p>
+        <div class="login-card">
+            <div class="login-logo"><span>S&N</span> Admin Login</div>
+            <p class="login-desc">Sign in to manage your portfolio</p>
             
             <form id="login-form">
                 <div class="form-group">
                     <label for="username">Username</label>
-                    <input type="text" id="username" class="form-control" placeholder="e.g. saeedullah" required autocomplete="off">
+                    <input type="text" id="username" class="form-control" placeholder="saeedullah OR naeemurrahman" required autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                    <input type="password" id="password" class="form-control" placeholder="Enter password" required>
                 </div>
                 
-                <div id="login-error" class="error-msg">Invalid username or password!</div>
+                <div id="login-error" class="error-msg">Invalid credentials!</div>
                 
-                <button type="submit" class="btn primary-btn" style="width: 100%; justify-content: center; margin-top: 15px;">
-                    <i class="fas fa-sign-in-alt"></i> Login to Dashboard
+                <button type="submit" class="btn primary-btn" style="width: 100%; justify-content: center; margin-top: 10px;">
+                    <i class="fas fa-sign-in-alt"></i> Login
                 </button>
             </form>
 
-            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Public Website</a>
+            <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Return to Main Website</a>
         </div>
     </div>
 
