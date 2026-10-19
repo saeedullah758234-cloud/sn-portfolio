@@ -21,7 +21,6 @@
         </div>
     </div>
     <script>
-        // Emergency Auto-Kill Preloader in 400ms max
         setTimeout(function() {
             var p = document.getElementById('preloader');
             if (p) {
@@ -29,17 +28,17 @@
                 p.style.pointerEvents = 'none';
                 setTimeout(function() { p.style.display = 'none'; }, 200);
             }
-        }, 400);
+        }, 300);
     </script>
 
-    <!-- Header / Navbar -->
+    <!-- Navigation Bar -->
     <header class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
                 <span class="logo-s">S</span><span class="logo-amp">&</span><span class="logo-n">N</span>
             </a>
             
-            <nav class="nav-menu" id="nav-menu">
+            <nav class="nav-menu">
                 <a href="index.html" class="nav-link active">Home</a>
                 <a href="about.html" class="nav-link">About Us</a>
                 <a href="portfolio.html?user=saeed" class="nav-link">Saeed's Portfolio</a>
@@ -50,14 +49,14 @@
                 <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
                     <i class="fas fa-moon"></i>
                 </button>
-                <a href="login.html" class="btn btn-sm btn-primary admin-btn">
+                <a href="login.html" class="btn btn-sm btn-primary">
                     <i class="fas fa-lock"></i> Admin Login
                 </a>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Main Hero Section -->
     <section class="hero-section">
         <div class="hero-container">
             <div class="hero-content">
@@ -105,7 +104,6 @@
                             </a>
                         </div>
                     </div>
-
                 </div>
 
             </div>
