@@ -1,142 +1,399 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&N Portfolio - Profile View</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Portfolio - S&N</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <style>
+        /* Critical preloader kill - works even if other CSS fails */
+        #preloader {
+            position: fixed !important;
+            inset: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background: #f8fafc !important;
+            z-index: 999999 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            transition: opacity 0.25s ease !important;
+        }
+        #preloader.hide, #preloader.hidden {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            display: none !important;
+        }
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid #e2e8f0;
+            border-top-color: #2563eb;
+            border-radius: 50%;
+            animation: pspin 0.7s linear infinite;
+        }
+        @keyframes pspin { to { transform: rotate(360deg); } }
+
+        /* Portfolio page safety styles so layout never breaks */
+        .portfolio-page { padding-top: 70px; min-height: 100vh; }
+        .portfolio-cover {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            overflow: hidden;
+            position: relative;
+        }
+        .portfolio-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .portfolio-header {
+            max-width: 900px;
+            margin: -60px auto 0;
+            padding: 0 1.25rem;
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.75rem;
+        }
+        .portfolio-avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            overflow: hidden;
+            background: #e2e8f0;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            flex-shrink: 0;
+        }
+        .portfolio-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .portfolio-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin: 0.25rem 0 0;
+            word-break: break-word;
+        }
+        [data-theme="dark"] .portfolio-header h1 { color: #f8fafc; }
+        .portfolio-role {
+            display: inline-block;
+            padding: 0.3rem 0.9rem;
+            border-radius: 50px;
+            background: rgba(37,99,235,0.12);
+            color: #2563eb;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .portfolio-title {
+            color: #64748b;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+        .portfolio-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        .portfolio-actions .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.65rem 1.25rem;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-whatsapp {
+            background: #25d366;
+            color: #fff;
+        }
+        .btn-resume {
+            background: transparent;
+            border: 1px solid #e2e8f0 !important;
+            color: #0f172a;
+        }
+        [data-theme="dark"] .btn-resume { color: #f8fafc; border-color: #334155 !important; }
+        .portfolio-body {
+            max-width: 900px;
+            margin: 2rem auto 4rem;
+            padding: 0 1.25rem;
+        }
+        .info-block {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        [data-theme="dark"] .info-block {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        .info-block h3 {
+            font-size: 1.15rem;
+            margin: 0 0 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2563eb;
+        }
+        .info-block p {
+            color: #334155;
+            line-height: 1.7;
+            margin: 0;
+            white-space: pre-wrap;
+        }
+        [data-theme="dark"] .info-block p { color: #cbd5e1; }
+        #projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+            margin-top: 0.75rem;
+        }
+        @media (min-width: 600px) {
+            #projects-grid { grid-template-columns: 1fr 1fr; }
+        }
+        .project-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        [data-theme="dark"] .project-card {
+            background: #0f172a;
+            border-color: #334155;
+        }
+        .project-card h4 { margin: 0.35rem 0; font-size: 1.05rem; }
+        .project-cat {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #2563eb;
+            text-transform: uppercase;
+        }
+        .project-tech { font-size: 0.85rem; color: #64748b; margin-bottom: 0.75rem; }
+        .no-data { color: #64748b; font-size: 0.9rem; }
+
+        /* Simple top nav for portfolio - never breaks */
+        .p-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 58px;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e2e8f0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+        }
+        [data-theme="dark"] .p-nav {
+            background: rgba(30,41,59,0.95);
+            border-color: #334155;
+        }
+        .p-nav .logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+        .p-nav .logo .s { color: #2563eb; }
+        .p-nav .logo .n { color: #7c3aed; }
+        .p-nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .p-nav-links a {
+            text-decoration: none;
+            color: #64748b;
+            font-size: 0.85rem;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        .p-nav-links a:hover { color: #2563eb; }
+        .p-nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .p-theme-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #0f172a;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        [data-theme="dark"] .p-theme-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #f8fafc;
+        }
+        @media (max-width: 640px) {
+            .p-nav-links { display: none; }
+            .portfolio-cover { height: 160px; }
+            .portfolio-avatar { width: 110px; height: 110px; }
+            .portfolio-header h1 { font-size: 1.45rem; }
+        }
+    </style>
 </head>
 <body>
     <!-- Preloader -->
-    <div class="preloader">
+    <div id="preloader">
         <div class="spinner"></div>
-        <h2><span>Loading</span> Profile</h2>
+        <div style="margin-top:12px;font-weight:800;font-size:1.25rem;">
+            <span style="color:#2563eb;">S</span>&amp;<span style="color:#7c3aed;">N</span>
+        </div>
     </div>
+    <script>
+        (function(){
+            function kill(){
+                var p=document.getElementById('preloader');
+                if(!p)return;
+                p.classList.add('hide');
+                p.style.opacity='0';
+                p.style.display='none';
+            }
+            setTimeout(kill, 250);
+            setTimeout(kill, 600);
+            window.addEventListener('load', kill);
+            document.addEventListener('DOMContentLoaded', function(){ setTimeout(kill, 100); });
+        })();
+    </script>
 
-    <!-- Header -->
-    <header>
-        <nav>
-            <a href="index.html" class="logo"><span>S&N</span> Portfolio</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="portfolio.html?user=saeed" id="nav-saeed">Saeed (Web)</a></li>
-                <li><a href="portfolio.html?user=naeem" id="nav-naeem">Naeem (Video)</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <button class="theme-toggle" id="theme-btn"><i class="fas fa-moon"></i></button>
-                <button class="menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-            </div>
-        </nav>
-    </header>
-
-    <main>
-        <!-- Profile Header with Cover & Image -->
-        <section class="portfolio-header fade-in">
-            <div class="cover-photo" id="cover-image-container">
-                <!-- Cover Image will be injected here -->
-            </div>
-            
-            <div class="profile-img">
-                <img id="profile-image" src="https://via.placeholder.com/160" alt="Profile Image">
-            </div>
-            
-            <h1 id="profile-name">Loading...</h1>
-            <h3 class="role" id="profile-title">Please Wait</h3>
-            <p class="intro-text" id="profile-intro"></p>
-
-            <div class="social-links" id="social-links">
-                <!-- Social links injected here -->
-            </div>
-
-            <div class="contact-info fade-in" id="contact-grid">
-                <!-- Contact info injected here -->
-            </div>
-
-            <div style="margin-top: 25px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
-                <a href="#" id="whatsapp-btn" class="btn whatsapp-btn" target="_blank">
-                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
-                </a>
-                <a href="#" id="resume-btn" class="btn secondary-btn" style="display: none;" target="_blank">
-                    <i class="fas fa-download"></i> Download CV
-                </a>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section class="section fade-in" id="about-container">
-            <div class="about-section">
-                <h2>About Me</h2>
-                <p id="profile-about">Loading about information...</p>
-            </div>
-        </section>
-
-        <!-- Services Section -->
-        <section class="section fade-in" id="services-container" style="display: none;">
-            <h2 class="section-title">My <span>Services</span></h2>
-            <div class="services-grid" id="services-grid"></div>
-        </section>
-
-        <!-- Skills Section -->
-        <section class="section fade-in" id="skills-container" style="display: none;">
-            <h2 class="section-title">Professional <span>Skills</span></h2>
-            <div class="skills-grid" id="skills-grid"></div>
-        </section>
-
-        <!-- Projects Section -->
-        <section class="section fade-in" id="projects-container" style="display: none;">
-            <h2 class="section-title">Featured <span>Projects</span></h2>
-            <div class="projects-grid" id="projects-grid"></div>
-        </section>
-
-        <!-- Experience & Education (Timeline) -->
-        <section class="section fade-in" id="timeline-container" style="display: none;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
-                
-                <!-- Experience -->
-                <div id="experience-wrapper" style="display: none;">
-                    <h2 class="section-title" style="font-size: 28px; text-align: left;">Work <span>Experience</span></h2>
-                    <div class="timeline" id="experience-timeline"></div>
-                </div>
-
-                <!-- Education -->
-                <div id="education-wrapper" style="display: none;">
-                    <h2 class="section-title" style="font-size: 28px; text-align: left;">My <span>Education</span></h2>
-                    <div class="timeline" id="education-timeline"></div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Certifications Section -->
-        <section class="section fade-in" id="certifications-container" style="display: none;">
-            <h2 class="section-title">Licenses & <span>Certifications</span></h2>
-            <div class="cert-grid" id="certifications-grid"></div>
-        </section>
-    </main>
-
-    <!-- Floating WhatsApp -->
-    <a href="#" id="whatsapp-float" class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <!-- Mobile Nav -->
-    <nav class="bottom-nav">
-        <ul class="bottom-nav-links">
-            <li><a href="index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
-            <li><a href="portfolio.html?user=saeed"><i class="fas fa-code"></i><span>Saeed</span></a></li>
-            <li><a href="portfolio.html?user=naeem"><i class="fas fa-film"></i><span>Naeem</span></a></li>
-            <li><a href="about.html"><i class="fas fa-info-circle"></i><span>About</span></a></li>
-        </ul>
+    <!-- Simple Fixed Nav -->
+    <nav class="p-nav">
+        <a href="index.html" class="logo">
+            <span class="s">S</span>&amp;<span class="n">N</span>
+        </a>
+        <div class="p-nav-links">
+            <a href="index.html">Home</a>
+            <a href="portfolio.html?user=saeed">Saeed</a>
+            <a href="portfolio.html?user=naeem">Naeem</a>
+            <a href="about.html">About</a>
+        </div>
+        <div class="p-nav-actions">
+            <button type="button" id="theme-toggle" class="p-theme-btn" aria-label="Theme">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="login.html" style="font-size:0.8rem;font-weight:600;color:#2563eb;text-decoration:none;">
+                <i class="fas fa-lock"></i> Admin
+            </a>
+        </div>
     </nav>
 
-    <footer class="desktop-footer">
-        <p>&copy; 2024 S&N Portfolio. All rights reserved.</p>
+    <div class="portfolio-page">
+        <!-- Cover -->
+        <div class="portfolio-cover">
+            <img id="cover-img" src="" alt="Cover" style="display:none;" onerror="this.style.display='none'">
+        </div>
+
+        <!-- Header / Avatar -->
+        <div class="portfolio-header">
+            <div class="portfolio-avatar">
+                <img id="profile-img" src="https://via.placeholder.com/150" alt="Profile">
+            </div>
+            <span id="profile-role" class="portfolio-role">Creator</span>
+            <h1 id="profile-name">Loading...</h1>
+            <p id="profile-title" class="portfolio-title">Professional Portfolio</p>
+            <div class="portfolio-actions">
+                <a id="whatsapp-btn" href="#" target="_blank" rel="noopener" class="btn btn-whatsapp" style="display:none;">
+                    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+                <a id="resume-btn" href="#" target="_blank" rel="noopener" class="btn btn-resume" style="display:none;">
+                    <i class="fas fa-download"></i> Resume
+                </a>
+            </div>
+        </div>
+
+        <!-- Body Content -->
+        <div class="portfolio-body">
+            <div class="info-block">
+                <h3><i class="fas fa-user"></i> About Me</h3>
+                <p id="profile-about"></p>
+                <p id="profile-bio" style="margin-top:0.75rem;"></p>
+            </div>
+
+            <div class="info-block">
+                <h3><i class="fas fa-folder-open"></i> Projects &amp; Work</h3>
+                <div id="projects-grid">
+                    <p class="no-data">Loading projects...</p>
+                </div>
+            </div>
+
+            <div class="info-block" id="skills-block" style="display:none;">
+                <h3><i class="fas fa-code"></i> Skills</h3>
+                <div id="skills-display"></div>
+            </div>
+
+            <div class="info-block" id="contact-block" style="display:none;">
+                <h3><i class="fas fa-envelope"></i> Contact</h3>
+                <p id="contact-info"></p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer" style="text-align:center;padding:1.5rem;color:#64748b;font-size:0.85rem;border-top:1px solid #e2e8f0;">
+        <p>&copy; 2025 S&amp;N Portfolio — Saeed ullah &amp; Naeem ur Rahman</p>
     </footer>
 
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <script src="js/database.js"></script>
     <script src="js/app.js"></script>
+    <script>
+        // Extra safety: force hide preloader + theme toggle on this page
+        (function(){
+            function killPre(){
+                var p=document.getElementById('preloader');
+                if(p){ p.style.display='none'; p.classList.add('hide'); }
+            }
+            setTimeout(killPre, 200);
+            setTimeout(killPre, 800);
+            setTimeout(killPre, 2000);
+
+            var btn=document.getElementById('theme-toggle');
+            if(btn){
+                var t=localStorage.getItem('theme')||'light';
+                document.documentElement.setAttribute('data-theme', t);
+                btn.innerHTML=t==='dark'?'<i class="fas fa-sun"></i>':'<i class="fas fa-moon"></i>';
+                btn.addEventListener('click', function(){
+                    var cur=document.documentElement.getAttribute('data-theme');
+                    var next=cur==='dark'?'light':'dark';
+                    document.documentElement.setAttribute('data-theme', next);
+                    localStorage.setItem('theme', next);
+                    btn.innerHTML=next==='dark'?'<i class="fas fa-sun"></i>':'<i class="fas fa-moon"></i>';
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
