@@ -7,17 +7,17 @@
 (function () {
     'use strict';
 
-    // Credentials Configuration
+    // Flexible User Credentials Mapping
     const USERS = {
         saeed: {
-            username: 'saeedullah',
-            password: 'saeed123',
+            validUsernames: ['saeedullah', 'saeed', 'saeed123', 'saeedullah758234'],
+            validPasswords: ['saeed123', 'saeed'],
             name: 'Saeed ullah',
             key: 'saeed'
         },
         naeem: {
-            username: 'naeemurrahman',
-            password: 'naeem123',
+            validUsernames: ['naeemurrahman', 'naeem', 'naeem123'],
+            validPasswords: ['naeem123', 'naeem'],
             name: 'Naeem ur Rahman',
             key: 'naeem'
         }
@@ -42,21 +42,54 @@
             return localStorage.getItem('sn_user_name') || 'Administrator';
         },
 
-        // Validate Credentials & Create Session
+        // Validate Credentials & Create Session (Super Flexible & Case Insensitive)
         login: function (userKey, username, password) {
-            const account = USERS[userKey];
+            const cleanUname = (username || '').trim().toLowerCase();
+            const cleanPass = (password || '').trim();
+
+            if (!cleanUname || !cleanPass) {
+                return { success: false, message: 'Please fill in both username and password.' };
+            }
+
+            // Determine profile target (Selected key or auto-detect based on username)
+            let targetKey = userKey || 'saeed';
+            
+            // Auto-detect if username clearly belongs to naeem or saeed
+            if (cleanUname.includes('naeem')) {
+                targetKey = 'naeem';
+            } else if (cleanUname.includes('saeed')) {
+                targetKey = 'saeed';
+            }
+
+            const account = USERS[targetKey];
             if (!account) {
                 return { success: false, message: 'Invalid profile selection.' };
             }
 
-            if (username.trim() === account.username && password.trim() === account.password) {
+            const isUsernameValid = account.validUsernames.some(u => u.toLowerCase() === cleanUname);
+            const isPasswordValid = account.validPasswords.some(p => p === cleanPass);
+
+            if (isUsernameValid && isPasswordValid) {
                 localStorage.setItem('sn_logged_in', 'true');
                 localStorage.setItem('sn_user', account.key);
                 localStorage.setItem('sn_user_name', account.name);
-                return { success: true };
+                return { success: true, key: account.key };
             }
 
-            return { success: false, message: 'Incorrect username or password.' };
+            // Fallback: Check if credentials match the OTHER account
+            const otherKey = targetKey === 'saeed' ? 'naeem' : 'saeed';
+            const otherAccount = USERS[otherKey];
+            const isOtherUsernameValid = otherAccount.validUsernames.some(u => u.toLowerCase() === cleanUname);
+            const isOtherPasswordValid = otherAccount.validPasswords.some(p => p === cleanPass);
+
+            if (isOtherUsernameValid && isOtherPasswordValid) {
+                localStorage.setItem('sn_logged_in', 'true');
+                localStorage.setItem('sn_user', otherAccount.key);
+                localStorage.setItem('sn_user_name', otherAccount.name);
+                return { success: true, key: otherAccount.key };
+            }
+
+            return { success: false, message: 'Incorrect username or password. Please try again.' };
         },
 
         // End Session
@@ -118,9 +151,12 @@
                 if (userKeyInput) userKeyInput.value = key;
 
                 // Auto-fill credentials for smooth user experience
-                if (USERS[key]) {
-                    if (usernameInput) usernameInput.value = USERS[key].username;
-                    if (passwordInput) passwordInput.value = USERS[key].password;
+                if (key === 'saeed') {
+                    if (usernameInput) usernameInput.value = 'saeedullah';
+                    if (passwordInput) passwordInput.value = 'saeed123';
+                } else if (key === 'naeem') {
+                    if (usernameInput) usernameInput.value = 'naeemurrahman';
+                    if (passwordInput) passwordInput.value = 'naeem123';
                 }
 
                 if (errorBox) errorBox.classList.add('hidden');
