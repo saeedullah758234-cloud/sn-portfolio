@@ -14,13 +14,16 @@ window.addEventListener('load', () => {
     }
 });
 
-// Fail-safe Preloader
+// Fail-safe Preloader (Agar page slow ho to 1.5s baad lazmi hide ho jaye)
 setTimeout(() => {
     const preloader = document.querySelector('.preloader');
     if (preloader && preloader.style.display !== 'none') {
-        preloader.style.display = 'none';
+        preloader.style.opacity = '0';
+        setTimeout(() => {
+            preloader.style.display = 'none';
+        }, 500);
     }
-}, 2000);
+}, 1500);
 
 document.addEventListener('DOMContentLoaded', () => {
     // 2. THEME MANAGEMENT
@@ -76,7 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
     fadeElements.forEach(el => scrollObserver.observe(el));
 
     // 5. LOAD PORTFOLIO DATA
-    if (window.location.pathname.includes('portfolio.html')) {
+    // Vercel path fixing: Instead of checking URL, we check if profile elements exist
+    if (document.getElementById('profile-name') || window.location.pathname.includes('portfolio')) {
         loadPortfolio();
     }
 });
@@ -103,11 +107,17 @@ async function loadPortfolio() {
 
         if (typeof db === 'undefined') {
             console.error("Database script missing");
+            safeSetText('profile-name', 'Database Error');
+            safeSetText('profile-title', 'Please refresh the page');
             return;
         }
 
         const userData = await db.getUser(user);
-        if (!userData) return;
+        if (!userData) {
+            safeSetText('profile-name', 'User Not Found');
+            safeSetText('profile-title', 'Please check the URL');
+            return;
+        }
 
         // --- 1. Basic Info ---
         safeSetText('profile-name', userData.name || 'User Profile');
@@ -123,7 +133,7 @@ async function loadPortfolio() {
         const coverContainer = document.getElementById('cover-image-container');
         if (coverContainer) {
             if (userData.coverImage && userData.coverImage !== '') {
-                coverContainer.innerHTML = `<img src="${userData.coverImage}" alt="Cover">`;
+                coverContainer.innerHTML = `<img src="${userData.coverImage}" alt="Cover" style="width: 100%; height: 100%; object-fit: cover;">`;
             } else {
                 coverContainer.innerHTML = ''; // Keep gradient
             }
@@ -269,6 +279,8 @@ async function loadPortfolio() {
 
     } catch (err) {
         console.error("Error loading profile:", err);
+        safeSetText('profile-name', 'Error Loading Data');
+        safeSetText('profile-title', 'Please try again later.');
     }
 }
 
