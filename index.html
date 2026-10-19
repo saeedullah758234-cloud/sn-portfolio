@@ -4,40 +4,82 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>S&N Portfolio - Saeed ullah & Naeem ur Rahman</title>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Base Styles -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/animations.css">
+    <style>
+        /* Home card banner can show real cover photo */
+        .card-banner {
+            height: 130px;
+            width: 100%;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        .card-banner.purple-banner {
+            background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%);
+            background-size: cover;
+            background-position: center;
+        }
+        .card-banner.has-cover {
+            background-color: #1e293b;
+        }
+        /* Soft dark overlay so avatar stays readable on busy covers */
+        .card-banner.has-cover::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.15), rgba(0,0,0,0.35));
+            pointer-events: none;
+        }
+        .card-avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            margin: -65px auto 1rem;
+            border: 5px solid var(--card-bg, #fff);
+            overflow: hidden;
+            background: #e2e8f0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            position: relative;
+            z-index: 2;
+        }
+        .card-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+    </style>
 </head>
 <body>
-    <!-- Preloader with Instant Auto-Kill -->
+    <!-- Preloader -->
     <div id="preloader">
         <div class="spinner"></div>
         <div class="preloader-logo" style="margin-top:15px; font-weight:800; font-size:1.5rem;">
-            <span style="color:#2563eb;">S</span>&<span style="color:#7c3aed;">N</span>
+            <span style="color:#2563eb;">S</span>&amp;<span style="color:#7c3aed;">N</span>
         </div>
     </div>
     <script>
-        setTimeout(function() {
+        setTimeout(function () {
             var p = document.getElementById('preloader');
             if (p) {
                 p.style.opacity = '0';
                 p.style.pointerEvents = 'none';
-                setTimeout(function() { p.style.display = 'none'; }, 200);
+                setTimeout(function () { p.style.display = 'none'; }, 200);
             }
         }, 300);
     </script>
 
-    <!-- Navigation Bar -->
+    <!-- Navigation -->
     <header class="navbar">
         <div class="nav-container">
             <a href="index.html" class="logo">
-                <span class="logo-s">S</span><span class="logo-amp">&</span><span class="logo-n">N</span>
+                <span class="logo-s">S</span><span class="logo-amp">&amp;</span><span class="logo-n">N</span>
             </a>
-            
+
             <nav class="nav-menu">
                 <a href="index.html" class="nav-link active">Home</a>
                 <a href="about.html" class="nav-link">About Us</a>
@@ -46,7 +88,7 @@
             </nav>
 
             <div class="nav-actions">
-                <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+                <button id="theme-toggle" class="theme-btn" type="button" aria-label="Toggle Theme">
                     <i class="fas fa-moon"></i>
                 </button>
                 <a href="login.html" class="btn btn-sm btn-primary">
@@ -56,28 +98,30 @@
         </div>
     </header>
 
-    <!-- Main Hero Section -->
+    <!-- Hero -->
     <section class="hero-section">
         <div class="hero-container">
             <div class="hero-content">
-                <span class="badge">Welcome to S&N Multi-Portfolio</span>
-                <h1>Crafting Digital <span class="text-gradient">Experiences</span> & Visual <span class="text-gradient-purple">Magic</span></h1>
+                <span class="badge">Welcome to S&amp;N Multi-Portfolio</span>
+                <h1>Crafting Digital <span class="text-gradient">Experiences</span> &amp; Visual <span class="text-gradient-purple">Magic</span></h1>
                 <p class="hero-subtitle">We are a dual-creator powerhouse offering top-tier Web Development and Professional Video Editing services.</p>
             </div>
 
-            <!-- Profiles Grid Cards -->
             <div class="profiles-dual-grid">
-                
-                <!-- Saeed's Card -->
+
+                <!-- ========== SAEED CARD ========== -->
                 <div class="profile-card saeed-card">
-                    <div class="card-banner"></div>
+                    <!-- id used by JS to inject cover/banner image -->
+                    <div class="card-banner" id="home-saeed-banner"></div>
                     <div class="card-avatar">
-                        <img id="home-saeed-img" src="https://via.placeholder.com/150" alt="Saeed ullah">
+                        <img id="home-saeed-img"
+                             src="https://ui-avatars.com/api/?name=Saeed+Ullah&size=150&background=2563eb&color=fff"
+                             alt="Saeed ullah">
                     </div>
                     <div class="card-body">
                         <span class="role-badge">Web Developer</span>
                         <h3 id="home-saeed-name">Saeed ullah</h3>
-                        <p class="card-title" id="home-saeed-title">Full-Stack Web Developer & UI Designer</p>
+                        <p class="card-title" id="home-saeed-title">Full-Stack Web Developer &amp; UI Designer</p>
                         <p class="card-intro" id="home-saeed-intro">Building scalable web applications, responsive websites, and custom admin portals with modern technologies.</p>
                         <div class="card-actions">
                             <a href="portfolio.html?user=saeed" class="btn btn-primary btn-full">
@@ -87,16 +131,19 @@
                     </div>
                 </div>
 
-                <!-- Naeem's Card -->
+                <!-- ========== NAEEM CARD ========== -->
                 <div class="profile-card naeem-card">
-                    <div class="card-banner purple-banner"></div>
+                    <!-- id used by JS to inject cover/banner image -->
+                    <div class="card-banner purple-banner" id="home-naeem-banner"></div>
                     <div class="card-avatar">
-                        <img id="home-naeem-img" src="https://via.placeholder.com/150" alt="Naeem ur Rahman">
+                        <img id="home-naeem-img"
+                             src="https://ui-avatars.com/api/?name=Naeem+ur+Rahman&size=150&background=7c3aed&color=fff"
+                             alt="Naeem ur Rahman">
                     </div>
                     <div class="card-body">
                         <span class="role-badge purple">Video Editor</span>
                         <h3 id="home-naeem-name">Naeem ur Rahman</h3>
-                        <p class="card-title" id="home-naeem-title">Professional Video Editor & Content Creator</p>
+                        <p class="card-title" id="home-naeem-title">Professional Video Editor &amp; Content Creator</p>
                         <p class="card-intro" id="home-naeem-intro">Transforming raw footage into compelling stories with cinematic color grading, motion graphics, and audio editing.</p>
                         <div class="card-actions">
                             <a href="portfolio.html?user=naeem" class="btn btn-purple btn-full">
@@ -110,14 +157,12 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
         <div class="footer-container">
-            <p>&copy; 2025 S&N Portfolio. All Rights Reserved. Saeed ullah & Naeem ur Rahman.</p>
+            <p>&copy; 2025 S&amp;N Portfolio. All Rights Reserved. Saeed ullah &amp; Naeem ur Rahman.</p>
         </div>
     </footer>
 
-    <!-- Firebase & Core Scripts -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     <script src="js/database.js"></script>
