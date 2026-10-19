@@ -1,91 +1,164 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&N Portfolio - About Us</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>About Us | SN Portfolio</title>
+    <!-- Google Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-body, #ffffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        #preloader.hidden { opacity: 0; pointer-events: none; }
+        .spinner {
+            width: 50px; height: 50px;
+            border: 5px solid var(--border-color, #e2e8f0);
+            border-top-color: var(--primary, #2563eb);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Team Image Container */
+        .member-img-box {
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 1.5rem;
+            border-radius: 50%;
+            padding: 5px;
+            background: linear-gradient(135deg, var(--primary), #8b5cf6);
+        }
+
+        .member-img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--bg-card);
+        }
+    </style>
 </head>
 <body>
-    <div class="preloader">
+
+    <!-- Preloader -->
+    <div id="preloader">
         <div class="spinner"></div>
-        <h2><span>About</span> Us</h2>
     </div>
 
-    <header>
-        <nav>
-            <a href="index.html" class="logo"><span>S&N</span> Portfolio</a>
-            <ul class="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="portfolio.html?user=saeed">Saeed (Web)</a></li>
-                <li><a href="portfolio.html?user=naeem">Naeem (Video)</a></li>
-                <li><a href="about.html" class="active">About</a></li>
-            </ul>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <button class="theme-toggle" id="theme-btn"><i class="fas fa-moon"></i></button>
-                <button class="menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="nav-logo">SN Portfolio</a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="login.html">Admin</a>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <header class="hero">
+            <h1>About S&N Portfolio</h1>
+            <p class="subtitle">The perfect combination of Code and Cinema. We bring your ideas to reality with precision and creativity.</p>
+        </header>
+
+        <section class="profiles">
+            <div class="section-title">
+                <h2>Meet The Duo</h2>
+                <div class="underline"></div>
             </div>
-        </nav>
-    </header>
 
-    <main>
-        <section class="section" style="padding-top: 60px;">
-            <h1 class="section-title fade-in">About <span>S&N</span></h1>
-            <p class="section-subtitle fade-in">The perfect combination of Code and Cinema.</p>
-
-            <div class="about-section fade-in" style="margin-top: 40px;">
-                <h2 style="text-align: center; margin-bottom: 30px;">Our Vision</h2>
-                <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">
-                    We are a duo of passionate professionals dedicated to delivering top-notch digital solutions. 
-                    Whether you need a blazing-fast, beautiful website or a cinematic video that captures every emotion, 
-                    we bring your ideas to reality with precision and creativity.
-                </p>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px;">
-                    <div style="text-align: center; padding: 20px;">
-                        <i class="fas fa-laptop-code" style="font-size: 40px; color: var(--accent-primary); margin-bottom: 15px;"></i>
-                        <h3 style="color: var(--text-primary); margin-bottom: 10px;">Web Development</h3>
-                        <p style="color: var(--text-secondary); font-size: 14px;">Led by Saeed ullah, we build responsive, secure, and modern web applications tailored to your business needs.</p>
+            <div class="profile-grid">
+                <!-- Saeed Card -->
+                <div class="profile-card" onclick="location.href='portfolio.html?user=saeed'" style="padding: 2.5rem 1.5rem;">
+                    <div class="member-img-box">
+                        <img id="about-saeed-img" src="https://via.placeholder.com/150" alt="Saeed ullah" class="member-img">
                     </div>
-                    
-                    <div style="text-align: center; padding: 20px;">
-                        <i class="fas fa-film" style="font-size: 40px; color: var(--accent-secondary); margin-bottom: 15px;"></i>
-                        <h3 style="color: var(--text-primary); margin-bottom: 10px;">Video Production</h3>
-                        <p style="color: var(--text-secondary); font-size: 14px;">Led by Naeem ur Rahman, we edit and color grade videos to create compelling visual stories for any platform.</p>
-                    </div>
+                    <h3 id="about-saeed-name">Saeed ullah</h3>
+                    <p class="role" style="color: var(--primary); font-weight: 600; margin-bottom: 1rem;">Full Stack Web Developer</p>
+                    <p id="about-saeed-bio" class="bio">Expert in building high-performance, responsive web applications and modern web experiences.</p>
+                    <a href="portfolio.html?user=saeed" class="btn btn-sm">View Portfolio</a>
                 </div>
 
-                <div style="text-align: center; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border-color);">
-                    <h3 style="color: var(--text-primary); margin-bottom: 15px;">Admin Portal</h3>
-                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">Authorized administrators can manage their portfolios here.</p>
-                    <a href="login.html" class="btn secondary-btn small-btn">
-                        <i class="fas fa-lock"></i> Admin Login
-                    </a>
+                <!-- Naeem Card -->
+                <div class="profile-card" onclick="location.href='portfolio.html?user=naeem'" style="padding: 2.5rem 1.5rem;">
+                    <div class="member-img-box">
+                        <img id="about-naeem-img" src="https://via.placeholder.com/150" alt="Naeem ur Rahman" class="member-img">
+                    </div>
+                    <h3 id="about-naeem-name">Naeem ur Rahman</h3>
+                    <p class="role" style="color: var(--primary); font-weight: 600; margin-bottom: 1rem;">Professional Video Editor</p>
+                    <p id="about-naeem-bio" class="bio">Creative video editing specialist turning raw footage into cinematic, high-converting visual media.</p>
+                    <a href="portfolio.html?user=naeem" class="btn btn-sm">View Portfolio</a>
                 </div>
             </div>
         </section>
-    </main>
+    </div>
 
-    <a href="https://wa.me/923000000000" id="whatsapp-float" class="whatsapp-float" target="_blank">
-        <i class="fab fa-whatsapp"></i>
-    </a>
-
-    <nav class="bottom-nav">
-        <ul class="bottom-nav-links">
-            <li><a href="index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
-            <li><a href="portfolio.html?user=saeed"><i class="fas fa-code"></i><span>Saeed</span></a></li>
-            <li><a href="portfolio.html?user=naeem"><i class="fas fa-film"></i><span>Naeem</span></a></li>
-            <li><a href="about.html" class="active"><i class="fas fa-info-circle"></i><span>About</span></a></li>
-        </ul>
-    </nav>
-
-    <footer class="desktop-footer">
-        <p>&copy; 2024 S&N Portfolio. All rights reserved.</p>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 SN Portfolio. All rights reserved.</p>
+        </div>
     </footer>
 
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <script src="js/database.js"></script>
-    <script src="js/app.js"></script>
+
+    <script>
+        // Preloader Auto-Kill
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const pre = document.getElementById('preloader');
+                if(pre) pre.classList.add('hidden');
+            }, 500);
+        });
+
+        setTimeout(() => {
+            const pre = document.getElementById('preloader');
+            if(pre) pre.classList.add('hidden');
+        }, 2500);
+
+        // Load Real Data from Firebase
+        async function loadTeamData() {
+            try {
+                const saeed = await db.getUser('saeed');
+                const naeem = await db.getUser('naeem');
+
+                if(saeed) {
+                    if(saeed.profileImage) document.getElementById('about-saeed-img').src = saeed.profileImage;
+                    document.getElementById('about-saeed-name').textContent = saeed.name || 'Saeed ullah';
+                    if(saeed.intro) document.getElementById('about-saeed-bio').textContent = saeed.intro;
+                }
+
+                if(naeem) {
+                    if(naeem.profileImage) document.getElementById('about-naeem-img').src = naeem.profileImage;
+                    document.getElementById('about-naeem-name').textContent = naeem.name || 'Naeem ur Rahman';
+                    if(naeem.intro) document.getElementById('about-naeem-bio').textContent = naeem.intro;
+                }
+            } catch (error) {
+                console.error("Error loading team data:", error);
+            }
+        }
+
+        // Apply Dark Theme if needed
+        if(localStorage.getItem('theme') === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+        }
+
+        loadTeamData();
+    </script>
 </body>
 </html>
