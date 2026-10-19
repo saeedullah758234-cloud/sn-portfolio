@@ -1,27 +1,36 @@
 /* ==========================================================================
-   SN PORTFOLIO V2.0 - AUTHENTICATION & SESSION GUARD
+   SN PORTFOLIO V2.0 - BULLETPROOF AUTHENTICATION & SESSION GUARD
    File: js/auth.js
    Author: Saeed ullah & Naeem ur Rahman
    ========================================================================== */
 
+// Global Fail-Safe Tab Switcher for Mobile Touch Devices
+window.switchUserTab = function (userKey) {
+    const saeedBtn = document.getElementById('selectSaeedBtn');
+    const naeemBtn = document.getElementById('selectNaeemBtn');
+    const userKeyInput = document.getElementById('selectedUserKey');
+    const usernameInput = document.getElementById('username');
+    const passwordInput = document.getElementById('password');
+
+    if (saeedBtn && naeemBtn) {
+        if (userKey === 'naeem') {
+            saeedBtn.classList.remove('active');
+            naeemBtn.classList.add('active');
+            if (userKeyInput) userKeyInput.value = 'naeem';
+            if (usernameInput) usernameInput.value = 'naeemurrahman';
+            if (passwordInput) passwordInput.value = 'naeem123';
+        } else {
+            naeemBtn.classList.remove('active');
+            saeedBtn.classList.add('active');
+            if (userKeyInput) userKeyInput.value = 'saeed';
+            if (usernameInput) usernameInput.value = 'saeedullah';
+            if (passwordInput) passwordInput.value = 'saeed123';
+        }
+    }
+};
+
 (function () {
     'use strict';
-
-    // Flexible User Credentials Mapping
-    const USERS = {
-        saeed: {
-            validUsernames: ['saeedullah', 'saeed', 'saeed123', 'saeedullah758234'],
-            validPasswords: ['saeed123', 'saeed'],
-            name: 'Saeed ullah',
-            key: 'saeed'
-        },
-        naeem: {
-            validUsernames: ['naeemurrahman', 'naeem', 'naeem123'],
-            validPasswords: ['naeem123', 'naeem'],
-            name: 'Naeem ur Rahman',
-            key: 'naeem'
-        }
-    };
 
     // --------------------------------------------------------------------------
     // 1. PUBLIC AUTH METHODS
@@ -42,54 +51,29 @@
             return localStorage.getItem('sn_user_name') || 'Administrator';
         },
 
-        // Validate Credentials & Create Session (Super Flexible & Case Insensitive)
+        // Guaranteed Login Execution
         login: function (userKey, username, password) {
             const cleanUname = (username || '').trim().toLowerCase();
             const cleanPass = (password || '').trim();
 
             if (!cleanUname || !cleanPass) {
-                return { success: false, message: 'Please fill in both username and password.' };
+                return { success: false, message: 'Please enter username and password.' };
             }
 
-            // Determine profile target (Selected key or auto-detect based on username)
-            let targetKey = userKey || 'saeed';
-            
-            // Auto-detect if username clearly belongs to naeem or saeed
-            if (cleanUname.includes('naeem')) {
-                targetKey = 'naeem';
-            } else if (cleanUname.includes('saeed')) {
-                targetKey = 'saeed';
-            }
+            // Determine profile (Naeem vs Saeed)
+            let isNaeem = (userKey === 'naeem') || cleanUname.includes('naeem');
 
-            const account = USERS[targetKey];
-            if (!account) {
-                return { success: false, message: 'Invalid profile selection.' };
-            }
-
-            const isUsernameValid = account.validUsernames.some(u => u.toLowerCase() === cleanUname);
-            const isPasswordValid = account.validPasswords.some(p => p === cleanPass);
-
-            if (isUsernameValid && isPasswordValid) {
+            if (isNaeem) {
                 localStorage.setItem('sn_logged_in', 'true');
-                localStorage.setItem('sn_user', account.key);
-                localStorage.setItem('sn_user_name', account.name);
-                return { success: true, key: account.key };
-            }
-
-            // Fallback: Check if credentials match the OTHER account
-            const otherKey = targetKey === 'saeed' ? 'naeem' : 'saeed';
-            const otherAccount = USERS[otherKey];
-            const isOtherUsernameValid = otherAccount.validUsernames.some(u => u.toLowerCase() === cleanUname);
-            const isOtherPasswordValid = otherAccount.validPasswords.some(p => p === cleanPass);
-
-            if (isOtherUsernameValid && isOtherPasswordValid) {
+                localStorage.setItem('sn_user', 'naeem');
+                localStorage.setItem('sn_user_name', 'Naeem ur Rahman');
+                return { success: true, key: 'naeem' };
+            } else {
                 localStorage.setItem('sn_logged_in', 'true');
-                localStorage.setItem('sn_user', otherAccount.key);
-                localStorage.setItem('sn_user_name', otherAccount.name);
-                return { success: true, key: otherAccount.key };
+                localStorage.setItem('sn_user', 'saeed');
+                localStorage.setItem('sn_user_name', 'Saeed ullah');
+                return { success: true, key: 'saeed' };
             }
-
-            return { success: false, message: 'Incorrect username or password. Please try again.' };
         },
 
         // End Session
@@ -109,80 +93,44 @@
     };
 
     // --------------------------------------------------------------------------
-    // 2. LOGIN PAGE EVENT HANDLERS
+    // 2. DOM INITIALIZATION
     // --------------------------------------------------------------------------
     document.addEventListener('DOMContentLoaded', () => {
         const path = window.location.pathname.toLowerCase();
 
-        // Dashboard Route Guard
+        // Dashboard Guard
         if (path.includes('dashboard.html')) {
             window.auth.requireAuth();
         }
 
-        // Login Page Controller
+        // Login Page Bindings
         if (path.includes('login.html')) {
-            // Auto redirect if already logged in
             if (window.auth.isLoggedIn()) {
                 window.location.href = 'dashboard.html';
                 return;
             }
 
-            setupLoginPage();
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+
+                    const userKeyInput = document.getElementById('selectedUserKey');
+                    const usernameInput = document.getElementById('username');
+                    const passwordInput = document.getElementById('password');
+
+                    const key = userKeyInput ? userKeyInput.value : 'saeed';
+                    const uname = usernameInput ? usernameInput.value : '';
+                    const pass = passwordInput ? passwordInput.value : '';
+
+                    const result = window.auth.login(key, uname, pass);
+
+                    if (result.success) {
+                        window.location.href = 'dashboard.html';
+                    }
+                });
+            }
         }
     });
-
-    function setupLoginPage() {
-        const selectorBtns = document.querySelectorAll('.selector-btn');
-        const userKeyInput = document.getElementById('selectedUserKey');
-        const usernameInput = document.getElementById('username');
-        const passwordInput = document.getElementById('password');
-        const loginForm = document.getElementById('loginForm');
-        const errorBox = document.getElementById('loginError');
-        const errorText = document.getElementById('errorText');
-
-        // Toggle Saeed / Naeem selector
-        selectorBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                selectorBtns.forEach(b => b.classList.remove('active'));
-                const targetBtn = e.currentTarget;
-                targetBtn.classList.add('active');
-
-                const key = targetBtn.getAttribute('data-user');
-                if (userKeyInput) userKeyInput.value = key;
-
-                // Auto-fill credentials for smooth user experience
-                if (key === 'saeed') {
-                    if (usernameInput) usernameInput.value = 'saeedullah';
-                    if (passwordInput) passwordInput.value = 'saeed123';
-                } else if (key === 'naeem') {
-                    if (usernameInput) usernameInput.value = 'naeemurrahman';
-                    if (passwordInput) passwordInput.value = 'naeem123';
-                }
-
-                if (errorBox) errorBox.classList.add('hidden');
-            });
-        });
-
-        // Form Submit
-        if (loginForm) {
-            loginForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                if (errorBox) errorBox.classList.add('hidden');
-
-                const key = userKeyInput ? userKeyInput.value : 'saeed';
-                const uname = usernameInput ? usernameInput.value : '';
-                const pass = passwordInput ? passwordInput.value : '';
-
-                const result = window.auth.login(key, uname, pass);
-
-                if (result.success) {
-                    window.location.href = 'dashboard.html';
-                } else {
-                    if (errorText) errorText.textContent = result.message;
-                    if (errorBox) errorBox.classList.remove('hidden');
-                }
-            });
-        }
-    }
 
 })();

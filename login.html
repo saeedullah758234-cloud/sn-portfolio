@@ -19,9 +19,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- CSS Stylesheets -->
-    <link rel="stylesheet" href="css/style.css?v=3.2">
-    <link rel="stylesheet" href="css/admin.css?v=3.2">
-    <link rel="stylesheet" href="css/animations.css?v=3.2">
+    <link rel="stylesheet" href="css/style.css?v=3.3">
+    <link rel="stylesheet" href="css/admin.css?v=3.3">
+    <link rel="stylesheet" href="css/animations.css?v=3.3">
 </head>
 <body>
 
@@ -36,13 +36,13 @@
                 <p>Select your user profile to access dashboard controls.</p>
             </div>
 
-            <!-- Profile Selector Buttons -->
+            <!-- Profile Selector Buttons with Fail-Safe Inline Event -->
             <div class="login-user-selector">
-                <button type="button" class="selector-btn active" id="selectSaeedBtn" data-user="saeed">
-                    <i class="fa-solid fa-user-gear"></i> Saeed ullah
+                <button type="button" class="selector-btn active" id="selectSaeedBtn" data-user="saeed" onclick="switchUserTab('saeed')">
+                    <i class="fa-solid fa-user-gear"></i> <span>Saeed ullah</span>
                 </button>
-                <button type="button" class="selector-btn" id="selectNaeemBtn" data-user="naeem">
-                    <i class="fa-solid fa-video"></i> Naeem ur Rahman
+                <button type="button" class="selector-btn" id="selectNaeemBtn" data-user="naeem" onclick="switchUserTab('naeem')">
+                    <i class="fa-solid fa-video"></i> <span>Naeem ur Rahman</span>
                 </button>
             </div>
 
@@ -84,7 +84,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     
     <!-- Application Scripts -->
-    <script src="js/database.js?v=3.2"></script>
-    <script src="js/auth.js?v=3.2"></script>
+    <script src="js/database.js?v=3.3"></script>
+    <script src="js/auth.js?v=3.3"></script>
 </body>
 </html>
