@@ -24,21 +24,21 @@ body {
     overflow-x: hidden;
 }
 
-/* Perfect Centered Preloader */
+/* ========================================= */
+/* PRELOADER FIX (100% CENTER FOR MOBILE)    */
+/* ========================================= */
 .preloader {
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    width: 100vw;
+    height: 100vh;
     background-color: var(--bg-color);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     z-index: 999999;
-    margin: 0;
-    padding: 0;
 }
 
 .spinner {
@@ -139,7 +139,7 @@ nav {
 /* Main Content Padding */
 main {
     padding-top: 100px;
-    min-height: calc(100vh - 80px); /* Adjust for header/footer */
+    min-height: calc(100vh - 80px);
 }
 
 /* Hero Section */
@@ -237,6 +237,10 @@ main {
     color: var(--text-color);
 }
 
+.section-title span {
+    color: var(--primary-color);
+}
+
 .profiles-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -267,6 +271,7 @@ main {
     border: 3px solid var(--primary-color);
     padding: 5px;
     overflow: hidden;
+    background: var(--bg-color);
 }
 
 .profile-img img {
@@ -505,11 +510,9 @@ main {
 /* Responsive Design (Mobile Fixes) */
 @media (max-width: 768px) {
     body {
-        /* Extra padding so bottom nav doesn't hide content */
         padding-bottom: 80px !important;
     }
     
-    /* Completely disable particles on mobile to stop freezing */
     .particle, #particles-js canvas {
         display: none !important;
     }
@@ -535,7 +538,6 @@ main {
     }
 
     .whatsapp-float {
-        /* Lift floating whatsapp above the bottom nav */
         bottom: 90px !important;
         right: 15px !important;
         width: 50px !important;

@@ -6,8 +6,8 @@ const defaultData = {
         about: 'Hi, I am Saeed ullah, a passionate Web Developer creating modern and responsive websites.',
         email: 'saeed@example.com',
         bank: 'Bank Name: Meezan Bank, Acc: 1234567890',
-        whatsapp: '923000000000', // Replace with actual number
-        profileImage: '', // Base64 image will go here
+        whatsapp: '923000000000', 
+        profileImage: '', 
         projects: [
             {
                 id: 1,
@@ -31,8 +31,8 @@ const defaultData = {
         about: 'Hi, I am Naeem ur Rahman, a professional Video Editor specializing in cinematic cuts and color grading.',
         email: 'naeem@example.com',
         bank: 'Bank Name: HBL, Acc: 0987654321',
-        whatsapp: '923000000000', // Replace with actual number
-        profileImage: '', // Base64 image will go here
+        whatsapp: '923000000000', 
+        profileImage: '', 
         projects: [
             {
                 id: 1,
@@ -84,7 +84,7 @@ const db = {
         });
     },
 
-    // Get auth token (simulated)
+    // Get auth token
     checkAuth: function() {
         return localStorage.getItem('admin_token');
     },

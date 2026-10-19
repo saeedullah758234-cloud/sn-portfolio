@@ -1,17 +1,18 @@
-// DOM Loaded Event
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Safe Preloader Removal
+// Remove Preloader when everything is fully loaded (Fixes Loading Hang)
+window.addEventListener('load', () => {
     const preloader = document.querySelector('.preloader');
     if (preloader) {
+        preloader.style.opacity = '0';
+        preloader.style.transition = 'opacity 0.5s ease';
         setTimeout(() => {
-            preloader.style.opacity = '0';
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 500);
-        }, 800);
+            preloader.style.display = 'none';
+        }, 500);
     }
+});
 
-    // 2. Safe Mobile Menu Toggle
+// DOM Loaded Event
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Mobile Menu Toggle
     const menuBtn = document.querySelector('.menu-btn');
     const navLinks = document.querySelector('.nav-links');
     if (menuBtn && navLinks) {
@@ -23,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Initialize Animations safely (Only for desktop to stop mobile hang)
+    // 2. Initialize AOS Animations safely (Desktop Only)
     if (typeof AOS !== 'undefined' && window.innerWidth >= 768) {
         try {
             AOS.init({
@@ -32,11 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 offset: 100
             });
         } catch (e) {
-            console.error("AOS Error:", e);
+            console.log("AOS Error handled");
         }
     }
 
-    // 4. Initialize Particles safely (Only for desktop)
+    // 3. Initialize Particles safely (Desktop Only)
     if (typeof particlesJS !== 'undefined' && document.getElementById('particles-js') && window.innerWidth >= 768) {
         try {
             particlesJS('particles-js', {
@@ -46,49 +47,30 @@ document.addEventListener('DOMContentLoaded', () => {
                     "shape": { "type": "circle" },
                     "opacity": { "value": 0.5, "random": false },
                     "size": { "value": 3, "random": true },
-                    "line_linked": {
-                        "enable": true,
-                        "distance": 150,
-                        "color": "#00f3ff",
-                        "opacity": 0.4,
-                        "width": 1
-                    },
-                    "move": {
-                        "enable": true,
-                        "speed": 2,
-                        "direction": "none",
-                        "random": false,
-                        "straight": false,
-                        "out_mode": "out",
-                        "bounce": false
-                    }
+                    "line_linked": { "enable": true, "distance": 150, "color": "#00f3ff", "opacity": 0.4, "width": 1 },
+                    "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
                 },
                 "interactivity": {
                     "detect_on": "canvas",
-                    "events": {
-                        "onhover": { "enable": true, "mode": "grab" },
-                        "onclick": { "enable": true, "mode": "push" },
-                        "resize": true
-                    }
+                    "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }
                 },
                 "retina_detect": true
             });
         } catch (e) {
-            console.error("Particles Error:", e);
+            console.log("Particles Error handled");
         }
     }
 
-    // 5. Check which page we are on and load data safely
+    // 4. Load Data if on Portfolio Page
     const currentPage = window.location.pathname;
     if (currentPage.includes('portfolio.html')) {
         try {
             const urlParams = new URLSearchParams(window.location.search);
             let user = urlParams.get('user');
-            if (!user) user = 'saeed'; // Default if none provided
+            if (!user) user = 'saeed'; // Default
             loadPortfolioData(user);
         } catch (e) {
-            console.error("Error getting user param:", e);
-            loadPortfolioData('saeed'); // fallback
+            loadPortfolioData('saeed');
         }
     }
 });
@@ -105,17 +87,14 @@ function safeSetText(id, text) {
 async function loadPortfolioData(user) {
     try {
         const userData = await db.getUser(user);
-        if (!userData) {
-            console.error("No user data found!");
-            return;
-        }
+        if (!userData) return;
 
-        // Update Profile Info Safely
+        // Update Text Info
         safeSetText('profile-name', userData.name || 'Name not set');
         safeSetText('profile-title', userData.title || 'Title not set');
         safeSetText('profile-desc', userData.about || 'Description not set');
         
-        // Ensure email and bank icons are kept if they have HTML inside them initially
+        // Update Email and Bank with Icons
         const emailEl = document.getElementById('profile-email');
         if (emailEl) {
             emailEl.innerHTML = `<i class="fas fa-envelope"></i> ${userData.email || 'Email not set'}`;
@@ -127,17 +106,13 @@ async function loadPortfolioData(user) {
             <i class="fas fa-copy copy-icon" onclick="copyToClipboard('${userData.bank || ''}')"></i>`;
         }
 
-        // Update Profile Image Safely
+        // Update Profile Image
         const profileImg = document.getElementById('profile-image');
         if (profileImg) {
-            if (userData.profileImage) {
-                profileImg.src = userData.profileImage;
-            } else {
-                profileImg.src = 'https://via.placeholder.com/150'; // Fallback
-            }
+            profileImg.src = userData.profileImage ? userData.profileImage : 'https://via.placeholder.com/150';
         }
 
-        // Update WhatsApp Links Safely (Removes spaces/pluses for the link)
+        // Update WhatsApp Links
         if (userData.whatsapp) {
             const cleanNumber = userData.whatsapp.replace(/[^0-9]/g, '');
             const waLink = `https://wa.me/${cleanNumber}`;
@@ -149,10 +124,10 @@ async function loadPortfolioData(user) {
             if (waFloat) waFloat.href = waLink;
         }
 
-        // Load Projects Safely
+        // Load Projects
         const projectsGrid = document.getElementById('projects-grid');
         if (projectsGrid) {
-            projectsGrid.innerHTML = ''; // Clear existing loaders
+            projectsGrid.innerHTML = ''; // Clear default "Loading projects..." text
 
             if (userData.projects && userData.projects.length > 0) {
                 userData.projects.forEach(project => {
@@ -175,9 +150,7 @@ async function loadPortfolioData(user) {
             }
         }
     } catch (error) {
-        console.error("Error loading portfolio data:", error);
-        safeSetText('profile-name', 'Error loading data');
-        safeSetText('profile-title', 'Please refresh the page');
+        console.log("Error displaying portfolio data");
     }
 }
 
@@ -187,6 +160,6 @@ window.copyToClipboard = function(text) {
     navigator.clipboard.writeText(text).then(() => {
         alert("Copied to clipboard!");
     }).catch(err => {
-        console.error('Could not copy text: ', err);
+        console.log('Copy failed');
     });
 };
