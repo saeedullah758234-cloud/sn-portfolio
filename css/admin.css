@@ -30,6 +30,41 @@
     --sidebar-active: #6366f1;
 }
 
+/* Preloader Overlay Fix */
+#preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--card-bg);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#preloader.hide {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    display: none !important;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 body.admin-body-bg {
     background-color: var(--bg-color);
     color: var(--text-primary);
@@ -59,7 +94,7 @@ body.admin-body-bg {
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, visibility 0.3s ease;
 }
 
 .sidebar-header {
@@ -321,7 +356,7 @@ body.admin-body-bg {
     color: var(--text-secondary);
 }
 
-/* Dynamic Item Cards (Projects, Education, etc) */
+/* Dynamic Item Cards */
 .dynamic-item-card {
     background: var(--bg-color);
     border: 1px solid var(--border-color);
@@ -456,14 +491,18 @@ body.admin-body-bg {
     gap: 0.75rem;
 }
 
-/* Mobile & Tablet Styles */
+/* Mobile & Tablet Responsive Fixes */
 @media (max-width: 991px) {
     .admin-sidebar {
         transform: translateX(-100%);
+        visibility: hidden; /* Complete hide when closed to prevent text overlay on form */
+        z-index: 1200;
+        box-shadow: 5px 0 25px rgba(0,0,0,0.3);
     }
 
     .admin-sidebar.open {
         transform: translateX(0);
+        visibility: visible;
     }
 
     .sidebar-close-btn {
@@ -475,7 +514,7 @@ body.admin-body-bg {
         position: fixed;
         top: 0; left: 0; right: 0; bottom: 0;
         background: rgba(0,0,0,0.5);
-        z-index: 999;
+        z-index: 1150;
     }
 
     .sidebar-backdrop.active {
@@ -496,5 +535,9 @@ body.admin-body-bg {
 
     .grid-2 {
         grid-template-columns: 1fr;
+    }
+
+    .admin-content {
+        padding: 1rem;
     }
 }

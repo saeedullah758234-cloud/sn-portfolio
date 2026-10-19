@@ -3,15 +3,19 @@
    ========================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Auth Protection
+    // 1. Instant Preloader Hide Failsafe
+    const hidePreloader = () => {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.classList.add('hide');
+            setTimeout(() => { preloader.style.display = 'none'; }, 300);
+        }
+    };
+    setTimeout(hidePreloader, 350);
+
+    // 2. Auth Protection
     if (typeof requireAuth === 'function') {
         requireAuth();
-    }
-
-    // Hide preloader
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-        setTimeout(() => { preloader.style.display = 'none'; }, 400);
     }
 
     const currentUser = localStorage.getItem('sn_user') || 'saeed';
@@ -23,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         welcomeMsg.innerText = `Welcome, ${currentUser === 'saeed' ? 'Saeed ullah' : 'Naeem ur Rahman'}`;
     }
 
-    // 2. Sidebar Navigation & Mobile Drawer
+    // 3. Sidebar Navigation & Mobile Drawer
     const sidebar = document.getElementById('admin-sidebar');
     const sidebarToggle = document.getElementById('sidebar-toggle');
     const sidebarClose = document.getElementById('sidebar-close');
@@ -62,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 3. Logout & Theme Toggle
+    // 4. Logout & Theme Toggle
     const logoutBtn = document.getElementById('logout-btn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
@@ -85,14 +89,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 4. Load Data from Firebase / Fallback
+    // 5. Load Data from Firebase / Fallback
     if (typeof db !== 'undefined' && db.getUser) {
         db.getUser(currentUser, (data) => {
+            hidePreloader();
             if (data) {
                 currentData = data;
                 populateForm(data);
             }
         });
+    } else {
+        hidePreloader();
     }
 
     function populateForm(data) {
@@ -181,7 +188,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 5. Profile Photo Crop Engine
+    // 6. Profile Photo Crop Engine
     const cropModal = document.getElementById('crop-modal');
     const cropCanvas = document.getElementById('crop-canvas');
     const cropZoom = document.getElementById('crop-zoom');
@@ -236,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('mousemove', (e) => { if (!isDragging) return; offsetX = e.clientX - startX; offsetY = e.clientY - startY; drawCrop(); });
         window.addEventListener('mouseup', () => { isDragging = false; });
 
-        // Touch support for mobile
+        // Touch support for mobile devices
         cropCanvas.addEventListener('touchstart', (e) => { isDragging = true; startX = e.touches[0].clientX - offsetX; startY = e.touches[0].clientY - offsetY; });
         window.addEventListener('touchmove', (e) => { if (!isDragging) return; offsetX = e.touches[0].clientX - startX; offsetY = e.touches[0].clientY - startY; drawCrop(); });
         window.addEventListener('touchend', () => { isDragging = false; });
@@ -296,7 +303,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 6. Save All Changes to Firebase
+    // 7. Save All Changes to Firebase
     const saveBtn = document.getElementById('save-all-btn');
     if (saveBtn) {
         saveBtn.addEventListener('click', () => {
