@@ -43,37 +43,9 @@ body {
     padding: 0 1.5rem;
 }
 
-/* Theme Toggle */
-.theme-toggle {
-    position: fixed;
-    top: 1.5rem;
-    right: 1.5rem;
-    z-index: 1000;
-}
-
-.theme-toggle button {
-    background: var(--bg-card);
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: var(--shadow);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    transition: 0.3s;
-}
-
-.theme-toggle button:hover {
-    transform: scale(1.1);
-}
-
-/* Navigation */
+/* Navigation (Fixed Overlap Issue) */
 nav {
-    padding: 1.2rem 5%;
+    padding: 1rem 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -91,6 +63,12 @@ nav {
     text-decoration: none;
 }
 
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
 .nav-links {
     display: flex;
     gap: 1.5rem;
@@ -106,6 +84,26 @@ nav {
 
 .nav-links a:hover {
     color: var(--primary);
+}
+
+.theme-toggle-btn {
+    background: var(--bg-body);
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.theme-toggle-btn:hover {
+    background: var(--primary);
+    color: white;
 }
 
 /* Hero Section */
@@ -156,7 +154,7 @@ nav {
     border-radius: 2px;
 }
 
-/* Profile Grid & Cards Fix */
+/* Profile Grid & Cards */
 .profiles {
     padding: 2rem 0 5rem;
 }
@@ -202,11 +200,9 @@ nav {
     margin: 0;
 }
 
-.profile-card .profile-img {
+.profile-img {
     width: 110px !important;
     height: 110px !important;
-    min-width: 110px !important;
-    min-height: 110px !important;
     max-width: 110px !important;
     max-height: 110px !important;
     border-radius: 50% !important;
@@ -215,7 +211,7 @@ nav {
     margin: -55px auto 10px auto !important;
     display: block !important;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15) !important;
-    background-color: var(--border-color);
+    background-color: var(--bg-body);
 }
 
 .card-body {
@@ -302,19 +298,26 @@ footer {
     margin-top: 3rem;
 }
 
-/* Responsive Fixes */
+/* Mobile Nav & Layout Fixes */
 @media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        padding: 1rem;
+        gap: 1rem;
+    }
+    .nav-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .nav-links {
+        gap: 1rem;
+    }
     .profile-grid {
         grid-template-columns: 1fr;
         gap: 2rem;
         padding: 0 0.5rem;
     }
-
     .hero {
         padding: 3rem 0 2rem;
-    }
-
-    nav {
-        padding: 1rem 4%;
     }
 }
