@@ -1,27 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&N Portfolio - Profile</title>
-    <!-- Google Fonts -->
+    <title>S&N Portfolio - Profile View</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Full Centered Preloader -->
+    <!-- Preloader -->
     <div class="preloader">
         <div class="spinner"></div>
-        <h2><span>S</span>&<span>N</span></h2>
+        <h2><span>Loading</span> Profile</h2>
     </div>
 
-    <!-- Background Particles -->
-    <div id="particles-js"></div>
-
-    <!-- Desktop Header Navigation -->
+    <!-- Header -->
     <header>
         <nav>
             <a href="index.html" class="logo"><span>S&N</span> Portfolio</a>
@@ -30,58 +24,105 @@
                 <li><a href="portfolio.html?user=saeed" id="nav-saeed">Saeed (Web)</a></li>
                 <li><a href="portfolio.html?user=naeem" id="nav-naeem">Naeem (Video)</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="login.html">Admin Login</a></li>
             </ul>
-            <button class="menu-btn" aria-label="Toggle Menu">
-                <i class="fas fa-bars"></i>
-            </button>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="theme-toggle" id="theme-btn"><i class="fas fa-moon"></i></button>
+                <button class="menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
         </nav>
     </header>
 
     <main>
-        <!-- Profile Header Section -->
-        <section class="portfolio-header">
-            <div class="profile-img">
-                <img id="profile-image" src="https://via.placeholder.com/150" alt="Profile">
+        <!-- Profile Header with Cover & Image -->
+        <section class="portfolio-header fade-in">
+            <div class="cover-photo" id="cover-image-container">
+                <!-- Cover Image will be injected here -->
             </div>
-            <h1 id="profile-name">Loading Profile...</h1>
-            <h3 class="role" id="profile-title">Please wait...</h3>
             
-            <div class="contact-info">
-                <div class="info-item" id="profile-email">
-                    <i class="fas fa-envelope"></i> <span>Loading...</span>
-                </div>
-                <div class="info-item" id="profile-bank">
-                    <i class="fas fa-university"></i> <span>Loading...</span>
-                </div>
+            <div class="profile-img">
+                <img id="profile-image" src="https://via.placeholder.com/160" alt="Profile Image">
+            </div>
+            
+            <h1 id="profile-name">Loading...</h1>
+            <h3 class="role" id="profile-title">Please Wait</h3>
+            <p class="intro-text" id="profile-intro"></p>
+
+            <div class="social-links" id="social-links">
+                <!-- Social links injected here -->
             </div>
 
-            <p id="profile-desc" style="max-width: 600px; margin: 20px auto; color: var(--text-secondary);">
-                Loading profile description...
-            </p>
+            <div class="contact-info fade-in" id="contact-grid">
+                <!-- Contact info injected here -->
+            </div>
 
-            <div style="margin-top: 25px;">
+            <div style="margin-top: 25px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;">
                 <a href="#" id="whatsapp-btn" class="btn whatsapp-btn" target="_blank">
                     <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                </a>
+                <a href="#" id="resume-btn" class="btn secondary-btn" style="display: none;" target="_blank">
+                    <i class="fas fa-download"></i> Download CV
                 </a>
             </div>
         </section>
 
-        <!-- Projects Section -->
-        <section class="projects-section">
-            <h2 class="section-title">My <span>Projects</span></h2>
-            <div class="projects-grid" id="projects-grid">
-                <p style="text-align: center; width: 100%; color: var(--text-secondary);">Loading projects...</p>
+        <!-- About Section -->
+        <section class="section fade-in" id="about-container">
+            <div class="about-section">
+                <h2>About Me</h2>
+                <p id="profile-about">Loading about information...</p>
             </div>
+        </section>
+
+        <!-- Services Section -->
+        <section class="section fade-in" id="services-container" style="display: none;">
+            <h2 class="section-title">My <span>Services</span></h2>
+            <div class="services-grid" id="services-grid"></div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section fade-in" id="skills-container" style="display: none;">
+            <h2 class="section-title">Professional <span>Skills</span></h2>
+            <div class="skills-grid" id="skills-grid"></div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="section fade-in" id="projects-container" style="display: none;">
+            <h2 class="section-title">Featured <span>Projects</span></h2>
+            <div class="projects-grid" id="projects-grid"></div>
+        </section>
+
+        <!-- Experience & Education (Timeline) -->
+        <section class="section fade-in" id="timeline-container" style="display: none;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+                
+                <!-- Experience -->
+                <div id="experience-wrapper" style="display: none;">
+                    <h2 class="section-title" style="font-size: 28px; text-align: left;">Work <span>Experience</span></h2>
+                    <div class="timeline" id="experience-timeline"></div>
+                </div>
+
+                <!-- Education -->
+                <div id="education-wrapper" style="display: none;">
+                    <h2 class="section-title" style="font-size: 28px; text-align: left;">My <span>Education</span></h2>
+                    <div class="timeline" id="education-timeline"></div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section class="section fade-in" id="certifications-container" style="display: none;">
+            <h2 class="section-title">Licenses & <span>Certifications</span></h2>
+            <div class="cert-grid" id="certifications-grid"></div>
         </section>
     </main>
 
-    <!-- Floating WhatsApp Button -->
+    <!-- Floating WhatsApp -->
     <a href="#" id="whatsapp-float" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- Mobile Bottom Navigation -->
+    <!-- Mobile Nav -->
     <nav class="bottom-nav">
         <ul class="bottom-nav-links">
             <li><a href="index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
@@ -91,12 +132,10 @@
         </ul>
     </nav>
 
-    <!-- Desktop Footer -->
     <footer class="desktop-footer">
         <p>&copy; 2024 S&N Portfolio. All rights reserved.</p>
     </footer>
 
-    <!-- Scripts -->
     <script src="js/database.js"></script>
     <script src="js/app.js"></script>
 </body>

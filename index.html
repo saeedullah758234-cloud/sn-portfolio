@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&N Portfolio - Home</title>
+    <title>S&N Portfolio - Welcome</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
@@ -12,16 +12,13 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Full Centered Preloader -->
+    <!-- Preloader -->
     <div class="preloader">
         <div class="spinner"></div>
         <h2><span>S</span>&<span>N</span></h2>
     </div>
 
-    <!-- Background Particles -->
-    <div id="particles-js"></div>
-
-    <!-- Desktop Header Navigation -->
+    <!-- Desktop Header & Navigation -->
     <header>
         <nav>
             <a href="index.html" class="logo"><span>S&N</span> Portfolio</a>
@@ -30,11 +27,15 @@
                 <li><a href="portfolio.html?user=saeed">Saeed (Web)</a></li>
                 <li><a href="portfolio.html?user=naeem">Naeem (Video)</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="login.html">Admin Login</a></li>
             </ul>
-            <button class="menu-btn" aria-label="Toggle Menu">
-                <i class="fas fa-bars"></i>
-            </button>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="theme-toggle" id="theme-btn" aria-label="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="menu-btn" id="mobile-menu-btn" aria-label="Toggle Menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </nav>
     </header>
 
@@ -42,8 +43,8 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <h1>Welcome to <span class="glitch-text">S&N Portfolio</span></h1>
-                <p>We craft high-performance websites and cinematic video edits that bring your vision to life worldwide.</p>
+                <h1>Welcome to <span class="gradient-text">S&N Portfolio</span></h1>
+                <p>We craft high-performance websites and cinematic video edits that bring your vision to life worldwide. Experience digital excellence.</p>
                 <div class="hero-buttons">
                     <a href="#profiles" class="btn primary-btn"><i class="fas fa-user-tie"></i> View Portfolios</a>
                     <a href="about.html" class="btn secondary-btn"><i class="fas fa-info-circle"></i> Learn More</a>
@@ -52,38 +53,38 @@
         </section>
 
         <!-- Profiles Showcase Section -->
-        <section class="profiles-section" id="profiles">
-            <h2 class="section-title">Meet Our <span>Experts</span></h2>
+        <section class="section" id="profiles">
+            <h2 class="section-title fade-in">Meet Our <span>Experts</span></h2>
+            <p class="section-subtitle fade-in">Choose a professional to view their detailed portfolio</p>
+            
             <div class="profiles-grid">
-                
                 <!-- Saeed's Card -->
-                <div class="profile-card">
+                <div class="profile-card fade-in">
                     <div class="profile-img">
-                        <img src="https://via.placeholder.com/150" alt="Saeed ullah">
+                        <img src="https://via.placeholder.com/150/00f3ff/0a0a1a?text=S" alt="Saeed ullah">
                     </div>
                     <h3>Saeed ullah</h3>
                     <span class="role">Web Developer</span>
                     <p>Expert in HTML, CSS, JavaScript, and modern web application development.</p>
-                    <a href="portfolio.html?user=saeed" class="btn primary-btn" style="margin-top: 15px;">View Portfolio</a>
+                    <a href="portfolio.html?user=saeed" class="btn primary-btn" style="margin-top: 15px; width: 100%; justify-content: center;">View Portfolio</a>
                 </div>
 
                 <!-- Naeem's Card -->
-                <div class="profile-card">
+                <div class="profile-card fade-in" style="transition-delay: 0.2s;">
                     <div class="profile-img">
-                        <img src="https://via.placeholder.com/150" alt="Naeem ur Rahman">
+                        <img src="https://via.placeholder.com/150/7b2cbf/ffffff?text=N" alt="Naeem ur Rahman">
                     </div>
                     <h3>Naeem ur Rahman</h3>
                     <span class="role">Video Editor</span>
                     <p>Specialist in cinematic cuts, color grading, and dynamic video edits.</p>
-                    <a href="portfolio.html?user=naeem" class="btn primary-btn" style="margin-top: 15px;">View Portfolio</a>
+                    <a href="portfolio.html?user=naeem" class="btn primary-btn" style="margin-top: 15px; width: 100%; justify-content: center;">View Portfolio</a>
                 </div>
-
             </div>
         </section>
     </main>
 
     <!-- Floating WhatsApp Button -->
-    <a href="https://wa.me/923000000000" id="whatsapp-float" class="whatsapp-float" target="_blank">
+    <a href="https://wa.me/923000000000" id="whatsapp-float" class="whatsapp-float" target="_blank" aria-label="Chat on WhatsApp">
         <i class="fab fa-whatsapp"></i>
     </a>
 

@@ -1,272 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - S&N Portfolio</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <title>S&N Portfolio - About Us</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/animations.css">
 </head>
 <body>
-
-    <!-- Navbar -->
-    <nav class="navbar navbar-solid" id="navbar">
-        <div class="nav-container">
-            <a href="index.html" class="nav-logo">
-                <span class="logo-gradient">S&N</span> Portfolio
-            </a>
-            <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="portfolio.html?user=saeedullah" class="nav-link">Saeed</a></li>
-                <li><a href="portfolio.html?user=naeemurrahman" class="nav-link">Naeem</a></li>
-                <li><a href="about.html" class="nav-link active">About</a></li>
-                <li><a href="login.html" class="nav-link nav-login-btn">Admin Login</a></li>
-            </ul>
-            <div class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- About Hero -->
-    <section class="about-hero">
-        <div class="container">
-            <div class="section-header" data-aos="fade-up">
-                <span class="section-tag">About Us</span>
-                <h1 class="section-title hero-title-sm">The Creative <span class="gradient-text">Duo</span></h1>
-                <p class="section-subtitle">Building digital excellence together</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Saeed -->
-    <section class="about-person" data-aos="fade-up">
-        <div class="container">
-            <div class="about-card">
-                <div class="about-image-side">
-                    <div class="about-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=600&fit=crop&crop=face"
-                            alt="Saeed Ullah" class="about-image" id="aboutSaeedImg">
-                        <div class="about-image-decoration"></div>
-                    </div>
-                </div>
-                <div class="about-content-side">
-                    <span class="about-label">Web Developer</span>
-                    <h2 class="about-name" id="aboutSaeedName">Saeed Ullah</h2>
-                    <p class="about-bio" id="aboutSaeedBio">
-                        A passionate full-stack web developer with expertise in creating modern, responsive, and user-friendly websites. Specializing in front-end development with HTML, CSS, JavaScript, and React, while also experienced in back-end technologies like Node.js and databases.
-                    </p>
-                    <p class="about-bio">
-                        With a keen eye for design and a commitment to clean code, Saeed delivers high-quality web solutions that exceed client expectations. Every project is an opportunity to create something amazing.
-                    </p>
-
-                    <div class="about-skills-section">
-                        <h3>Skills & Technologies</h3>
-                        <div class="skill-bars">
-                            <div class="skill-bar-item">
-                                <div class="skill-bar-header">
-                                    <span>HTML / CSS</span>
-                                    <span>95%</span>
-                                </div>
-                                <div class="skill-bar-track">
-                                    <div class="skill-bar-fill" data-width="95"></div>
-                                </div>
-                            </div>
-                            <div class="skill-bar-item">
-                                <div class="skill-bar-header">
-                                    <span>JavaScript</span>
-                                    <span>90%</span>
-                                </div>
-                                <div class="skill-bar-track">
-                                    <div class="skill-bar-fill" data-width="90"></div>
-                                </div>
-                            </div>
-                            <div class="skill-bar-item">
-                                <div class="skill-bar-header">
-                                    <span>React / Next.js</span>
-                                    <span>85%</span>
-                                </div>
-                                <div class="skill-bar-track">
-                                    <div class="skill-bar-fill" data-width="85"></div>
-                                </div>
-                            </div>
-                            <div class="skill-bar-item">
-                                <div class="skill-bar-header">
-                                    <span>Node.js</span>
-                                    <span>80%</span>
-                                </div>
-                                <div class="skill-bar-track">
-                                    <div class="skill-bar-fill" data-width="80"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="about-actions">
-                        <a href="portfolio.html?user=saeedullah" class="btn btn-primary">
-                            <i class="fas fa-folder"></i> View Portfolio
-                        </a>
-                        <a href="#" class="btn btn-whatsapp" id="aboutWhatsappSaeed" target="_blank">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Divider -->
-    <div class="section-divider">
-        <div class="divider-line"></div>
-        <span class="divider-icon"><i class="fas fa-star"></i></span>
-        <div class="divider-line"></div>
+    <div class="preloader">
+        <div class="spinner"></div>
+        <h2><span>About</span> Us</h2>
     </div>
 
-    <!-- About Naeem -->
-    <section class="about-person" data-aos="fade-up">
-        <div class="container">
-            <div class="about-card about-card-reverse">
-                <div class="about-content-side">
-                    <span class="about-label about-label-purple">Video Editor</span>
-                    <h2 class="about-name" id="aboutNaeemName">Naeem ur Rahman</h2>
-                    <p class="about-bio" id="aboutNaeemBio">
-                        A creative video editor with a passion for visual storytelling. Specializing in cinematic edits, color grading, motion graphics, and post-production for various platforms including YouTube, social media, and commercial projects.
-                    </p>
-                    <p class="about-bio">
-                        With years of experience working with diverse clients, Naeem brings stories to life through expert editing, seamless transitions, and captivating visual effects that leave lasting impressions.
-                    </p>
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><span>S&N</span> Portfolio</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="portfolio.html?user=saeed">Saeed (Web)</a></li>
+                <li><a href="portfolio.html?user=naeem">Naeem (Video)</a></li>
+                <li><a href="about.html" class="active">About</a></li>
+            </ul>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <button class="theme-toggle" id="theme-btn"><i class="fas fa-moon"></i></button>
+                <button class="menu-btn" id="mobile-menu-btn"><i class="fas fa-bars"></i></button>
+            </div>
+        </nav>
+    </header>
 
-                    <div class="about-skills-section">
-                        <h3>Skills & Tools</h3>
-                        <div class="skill-bars">
-                            <div class="skill-bar-item">
-                                <div class="skill-bar-header">
-                                    <span>Adobe Premiere Pro</span>
-                                    <span>95%</span>
-                                </div>
-                                <div class="skill-bar-track">
-                                    <div class="skill-bar-fill skill-fill-purple" data-width="95"></div>
-                                </div>
-                            </div>
-                            <div class="skill-bar-item">
-                                <div class="skill-bar-header">
-                                    <span>After Effects</span>
-                                    <span>90%</span>
-                                </div>
-                                <div class="skill-bar-track">
-                                    <div class="skill-bar-fill skill-fill-purple" data-width="90"></div>
-                                </div>
-                            </div>
-                            <div class="skill-bar-item">
-                                <div class="skill-bar-header">
-                                    <span>DaVinci Resolve</span>
-                                    <span>85%</span>
-                                </div>
-                                <div class="skill-bar-track">
-                                    <div class="skill-bar-fill skill-fill-purple" data-width="85"></div>
-                                </div>
-                            </div>
-                            <div class="skill-bar-item">
-                                <div class="skill-bar-header">
-                                    <span>Photoshop / Illustrator</span>
-                                    <span>80%</span>
-                                </div>
-                                <div class="skill-bar-track">
-                                    <div class="skill-bar-fill skill-fill-purple" data-width="80"></div>
-                                </div>
-                            </div>
-                        </div>
+    <main>
+        <section class="section" style="padding-top: 60px;">
+            <h1 class="section-title fade-in">About <span>S&N</span></h1>
+            <p class="section-subtitle fade-in">The perfect combination of Code and Cinema.</p>
+
+            <div class="about-section fade-in" style="margin-top: 40px;">
+                <h2 style="text-align: center; margin-bottom: 30px;">Our Vision</h2>
+                <p style="text-align: center; max-width: 800px; margin: 0 auto 40px;">
+                    We are a duo of passionate professionals dedicated to delivering top-notch digital solutions. 
+                    Whether you need a blazing-fast, beautiful website or a cinematic video that captures every emotion, 
+                    we bring your ideas to reality with precision and creativity.
+                </p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 40px;">
+                    <div style="text-align: center; padding: 20px;">
+                        <i class="fas fa-laptop-code" style="font-size: 40px; color: var(--accent-primary); margin-bottom: 15px;"></i>
+                        <h3 style="color: var(--text-primary); margin-bottom: 10px;">Web Development</h3>
+                        <p style="color: var(--text-secondary); font-size: 14px;">Led by Saeed ullah, we build responsive, secure, and modern web applications tailored to your business needs.</p>
                     </div>
-
-                    <div class="about-actions">
-                        <a href="portfolio.html?user=naeemurrahman" class="btn btn-purple">
-                            <i class="fas fa-folder"></i> View Portfolio
-                        </a>
-                        <a href="#" class="btn btn-whatsapp" id="aboutWhatsappNaeem" target="_blank">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </a>
+                    
+                    <div style="text-align: center; padding: 20px;">
+                        <i class="fas fa-film" style="font-size: 40px; color: var(--accent-secondary); margin-bottom: 15px;"></i>
+                        <h3 style="color: var(--text-primary); margin-bottom: 10px;">Video Production</h3>
+                        <p style="color: var(--text-secondary); font-size: 14px;">Led by Naeem ur Rahman, we edit and color grade videos to create compelling visual stories for any platform.</p>
                     </div>
                 </div>
-                <div class="about-image-side">
-                    <div class="about-image-wrapper">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=500&h=600&fit=crop&crop=face"
-                            alt="Naeem ur Rahman" class="about-image" id="aboutNaeemImg">
-                        <div class="about-image-decoration about-decoration-purple"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Why Choose Us -->
-    <section class="why-us-section" data-aos="fade-up">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-tag">Why Us</span>
-                <h2 class="section-title">Why Choose <span class="gradient-text">Us?</span></h2>
-            </div>
-            <div class="why-us-grid">
-                <div class="why-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="why-icon"><i class="fas fa-bolt"></i></div>
-                    <h3>Fast Delivery</h3>
-                    <p>We deliver high-quality work within tight deadlines without compromising quality.</p>
-                </div>
-                <div class="why-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="why-icon"><i class="fas fa-gem"></i></div>
-                    <h3>Premium Quality</h3>
-                    <p>Every project is crafted with attention to detail and industry best practices.</p>
-                </div>
-                <div class="why-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="why-icon"><i class="fas fa-headset"></i></div>
-                    <h3>24/7 Support</h3>
-                    <p>We're always available to help. Reach us anytime via WhatsApp.</p>
-                </div>
-                <div class="why-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="why-icon"><i class="fas fa-dollar-sign"></i></div>
-                    <h3>Affordable Pricing</h3>
-                    <p>Professional services at competitive prices. Great value for your investment.</p>
+                <div style="text-align: center; margin-top: 60px; padding-top: 40px; border-top: 1px solid var(--border-color);">
+                    <h3 style="color: var(--text-primary); margin-bottom: 15px;">Admin Portal</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 20px;">Authorized administrators can manage their portfolios here.</p>
+                    <a href="login.html" class="btn secondary-btn small-btn">
+                        <i class="fas fa-lock"></i> Admin Login
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; 2025 Saeed & Naeem Portfolio. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Floating WhatsApp -->
-    <a href="#" class="whatsapp-float" id="whatsappFloat" target="_blank">
+    <a href="https://wa.me/923000000000" id="whatsapp-float" class="whatsapp-float" target="_blank">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <!-- Mobile Bottom Nav -->
-    <nav class="mobile-bottom-nav" id="mobileNav">
-        <a href="index.html" class="bottom-nav-item">
-            <i class="fas fa-home"></i><span>Home</span>
-        </a>
-        <a href="portfolio.html?user=saeedullah" class="bottom-nav-item">
-            <i class="fas fa-code"></i><span>Saeed</span>
-        </a>
-        <a href="portfolio.html?user=naeemurrahman" class="bottom-nav-item">
-            <i class="fas fa-film"></i><span>Naeem</span>
-        </a>
-        <a href="about.html" class="bottom-nav-item active">
-            <i class="fas fa-info-circle"></i><span>About</span>
-        </a>
+    <nav class="bottom-nav">
+        <ul class="bottom-nav-links">
+            <li><a href="index.html"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a href="portfolio.html?user=saeed"><i class="fas fa-code"></i><span>Saeed</span></a></li>
+            <li><a href="portfolio.html?user=naeem"><i class="fas fa-film"></i><span>Naeem</span></a></li>
+            <li><a href="about.html" class="active"><i class="fas fa-info-circle"></i><span>About</span></a></li>
+        </ul>
     </nav>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <footer class="desktop-footer">
+        <p>&copy; 2024 S&N Portfolio. All rights reserved.</p>
+    </footer>
+
     <script src="js/database.js"></script>
     <script src="js/app.js"></script>
 </body>
