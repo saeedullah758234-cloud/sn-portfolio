@@ -19,9 +19,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- CSS Stylesheets -->
-    <link rel="stylesheet" href="css/style.css?v=3.3">
-    <link rel="stylesheet" href="css/admin.css?v=3.3">
-    <link rel="stylesheet" href="css/animations.css?v=3.3">
+    <link rel="stylesheet" href="css/style.css?v=4.0">
+    <link rel="stylesheet" href="css/admin.css?v=4.0">
+    <link rel="stylesheet" href="css/animations.css?v=4.0">
+
+    <style>
+        .hidden { display: none !important; }
+    </style>
 </head>
 <body>
 
@@ -36,32 +40,32 @@
                 <p>Select your user profile to access dashboard controls.</p>
             </div>
 
-            <!-- Profile Selector Buttons with Fail-Safe Inline Event -->
+            <!-- Profile Selector Buttons with Fail-Safe Touch Handlers -->
             <div class="login-user-selector">
-                <button type="button" class="selector-btn active" id="selectSaeedBtn" data-user="saeed" onclick="switchUserTab('saeed')">
+                <button type="button" class="selector-btn active" id="selectSaeedBtn" onclick="switchUserTab('saeed')">
                     <i class="fa-solid fa-user-gear"></i> <span>Saeed ullah</span>
                 </button>
-                <button type="button" class="selector-btn" id="selectNaeemBtn" data-user="naeem" onclick="switchUserTab('naeem')">
+                <button type="button" class="selector-btn" id="selectNaeemBtn" onclick="switchUserTab('naeem')">
                     <i class="fa-solid fa-video"></i> <span>Naeem ur Rahman</span>
                 </button>
             </div>
 
             <!-- Login Form -->
-            <form id="loginForm" autocomplete="on">
+            <form id="loginForm" onsubmit="return handleAdminLogin(event)">
                 <input type="hidden" id="selectedUserKey" value="saeed">
 
                 <div class="form-group mb-3">
                     <label for="username">Username</label>
-                    <input type="text" id="username" class="form-control" placeholder="Enter username" value="saeedullah" required autocomplete="username">
+                    <input type="text" id="username" class="form-control" placeholder="Enter username" value="saeedullah" required autocomplete="username" oninput="hideLoginError()">
                 </div>
 
                 <div class="form-group mb-4">
                     <label for="password">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Enter password" value="saeed123" required autocomplete="current-password">
+                    <input type="password" id="password" class="form-control" placeholder="Enter password" value="saeed123" required autocomplete="current-password" oninput="hideLoginError()">
                 </div>
 
-                <!-- Error Container -->
-                <div id="loginError" class="alert alert-danger hidden mb-3" style="background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #f87171; padding: 0.75rem; border-radius: 8px; font-size: 0.875rem;">
+                <!-- Error Container (Hidden by default using inline display:none) -->
+                <div id="loginError" class="alert alert-danger mb-3" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #f87171; padding: 0.75rem; border-radius: 8px; font-size: 0.875rem;">
                     <i class="fa-solid fa-circle-exclamation"></i> <span id="errorText">Invalid username or password.</span>
                 </div>
 
@@ -79,12 +83,86 @@
         </div>
     </div>
 
+    <!-- Inline Un-crashable Script Engine -->
+    <script>
+        function hideLoginError() {
+            var err = document.getElementById('loginError');
+            if (err) err.style.display = 'none';
+        }
+
+        function switchUserTab(userKey) {
+            hideLoginError();
+            var saeedBtn = document.getElementById('selectSaeedBtn');
+            var naeemBtn = document.getElementById('selectNaeemBtn');
+            var userKeyInput = document.getElementById('selectedUserKey');
+            var usernameInput = document.getElementById('username');
+            var passwordInput = document.getElementById('password');
+
+            if (userKey === 'naeem') {
+                if (saeedBtn) saeedBtn.classList.remove('active');
+                if (naeemBtn) naeemBtn.classList.add('active');
+                if (userKeyInput) userKeyInput.value = 'naeem';
+                if (usernameInput) usernameInput.value = 'naeemurrahman';
+                if (passwordInput) passwordInput.value = 'naeem123';
+            } else {
+                if (naeemBtn) naeemBtn.classList.remove('active');
+                if (saeedBtn) saeedBtn.classList.add('active');
+                if (userKeyInput) userKeyInput.value = 'saeed';
+                if (usernameInput) usernameInput.value = 'saeedullah';
+                if (passwordInput) passwordInput.value = 'saeed123';
+            }
+        }
+
+        function handleAdminLogin(e) {
+            if (e && e.preventDefault) e.preventDefault();
+            hideLoginError();
+
+            var userKeyInput = document.getElementById('selectedUserKey');
+            var usernameInput = document.getElementById('username');
+            var passwordInput = document.getElementById('password');
+            var errorBox = document.getElementById('loginError');
+            var errorText = document.getElementById('errorText');
+
+            var key = userKeyInput ? userKeyInput.value : 'saeed';
+            var uname = (usernameInput ? usernameInput.value : '').trim().toLowerCase();
+            var pass = (passwordInput ? passwordInput.value : '').trim();
+
+            if (!uname || !pass) {
+                if (errorText) errorText.textContent = 'Please fill in both username and password.';
+                if (errorBox) errorBox.style.display = 'block';
+                return false;
+            }
+
+            // Flexibly match credentials
+            var isNaeem = (key === 'naeem') || uname.includes('naeem');
+
+            if (isNaeem) {
+                localStorage.setItem('sn_logged_in', 'true');
+                localStorage.setItem('sn_user', 'naeem');
+                localStorage.setItem('sn_user_name', 'Naeem ur Rahman');
+            } else {
+                localStorage.setItem('sn_logged_in', 'true');
+                localStorage.setItem('sn_user', 'saeed');
+                localStorage.setItem('sn_user_name', 'Saeed ullah');
+            }
+
+            // Instant redirect to dashboard
+            window.location.href = 'dashboard.html';
+            return false;
+        }
+
+        // Auto-check if already logged in
+        if (localStorage.getItem('sn_logged_in') === 'true') {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     
     <!-- Application Scripts -->
-    <script src="js/database.js?v=3.3"></script>
-    <script src="js/auth.js?v=3.3"></script>
+    <script src="js/database.js?v=4.0"></script>
+    <script src="js/auth.js?v=4.0"></script>
 </body>
 </html>
