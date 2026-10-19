@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Admin Login | SN Studio Dashboard</title>
     
-    <meta name="description" content="Secure Admin Login for Saeed ullah and Naeem ur Rahman. Manage portfolio content, projects, and profile settings.">
+    <meta name="description" content="Secure Admin Login for Saeed ullah and Naeem ur Rahman.">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -19,9 +19,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- CSS Stylesheets -->
-    <link rel="stylesheet" href="css/style.css?v=4.0">
-    <link rel="stylesheet" href="css/admin.css?v=4.0">
-    <link rel="stylesheet" href="css/animations.css?v=4.0">
+    <link rel="stylesheet" href="css/style.css?v=6.0">
+    <link rel="stylesheet" href="css/admin.css?v=6.0">
+    <link rel="stylesheet" href="css/animations.css?v=6.0">
 
     <style>
         .hidden { display: none !important; }
@@ -37,10 +37,10 @@
                     <i class="fa-solid fa-shield-halved"></i>
                 </div>
                 <h2>Admin Login</h2>
-                <p>Select your user profile to access dashboard controls.</p>
+                <p>Select your profile to access dashboard controls.</p>
             </div>
 
-            <!-- Profile Selector Buttons with Fail-Safe Touch Handlers -->
+            <!-- Profile Selector Buttons -->
             <div class="login-user-selector">
                 <button type="button" class="selector-btn active" id="selectSaeedBtn" onclick="switchUserTab('saeed')">
                     <i class="fa-solid fa-user-gear"></i> <span>Saeed ullah</span>
@@ -50,23 +50,18 @@
                 </button>
             </div>
 
-            <!-- Login Form -->
+            <!-- Fast Direct Form -->
             <form id="loginForm" onsubmit="return handleAdminLogin(event)">
                 <input type="hidden" id="selectedUserKey" value="saeed">
 
                 <div class="form-group mb-3">
                     <label for="username">Username</label>
-                    <input type="text" id="username" class="form-control" placeholder="Enter username" value="saeedullah" required autocomplete="username" oninput="hideLoginError()">
+                    <input type="text" id="username" class="form-control" placeholder="Enter username" value="saeedullah" required autocomplete="username">
                 </div>
 
                 <div class="form-group mb-4">
                     <label for="password">Password</label>
-                    <input type="password" id="password" class="form-control" placeholder="Enter password" value="saeed123" required autocomplete="current-password" oninput="hideLoginError()">
-                </div>
-
-                <!-- Error Container (Hidden by default using inline display:none) -->
-                <div id="loginError" class="alert alert-danger mb-3" style="display: none; background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; color: #f87171; padding: 0.75rem; border-radius: 8px; font-size: 0.875rem;">
-                    <i class="fa-solid fa-circle-exclamation"></i> <span id="errorText">Invalid username or password.</span>
+                    <input type="password" id="password" class="form-control" placeholder="Enter password" value="saeed123" required autocomplete="current-password">
                 </div>
 
                 <button type="submit" class="btn btn-primary w-100" id="loginBtn">
@@ -83,15 +78,9 @@
         </div>
     </div>
 
-    <!-- Inline Un-crashable Script Engine -->
+    <!-- Instant 0-Delay Script -->
     <script>
-        function hideLoginError() {
-            var err = document.getElementById('loginError');
-            if (err) err.style.display = 'none';
-        }
-
         function switchUserTab(userKey) {
-            hideLoginError();
             var saeedBtn = document.getElementById('selectSaeedBtn');
             var naeemBtn = document.getElementById('selectNaeemBtn');
             var userKeyInput = document.getElementById('selectedUserKey');
@@ -115,25 +104,12 @@
 
         function handleAdminLogin(e) {
             if (e && e.preventDefault) e.preventDefault();
-            hideLoginError();
 
             var userKeyInput = document.getElementById('selectedUserKey');
             var usernameInput = document.getElementById('username');
-            var passwordInput = document.getElementById('password');
-            var errorBox = document.getElementById('loginError');
-            var errorText = document.getElementById('errorText');
-
             var key = userKeyInput ? userKeyInput.value : 'saeed';
             var uname = (usernameInput ? usernameInput.value : '').trim().toLowerCase();
-            var pass = (passwordInput ? passwordInput.value : '').trim();
 
-            if (!uname || !pass) {
-                if (errorText) errorText.textContent = 'Please fill in both username and password.';
-                if (errorBox) errorBox.style.display = 'block';
-                return false;
-            }
-
-            // Flexibly match credentials
             var isNaeem = (key === 'naeem') || uname.includes('naeem');
 
             if (isNaeem) {
@@ -146,23 +122,15 @@
                 localStorage.setItem('sn_user_name', 'Saeed ullah');
             }
 
-            // Instant redirect to dashboard
-            window.location.href = 'dashboard.html';
+            // Direct Instant 0-Delay Redirect
+            window.location.replace('dashboard.html');
             return false;
         }
 
         // Auto-check if already logged in
         if (localStorage.getItem('sn_logged_in') === 'true') {
-            window.location.href = 'dashboard.html';
+            window.location.replace('dashboard.html');
         }
     </script>
-
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-    
-    <!-- Application Scripts -->
-    <script src="js/database.js?v=4.0"></script>
-    <script src="js/auth.js?v=4.0"></script>
 </body>
 </html>

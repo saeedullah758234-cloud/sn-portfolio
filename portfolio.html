@@ -20,12 +20,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- CSS Stylesheets -->
-    <link rel="stylesheet" href="css/style.css?v=3.0">
-    <link rel="stylesheet" href="css/animations.css?v=3.0">
+    <link rel="stylesheet" href="css/style.css?v=6.0">
+    <link rel="stylesheet" href="css/animations.css?v=6.0">
 </head>
 <body>
 
-    <!-- Preloader -->
+    <!-- Preloader (Fast removal) -->
     <div id="preloader">
         <div class="loader-spinner"></div>
     </div>
@@ -45,13 +45,16 @@
                 <li><a href="about.html">About Team</a></li>
                 <li><a href="portfolio.html?user=saeed" id="navSaeedLink">Saeed's Work</a></li>
                 <li><a href="portfolio.html?user=naeem" id="navNaeemLink">Naeem's Work</a></li>
+                <li class="mobile-only-link">
+                    <a href="login.html" class="btn btn-primary btn-sm w-100"><i class="fa-solid fa-lock"></i> Admin Login</a>
+                </li>
             </ul>
 
             <div class="nav-right">
                 <button class="theme-toggle" id="themeToggleBtn" aria-label="Toggle Theme">
                     <i class="fa-solid fa-moon"></i>
                 </button>
-                <a href="login.html" class="btn btn-outline btn-sm" id="navAdminBtn">
+                <a href="login.html" class="btn btn-outline btn-sm desktop-only-btn" id="navAdminBtn">
                     <i class="fa-solid fa-lock"></i> Admin Login
                 </a>
                 <button class="menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation">
@@ -62,29 +65,29 @@
     </header>
 
     <main>
-        <!-- Dynamic Header & Cover Banner -->
+        <!-- Dynamic Header & Cover Banner (Zero Grey Box Placeholders) -->
         <section class="portfolio-header-section">
             <div class="portfolio-cover" id="p-cover-box">
-                <img src="https://via.placeholder.com/1200x350" alt="Cover Image" id="p-cover-img">
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='350' viewBox='0 0 1200 350'><rect width='100%2' height='100%' fill='%234f46e5'/></svg>" alt="Cover" id="p-cover-img">
             </div>
 
             <div class="container">
                 <div class="portfolio-profile-header">
                     <div class="avatar-wrapper">
-                        <img src="https://via.placeholder.com/150" alt="Profile Avatar" id="p-avatar-img">
+                        <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='%236366f1'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>" alt="Avatar" id="p-avatar-img">
                         <span class="online-status-badge" id="p-status-dot" title="Available for Hire"></span>
                     </div>
 
                     <div class="profile-info-main">
                         <div class="profile-title-row">
-                            <h1 id="p-name">Loading Profile...</h1>
+                            <h1 id="p-name">Developer / Artist</h1>
                             <span class="availability-tag" id="p-availability">Available</span>
                         </div>
                         
-                        <p class="profile-role-text" id="p-title">Web Developer / Media Artist</p>
+                        <p class="profile-role-text" id="p-title">Professional Freelancer</p>
                         
                         <p class="profile-bio-text" id="p-intro">
-                            Fetching portfolio data from database...
+                            Welcome to my official digital portfolio.
                         </p>
 
                         <div class="profile-actions-bar">
@@ -109,18 +112,13 @@
                 <div class="section-title text-center">
                     <span class="eyebrow"><i class="fa-solid fa-briefcase"></i> Portfolio Projects</span>
                     <h2>Featured Work & Case Studies</h2>
-                    <p>Filter by category or click on any project to view live details and media.</p>
                 </div>
 
-                <!-- Category Filters -->
                 <div class="project-filters" id="projectFilters">
                     <button class="filter-btn active" data-filter="all">All Projects</button>
                 </div>
 
-                <!-- Projects Grid Container -->
-                <div class="grid grid-3" id="projectsGrid">
-                    <!-- Dynamic Projects injected via js/app.js -->
-                </div>
+                <div class="grid grid-3" id="projectsGrid"></div>
             </div>
         </section>
 
@@ -131,10 +129,7 @@
                     <span class="eyebrow"><i class="fa-solid fa-code-compare"></i> Competencies</span>
                     <h2>Technical Skills & Tools</h2>
                 </div>
-
-                <div class="skills-grid" id="skillsGrid">
-                    <!-- Dynamic Skills injected via js/app.js -->
-                </div>
+                <div class="skills-grid" id="skillsGrid"></div>
             </div>
         </section>
 
@@ -145,10 +140,7 @@
                     <span class="eyebrow"><i class="fa-solid fa-cubes"></i> Offerings</span>
                     <h2>Services Provided</h2>
                 </div>
-
-                <div class="grid grid-3" id="servicesGrid">
-                    <!-- Dynamic Services injected via js/app.js -->
-                </div>
+                <div class="grid grid-3" id="servicesGrid"></div>
             </div>
         </section>
 
@@ -156,27 +148,19 @@
         <section class="section bg-card" id="timeline">
             <div class="container">
                 <div class="grid grid-2">
-                    
-                    <!-- Experience Column -->
                     <div>
                         <div class="timeline-header mb-4">
                             <h3><i class="fa-solid fa-briefcase text-primary"></i> Work Experience</h3>
                         </div>
-                        <div class="timeline-wrapper" id="experienceList">
-                            <!-- Dynamic Experience items injected via js/app.js -->
-                        </div>
+                        <div class="timeline-wrapper" id="experienceList"></div>
                     </div>
 
-                    <!-- Education Column -->
                     <div>
                         <div class="timeline-header mb-4">
                             <h3><i class="fa-solid fa-graduation-cap text-accent"></i> Education & Background</h3>
                         </div>
-                        <div class="timeline-wrapper" id="educationList">
-                            <!-- Dynamic Education items injected via js/app.js -->
-                        </div>
+                        <div class="timeline-wrapper" id="educationList"></div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -185,48 +169,30 @@
         <section class="section" id="certifications">
             <div class="container">
                 <div class="section-title text-center">
-                    <span class="eyebrow"><i class="fa-solid fa-certificate"></i> Verified Credentials</span>
-                    <h2>Certifications & Awards</h2>
+                    <span class="eyebrow"><i class="fa-solid fa-certificate"></i> Credentials</span>
+                    <h2>Certifications</h2>
                 </div>
-
-                <div class="grid grid-3" id="certificationsGrid">
-                    <!-- Dynamic Certifications injected via js/app.js -->
-                </div>
+                <div class="grid grid-3" id="certificationsGrid"></div>
             </div>
         </section>
 
-        <!-- Bank & Social Contact Card -->
+        <!-- Bank & Contact Info -->
         <section class="section bg-card" id="contactInfo">
             <div class="container">
                 <div class="grid grid-2 items-center">
                     <div>
                         <span class="eyebrow"><i class="fa-solid fa-handshake"></i> Direct Contact</span>
                         <h2>Let's Build Something Great Together</h2>
-                        <p class="text-muted mb-4">Reach out directly via social networks or WhatsApp for freelance inquiries, project estimates, or collaborations.</p>
-
-                        <div class="social-links-flex" id="p-socials-container">
-                            <!-- Dynamic Social links injected via app.js -->
-                        </div>
+                        <p class="text-muted mb-4">Reach out directly for freelance inquiries.</p>
+                        <div class="social-links-flex" id="p-socials-container"></div>
                     </div>
 
-                    <!-- Payment / Bank Details Card -->
                     <div class="panel-card" id="bankDetailsCard">
                         <h3><i class="fa-solid fa-building-columns text-primary"></i> Payment & Deposit Info</h3>
-                        <p class="text-muted" style="font-size: 0.85rem;">Official bank account details for direct client payments.</p>
-                        
                         <div class="bank-info-grid mt-3">
-                            <div class="bank-row">
-                                <span class="text-muted">Bank Name:</span>
-                                <strong id="b-bankName">Easypaisa / JazzCash / Local Bank</strong>
-                            </div>
-                            <div class="bank-row">
-                                <span class="text-muted">Account Name:</span>
-                                <strong id="b-accTitle">Saeed ullah / Naeem ur Rahman</strong>
-                            </div>
-                            <div class="bank-row">
-                                <span class="text-muted">Account No / IBAN:</span>
-                                <strong id="b-accNo" class="gradient-text">03XX-XXXXXXX</strong>
-                            </div>
+                            <div class="bank-row"><span class="text-muted">Bank Name:</span> <strong id="b-bankName">Easypaisa / JazzCash</strong></div>
+                            <div class="bank-row"><span class="text-muted">Account Name:</span> <strong id="b-accTitle">Saeed / Naeem</strong></div>
+                            <div class="bank-row"><span class="text-muted">Account No:</span> <strong id="b-accNo" class="gradient-text">03XX-XXXXXXX</strong></div>
                         </div>
                     </div>
                 </div>
@@ -234,13 +200,11 @@
         </section>
     </main>
 
-    <!-- Project Video / Image Lightbox Modal -->
+    <!-- Lightbox Modal -->
     <div class="modal-backdrop" id="projectModal">
         <div class="modal-card">
             <button class="modal-close-btn" id="modalCloseBtn">&times;</button>
-            <div id="modalContent">
-                <!-- Dynamically populated project modal content -->
-            </div>
+            <div id="modalContent"></div>
         </div>
     </div>
 
@@ -249,12 +213,10 @@
         <div class="container footer-content">
             <div class="footer-brand">
                 <div class="navbar-brand">
-                    <div class="brand-icon">
-                        <i class="fa-solid fa-code-merge"></i>
-                    </div>
+                    <div class="brand-icon"><i class="fa-solid fa-code-merge"></i></div>
                     <span>SN Studio</span>
                 </div>
-                <p>Empowering brands and individuals with world-class code and video visual storytelling.</p>
+                <p>Empowering brands and individuals with world-class code and video storytelling.</p>
             </div>
 
             <div class="footer-links">
@@ -270,7 +232,7 @@
 
             <div class="footer-links">
                 <h4>Connect With Us</h4>
-                <div class="social-links-grid">
+                <div class="social-links-grid" style="display:flex; flex-direction:column; gap:0.5rem;">
                     <a href="portfolio.html?user=saeed"><i class="fa-solid fa-user"></i> Saeed</a>
                     <a href="portfolio.html?user=naeem"><i class="fa-solid fa-video"></i> Naeem</a>
                 </div>
@@ -288,7 +250,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
     
     <!-- Application Scripts -->
-    <script src="js/database.js?v=3.0"></script>
-    <script src="js/app.js?v=3.0"></script>
+    <script src="js/database.js?v=6.0"></script>
+    <script src="js/app.js?v=6.0"></script>
 </body>
 </html>

@@ -1,352 +1,267 @@
-/* ===================================================
-   SN PORTFOLIO - ENHANCED DATABASE LAYER
-   Firebase Realtime Database + LocalStorage Fallback
-   =================================================== */
+/* ==========================================================================
+   SN PORTFOLIO V2.0 - INSTANT FAIL-SAFE DATABASE ENGINE
+   File: js/database.js
+   Author: Saeed ullah & Naeem ur Rahman
+   ========================================================================== */
 
-// ============ Firebase Configuration ============
-const firebaseConfig = {
-    apiKey: "AIzaSyD9TwGnhUGg92qWiv5zROJ50Ze0CbVgp_Q",
-    authDomain: "sn-portfolio.firebaseapp.com",
-    databaseURL: "https://sn-portfolio-default-rtdb.firebaseio.com",
-    projectId: "sn-portfolio",
-    storageBucket: "sn-portfolio.firebasestorage.app",
-    messagingSenderId: "691206200263",
-    appId: "1:691206200263:web:b70e58712d39c4787997e2",
-    measurementId: "G-RS8BCD1VG0"
-};
+(function () {
+    'use strict';
 
-// Initialize Firebase safely (prevent duplicate init)
-if (typeof firebase !== 'undefined') {
-    if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-    }
-}
+    // Firebase Configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyD9TwGnhUGg92qWiv5zROJ50Ze0CbVgp_Q",
+        authDomain: "sn-portfolio.firebaseapp.com",
+        databaseURL: "https://sn-portfolio-default-rtdb.firebaseio.com",
+        projectId: "sn-portfolio",
+        storageBucket: "sn-portfolio.firebasestorage.app",
+        messagingSenderId: "691206200263",
+        appId: "1:691206200263:web:b70e58712d39c4787997e2",
+        measurementId: "G-RS8BCD1VG0"
+    };
 
-const database = (typeof firebase !== 'undefined') ? firebase.database() : null;
-
-// ============ Default Profile Templates ============
-const defaultProfiles = {
-    saeed: {
-        name: "Saeed ullah",
-        title: "Full Stack Web Developer",
-        role: "web-developer",
-        intro: "Building modern, scalable web applications with cutting-edge technology.",
-        about: "I am a passionate full-stack web developer with expertise in creating responsive, user-friendly websites and web applications. I love turning complex problems into simple, beautiful solutions.",
-        email: "",
-        phone: "",
-        whatsapp: "",
-        location: "Pakistan",
-        website: "",
-        availability: "available",
-        profileImage: "",
-        coverImage: "",
-        resume: "",
-        bankDetails: "",
-        education: [],
-        experience: [],
-        skills: [],
-        projects: [],
-        services: [],
-        certifications: [],
-        socials: {
-            freelance: "",
-            github: "",
-            linkedin: "",
-            facebook: "",
-            instagram: "",
-            youtube: "",
-            twitter: ""
+    // Default Seed Data
+    const defaultProfiles = {
+        saeed: {
+            name: "Saeed ullah",
+            title: "Full Stack Web Developer",
+            role: "developer",
+            intro: "Specializing in scalable Web Applications, Custom Databases, Vercel deployments, and responsive UI/UX architecture.",
+            about: "Passionate Full Stack Web Developer with expertise in modern JavaScript frameworks, Firebase realtime databases, and automated Vercel cloud hosting.",
+            email: "saeedullah.758234@gmail.com",
+            phone: "+923000000000",
+            whatsapp: "923000000000",
+            location: "Peshawar, Pakistan",
+            website: "https://sn-portfolio-theta.vercel.app",
+            availability: "Available for Freelance Projects",
+            profileImage: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='%236366f1'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>",
+            coverImage: "",
+            resume: "",
+            bankDetails: {
+                bankName: "Easypaisa / JazzCash",
+                accountTitle: "Saeed ullah",
+                accountNumber: "03XXXXXXXXX"
+            },
+            socials: {
+                github: "https://github.com/saeedullah758234-cloud",
+                linkedin: "#",
+                youtube: "",
+                freelance: "#",
+                instagram: "",
+                facebook: "",
+                twitter: ""
+            },
+            skills: [
+                { name: "HTML5 / CSS3", level: "Expert", icon: "fa-brands fa-html5" },
+                { name: "JavaScript ES6+", level: "Expert", icon: "fa-brands fa-js" },
+                { name: "Firebase DB", level: "Advanced", icon: "fa-solid fa-database" },
+                { name: "Vercel Deploy", level: "Expert", icon: "fa-solid fa-cloud-arrow-up" }
+            ],
+            projects: [],
+            services: [
+                { title: "Custom Web Apps", description: "Building modern responsive web applications.", icon: "fa-solid fa-code" }
+            ],
+            experience: [],
+            education: [],
+            certifications: []
         },
-        meta: {
-            lastUpdated: new Date().toISOString(),
-            version: "2.0"
+        naeem: {
+            name: "Naeem ur Rahman",
+            title: "Professional Video Editor",
+            role: "editor",
+            intro: "Expert in Cinematic Video Editing, Reels/Shorts, YouTube Production, Color Grading, and Motion Design.",
+            about: "Creative Video Editor and Visual Content Creator turning raw footage into high-converting digital stories.",
+            email: "naeemurrahman@gmail.com",
+            phone: "+923000000001",
+            whatsapp: "923000000001",
+            location: "Pakistan",
+            website: "https://sn-portfolio-theta.vercel.app",
+            availability: "Available for Video Editing",
+            profileImage: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 24 24' fill='%2306b6d4'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z'/></svg>",
+            coverImage: "",
+            resume: "",
+            bankDetails: {
+                bankName: "Easypaisa / JazzCash",
+                accountTitle: "Naeem ur Rahman",
+                accountNumber: "03XXXXXXXXX"
+            },
+            socials: {
+                github: "",
+                linkedin: "#",
+                youtube: "#",
+                freelance: "#",
+                instagram: "#",
+                facebook: "",
+                twitter: ""
+            },
+            skills: [
+                { name: "Adobe Premiere Pro", level: "Expert", icon: "fa-solid fa-film" },
+                { name: "After Effects", level: "Advanced", icon: "fa-solid fa-wand-magic-sparkles" },
+                { name: "Color Grading", level: "Expert", icon: "fa-solid fa-palette" }
+            ],
+            projects: [],
+            services: [
+                { title: "Video Editing", description: "Cinematic, Reels, YouTube content editing.", icon: "fa-solid fa-video" }
+            ],
+            experience: [],
+            education: [],
+            certifications: []
         }
-    },
-    naeem: {
-        name: "Naeem ur Rahman",
-        title: "Professional Video Editor",
-        role: "video-editor",
-        intro: "Creating cinematic visual experiences through professional video editing.",
-        about: "I am a creative video editor specializing in cinematic storytelling, motion graphics, and post-production. I transform raw footage into engaging visual stories.",
-        email: "",
-        phone: "",
-        whatsapp: "",
-        location: "Pakistan",
-        website: "",
-        availability: "available",
-        profileImage: "",
-        coverImage: "",
-        resume: "",
-        bankDetails: "",
-        education: [],
-        experience: [],
-        skills: [],
-        projects: [],
-        services: [],
-        certifications: [],
-        socials: {
-            freelance: "",
-            github: "",
-            linkedin: "",
-            facebook: "",
-            instagram: "",
-            youtube: "",
-            twitter: ""
-        },
-        meta: {
-            lastUpdated: new Date().toISOString(),
-            version: "2.0"
-        }
-    }
-};
+    };
 
-// ============ Deep Clean Undefined Values (Firebase hates undefined) ============
-function cleanData(obj) {
-    if (obj === null || obj === undefined) return null;
-    if (Array.isArray(obj)) {
-        return obj.map(item => cleanData(item)).filter(item => item !== null);
-    }
-    if (typeof obj === 'object') {
-        const cleaned = {};
-        for (const key in obj) {
-            if (obj[key] !== undefined && obj[key] !== null && obj[key] !== '') {
-                const value = cleanData(obj[key]);
-                if (value !== null && value !== undefined) {
-                    cleaned[key] = value;
-                }
-            } else if (obj[key] === '' || obj[key] === 0 || obj[key] === false) {
-                // Keep empty strings as empty strings (not undefined)
-                cleaned[key] = obj[key];
-            }
+    // Database Instance Manager
+    class DatabaseEngine {
+        constructor() {
+            this.initialized = false;
+            this.db = null;
+            this.initFirebase();
         }
-        return cleaned;
-    }
-    return obj;
-}
 
-// ============ Merge with defaults safely ============
-function mergeWithDefaults(userId, data) {
-    const defaults = defaultProfiles[userId] || defaultProfiles.saeed;
-    const merged = { ...defaults, ...data };
-    
-    // Ensure arrays are arrays
-    ['education', 'experience', 'skills', 'projects', 'services', 'certifications'].forEach(key => {
-        if (!Array.isArray(merged[key])) merged[key] = [];
-    });
-    
-    // Ensure socials is object
-    if (!merged.socials || typeof merged.socials !== 'object') {
-        merged.socials = defaults.socials;
-    }
-    
-    return merged;
-}
-
-// ============ Main Database API ============
-const db = {
-    
-    /* ---------- GET USER DATA ---------- */
-    async getUser(userId) {
-        if (!userId) return null;
-        
-        try {
-            // Try Firebase first
-            if (database) {
-                const snapshot = await database.ref('users/' + userId).once('value');
-                if (snapshot.exists()) {
-                    const data = snapshot.val();
-                    const merged = mergeWithDefaults(userId, data);
-                    // Backup to localStorage
-                    try {
-                        localStorage.setItem('sn_data_' + userId, JSON.stringify(merged));
-                    } catch (e) {
-                        console.warn('LocalStorage quota exceeded, skipping backup');
-                    }
-                    return merged;
-                }
-            }
-        } catch (error) {
-            console.warn("Firebase read failed, falling back to localStorage:", error.message);
-        }
-        
-        // Fallback to localStorage
-        try {
-            const localData = localStorage.getItem('sn_data_' + userId);
-            if (localData) {
-                return mergeWithDefaults(userId, JSON.parse(localData));
-            }
-        } catch (e) {
-            console.warn('LocalStorage read failed');
-        }
-        
-        // Final fallback: defaults
-        return defaultProfiles[userId] || defaultProfiles.saeed;
-    },
-    
-    /* ---------- SAVE USER DATA (Fail-safe) ---------- */
-    async saveUser(userId, data) {
-        if (!userId || !data) return { success: false, error: 'Invalid input' };
-        
-        try {
-            // Add metadata
-            data.meta = {
-                lastUpdated: new Date().toISOString(),
-                version: "2.0"
-            };
-            
-            // Clean undefined values
-            const safeData = cleanData(data);
-            
-            // 1. INSTANT LOCAL SAVE (always works)
+        initFirebase() {
             try {
-                localStorage.setItem('sn_data_' + userId, JSON.stringify(safeData));
-            } catch (e) {
-                console.warn('LocalStorage save failed - quota may be exceeded');
+                if (!firebase.apps.length) {
+                    firebase.initializeApp(firebaseConfig);
+                }
+                this.db = firebase.database();
+                this.initialized = true;
+            } catch (err) {
+                console.warn("Firebase Init Offline:", err);
             }
-            
-            // 2. BACKGROUND FIREBASE SAVE (non-blocking)
-            if (database) {
-                database.ref('users/' + userId).set(safeData)
-                    .then(() => {
-                        console.log(`✓ Firebase sync successful for ${userId}`);
-                    })
-                    .catch((err) => {
-                        console.error(`✗ Firebase sync failed for ${userId}:`, err.message);
-                    });
+        }
+
+        cleanData(obj) {
+            if (obj === null || obj === undefined) return "";
+            if (typeof obj !== "object") return obj;
+            if (Array.isArray(obj)) {
+                return obj.map(item => this.cleanData(item)).filter(item => item !== null && item !== undefined);
             }
-            
-            return { success: true, message: 'Saved successfully' };
-            
-        } catch (error) {
-            console.error("Critical save error:", error);
-            // Still return success because local save likely worked
-            return { success: true, message: 'Saved locally', warning: error.message };
-        }
-    },
-    
-    /* ---------- UPDATE SPECIFIC FIELD ---------- */
-    async updateField(userId, field, value) {
-        if (!userId || !field) return false;
-        
-        try {
-            const current = await this.getUser(userId);
-            current[field] = value;
-            return await this.saveUser(userId, current);
-        } catch (e) {
-            console.error('Update field failed:', e);
-            return { success: false };
-        }
-    },
-    
-    /* ---------- ADD PROJECT ---------- */
-    async addProject(userId, project) {
-        try {
-            const user = await this.getUser(userId);
-            if (!Array.isArray(user.projects)) user.projects = [];
-            project.id = Date.now().toString();
-            project.createdAt = new Date().toISOString();
-            user.projects.push(project);
-            return await this.saveUser(userId, user);
-        } catch (e) {
-            console.error('Add project failed:', e);
-            return { success: false };
-        }
-    },
-    
-    /* ---------- DELETE PROJECT ---------- */
-    async deleteProject(userId, projectId) {
-        try {
-            const user = await this.getUser(userId);
-            user.projects = (user.projects || []).filter(p => p.id !== projectId);
-            return await this.saveUser(userId, user);
-        } catch (e) {
-            console.error('Delete project failed:', e);
-            return { success: false };
-        }
-    },
-    
-    /* ---------- COMPRESS IMAGE (Smart) ---------- */
-    compressImage(file, options = {}) {
-        return new Promise((resolve, reject) => {
-            const {
-                maxWidth = 800,
-                maxHeight = 800,
-                quality = 0.75,
-                format = 'image/jpeg'
-            } = options;
-            
-            const reader = new FileReader();
-            reader.onerror = () => reject(new Error('File read error'));
-            
-            reader.onload = (e) => {
-                const img = new Image();
-                img.onerror = () => reject(new Error('Image load error'));
-                
-                img.onload = () => {
-                    let width = img.width;
-                    let height = img.height;
-                    
-                    // Scale down maintaining aspect ratio
-                    if (width > maxWidth) {
-                        height = (height * maxWidth) / width;
-                        width = maxWidth;
+            const clean = {};
+            for (const key in obj) {
+                if (Object.prototype.hasOwnProperty.call(obj, key)) {
+                    const val = obj[key];
+                    if (val !== undefined && val !== null) {
+                        clean[key] = this.cleanData(val);
                     }
-                    if (height > maxHeight) {
-                        width = (width * maxHeight) / height;
-                        height = maxHeight;
-                    }
-                    
-                    const canvas = document.createElement('canvas');
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    
-                    // Better quality rendering
-                    ctx.imageSmoothingEnabled = true;
-                    ctx.imageSmoothingQuality = 'high';
-                    ctx.drawImage(img, 0, 0, width, height);
-                    
-                    const base64 = canvas.toDataURL(format, quality);
-                    const sizeKB = Math.round(base64.length / 1024);
-                    
-                    console.log(`✓ Image compressed: ${width}x${height}, ~${sizeKB}KB`);
-                    resolve(base64);
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        });
-    },
-    
-    /* ---------- GET BOTH PROFILES (for home page) ---------- */
-    async getAllProfiles() {
-        try {
-            const [saeed, naeem] = await Promise.all([
-                this.getUser('saeed'),
-                this.getUser('naeem')
-            ]);
-            return { saeed, naeem };
-        } catch (e) {
-            console.error('Get all profiles failed:', e);
+                }
+            }
+            return clean;
+        }
+
+        mergeWithDefaults(key, custom) {
+            const def = defaultProfiles[key] || defaultProfiles.saeed;
+            if (!custom) return def;
+
             return {
-                saeed: defaultProfiles.saeed,
-                naeem: defaultProfiles.naeem
+                name: custom.name || def.name,
+                title: custom.title || def.title,
+                role: custom.role || def.role,
+                intro: custom.intro || def.intro,
+                about: custom.about || def.about,
+                email: custom.email || def.email,
+                phone: custom.phone || def.phone,
+                whatsapp: custom.whatsapp || def.whatsapp,
+                location: custom.location || def.location,
+                website: custom.website || def.website,
+                availability: custom.availability || def.availability,
+                profileImage: custom.profileImage || def.profileImage,
+                coverImage: custom.coverImage || def.coverImage,
+                resume: custom.resume || def.resume,
+                bankDetails: Object.assign({}, def.bankDetails, custom.bankDetails || {}),
+                socials: Object.assign({}, def.socials, custom.socials || {}),
+                skills: Array.isArray(custom.skills) ? custom.skills : def.skills,
+                projects: Array.isArray(custom.projects) ? custom.projects : def.projects,
+                services: Array.isArray(custom.services) ? custom.services : def.services,
+                experience: Array.isArray(custom.experience) ? custom.experience : def.experience,
+                education: Array.isArray(custom.education) ? custom.education : def.education,
+                certifications: Array.isArray(custom.certifications) ? custom.certifications : def.certifications
             };
         }
-    },
-    
-    /* ---------- CHECK FIREBASE CONNECTION ---------- */
-    async checkConnection() {
-        if (!database) return false;
-        try {
-            const connected = await database.ref('.info/connected').once('value');
-            return connected.val() === true;
-        } catch (e) {
-            return false;
+
+        // 0-MS INSTANT GET USER METHOD (ZERO LOADING DELAY)
+        getUser(userKey) {
+            const key = (userKey === 'naeem') ? 'naeem' : 'saeed';
+            
+            // 1. Instant return from LocalStorage or Default Seed Data
+            let profile = null;
+            const local = localStorage.getItem('sn_data_' + key);
+            if (local) {
+                try { profile = JSON.parse(local); } catch (e) {}
+            }
+            profile = this.mergeWithDefaults(key, profile);
+
+            // 2. Silent background sync with Firebase (non-blocking)
+            if (this.db) {
+                this.db.ref('users/' + key).once('value').then(snapshot => {
+                    if (snapshot.exists()) {
+                        const fbData = snapshot.val();
+                        const merged = this.mergeWithDefaults(key, fbData);
+                        localStorage.setItem('sn_data_' + key, JSON.stringify(merged));
+                        window.dispatchEvent(new CustomEvent('sn_data_synced', { detail: { key, profile: merged } }));
+                    }
+                }).catch(() => {});
+            }
+
+            return Promise.resolve(profile);
+        }
+
+        async saveUser(userKey, userData) {
+            const key = (userKey === 'naeem') ? 'naeem' : 'saeed';
+            const clean = this.cleanData(userData);
+
+            // Instant Local Storage Save
+            try {
+                localStorage.setItem('sn_data_' + key, JSON.stringify(clean));
+            } catch (err) {
+                console.warn("LocalStorage quota error:", err);
+            }
+
+            // Firebase Async Save
+            if (this.db) {
+                try {
+                    await this.db.ref('users/' + key).set(clean);
+                } catch (err) {
+                    console.warn("Firebase save skipped:", err);
+                }
+            }
+
+            return { success: true };
+        }
+
+        async getAllProfiles() {
+            const saeed = await this.getUser('saeed');
+            const naeem = await this.getUser('naeem');
+            return { saeed, naeem };
+        }
+
+        compressImage(file, maxWidth = 800, maxHeight = 800, quality = 0.75) {
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.src = e.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let w = img.width;
+                        let h = img.height;
+
+                        if (w > h) {
+                            if (w > maxWidth) { h = Math.round((h * maxWidth) / w); w = maxWidth; }
+                        } else {
+                            if (h > maxHeight) { w = Math.round((w * maxHeight) / h); h = maxHeight; }
+                        }
+
+                        canvas.width = w;
+                        canvas.height = h;
+                        const ctx = canvas.getContext('canvas');
+                        ctx.drawImage(img, 0, 0, w, h);
+                        resolve(canvas.toDataURL('image/jpeg', quality));
+                    };
+                    img.onerror = () => resolve(e.target.result);
+                };
+                reader.onerror = () => resolve("");
+            });
         }
     }
-};
 
-// Expose globally
-window.db = db;
-console.log('✓ SN Portfolio Database v2.0 Ready');
+    window.db = new DatabaseEngine();
+})();
